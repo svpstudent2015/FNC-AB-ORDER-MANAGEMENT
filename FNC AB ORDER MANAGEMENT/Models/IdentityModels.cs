@@ -21,7 +21,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("IdentityDbContext", throwIfV1Schema: false)
         {
         }
 

@@ -13,10 +13,10 @@ namespace DAL
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class FNCOrderHanteringEntities : DbContext
+    public partial class FNCOrderHanteringEntitiesConnections : DbContext
     {
-        public FNCOrderHanteringEntities()
-            : base("name=FNCOrderHanteringEntities")
+        public FNCOrderHanteringEntitiesConnections()
+            : base("name=FNCOrderHanteringEntitiesConnections")
         {
         }
     
@@ -25,6 +25,11 @@ namespace DAL
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<INMATNINGAR> INMATNINGAR { get; set; }
     }
 }
