@@ -72,6 +72,38 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Ordernr" Type="nvarchar" MaxLength="50" />
+          <Property Name="Kund" Type="nvarchar" MaxLength="50" />
+          <Property Name="Telefonnr" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ort" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adress" Type="nvarchar" MaxLength="50" />
+          <Property Name="InDatum" Type="date" />
+          <Property Name="UtDatum" Type="date" />
+          <Property Name="StyckPris" Type="bit" />
+          <Property Name="Langd" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="Timmar" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="Fakturerad" Type="bit" />
+          <Property Name="Ovrigt" Type="nchar" MaxLength="200" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Utsattningar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Ordernr" Type="nvarchar" MaxLength="50" />
+          <Property Name="Kund" Type="nvarchar" MaxLength="50" />
+          <Property Name="Telefonnr" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ort" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adress" Type="nvarchar" MaxLength="50" />
+          <Property Name="InDatum" Type="date" />
+          <Property Name="UtDatum" Type="date" />
+          <Property Name="StyckPris" Type="bit" />
+          <Property Name="Langd" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="Timmar" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="Fakturerad" Type="bit" />
+          <Property Name="Ovrigt" Type="nchar" MaxLength="200" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="GPS" Type="bit" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -137,6 +169,7 @@
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INMATNINGAR" EntityType="Self.INMATNINGAR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Utsattningar" EntityType="Self.Utsattningar" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -223,6 +256,18 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Ordernr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Kund" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telefonnr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ort" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InDatum" Type="DateTime" Precision="0" />
+          <Property Name="UtDatum" Type="DateTime" Precision="0" />
+          <Property Name="StyckPris" Type="Boolean" />
+          <Property Name="Langd" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Timmar" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Fakturerad" Type="Boolean" />
+          <Property Name="Ovrigt" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -275,7 +320,28 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="Utsattningar" EntityType="FNCOrderHanteringModel.Utsattningar" />
         </EntityContainer>
+        <EntityType Name="Utsattningar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Ordernr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Kund" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telefonnr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ort" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InDatum" Type="DateTime" Precision="0" />
+          <Property Name="UtDatum" Type="DateTime" Precision="0" />
+          <Property Name="StyckPris" Type="Boolean" />
+          <Property Name="Langd" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Timmar" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Fakturerad" Type="Boolean" />
+          <Property Name="Ovrigt" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GPS" Type="Boolean" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -340,6 +406,18 @@
           <EntitySetMapping Name="INMATNINGAR">
             <EntityTypeMapping TypeName="FNCOrderHanteringModel.INMATNINGAR">
               <MappingFragment StoreEntitySet="INMATNINGAR">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Ovrigt" ColumnName="Ovrigt" />
+                <ScalarProperty Name="Fakturerad" ColumnName="Fakturerad" />
+                <ScalarProperty Name="Timmar" ColumnName="Timmar" />
+                <ScalarProperty Name="Langd" ColumnName="Langd" />
+                <ScalarProperty Name="StyckPris" ColumnName="StyckPris" />
+                <ScalarProperty Name="UtDatum" ColumnName="UtDatum" />
+                <ScalarProperty Name="InDatum" ColumnName="InDatum" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="Ort" ColumnName="Ort" />
+                <ScalarProperty Name="Telefonnr" ColumnName="Telefonnr" />
+                <ScalarProperty Name="Kund" ColumnName="Kund" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Ordernr" ColumnName="Ordernr" />
               </MappingFragment>
@@ -353,6 +431,27 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Utsattningar">
+            <EntityTypeMapping TypeName="FNCOrderHanteringModel.Utsattningar">
+              <MappingFragment StoreEntitySet="Utsattningar">
+                <ScalarProperty Name="GPS" ColumnName="GPS" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Ovrigt" ColumnName="Ovrigt" />
+                <ScalarProperty Name="Fakturerad" ColumnName="Fakturerad" />
+                <ScalarProperty Name="Timmar" ColumnName="Timmar" />
+                <ScalarProperty Name="Langd" ColumnName="Langd" />
+                <ScalarProperty Name="StyckPris" ColumnName="StyckPris" />
+                <ScalarProperty Name="UtDatum" ColumnName="UtDatum" />
+                <ScalarProperty Name="InDatum" ColumnName="InDatum" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="Ort" ColumnName="Ort" />
+                <ScalarProperty Name="Telefonnr" ColumnName="Telefonnr" />
+                <ScalarProperty Name="Kund" ColumnName="Kund" />
+                <ScalarProperty Name="Ordernr" ColumnName="Ordernr" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

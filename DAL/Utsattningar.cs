@@ -12,7 +12,7 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class INMATNINGAR
+    public partial class Utsattningar
     {
         public int Id { get; set; }
         public string Ordernr { get; set; }
@@ -28,5 +28,6 @@ namespace DAL
         public Nullable<bool> Fakturerad { get; set; }
         public string Ovrigt { get; set; }
         public string Status { get; set; }
+        public Nullable<bool> GPS { get; set; }
     }
 }
