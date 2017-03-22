@@ -189,6 +189,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\InmatningarModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -252,6 +253,7 @@
     <Content Include="Views\Inmatningar\Inmatningar.cshtml" />
     <Content Include="Views\Utmatningar\Utmatningar.cshtml" />
     <Content Include="Views\HanteraKonton\HanteraKonton.cshtml" />
+    <Content Include="Views\Inmatningar\NyInmatning.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
