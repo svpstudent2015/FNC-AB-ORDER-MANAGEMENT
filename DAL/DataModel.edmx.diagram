@@ -17,7 +17,6 @@
         <EntityTypeShape EntityType="FNCOrderHanteringModel.Utsattningar" Width="1.5" PointX="7.375" PointY="0.75" />
         <AssociationConnector Association="FNCOrderHanteringModel.FK_INMATNINGAR_Id" />
         <AssociationConnector Association="FNCOrderHanteringModel.FK_Utsattningar_Id" />
-        <AssociationConnector Association="FNCOrderHanteringModel.FK_INMATNINGAR_INMATNINGAR" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -68,9 +68,8 @@
         </EntityType>
         <EntityType Name="INMATNINGAR">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Ordernr" Type="nvarchar" MaxLength="50" />
           <Property Name="Kund" Type="nvarchar" MaxLength="50" />
           <Property Name="Telefonnr" Type="nvarchar" MaxLength="50" />
@@ -85,12 +84,12 @@
           <Property Name="Ovrigt" Type="nchar" MaxLength="200" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="AID" Type="nvarchar" MaxLength="128" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Utsattningar">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Ordernr" Type="nvarchar" MaxLength="50" />
           <Property Name="Kund" Type="nvarchar" MaxLength="50" />
           <Property Name="Telefonnr" Type="nvarchar" MaxLength="50" />
@@ -106,6 +105,7 @@
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="GPS" Type="bit" />
           <Property Name="AID" Type="nvarchar" MaxLength="128" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -272,9 +272,8 @@
         </EntityType>
         <EntityType Name="INMATNINGAR">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Ordernr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Kund" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Telefonnr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -290,6 +289,7 @@
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUsers" Relationship="FNCOrderHanteringModel.FK_INMATNINGAR_Id" FromRole="INMATNINGAR" ToRole="AspNetUsers" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -351,16 +351,11 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Utsattningar" EntitySet="Utsattningar" />
           </AssociationSet>
-          <AssociationSet Name="FK_INMATNINGAR_INMATNINGAR" Association="FNCOrderHanteringModel.FK_INMATNINGAR_INMATNINGAR">
-            <End Role="INMATNINGAR" EntitySet="INMATNINGAR" />
-            <End Role="INMATNINGAR1" EntitySet="INMATNINGAR" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Utsattningar">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Ordernr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Kund" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Telefonnr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -377,6 +372,7 @@
           <Property Name="GPS" Type="Boolean" />
           <Property Name="AID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUsers" Relationship="FNCOrderHanteringModel.FK_Utsattningar_Id" FromRole="Utsattningar" ToRole="AspNetUsers" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <Association Name="FK_INMATNINGAR_Id">
           <End Type="FNCOrderHanteringModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
@@ -399,18 +395,6 @@
             </Principal>
             <Dependent Role="Utsattningar">
               <PropertyRef Name="AID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_INMATNINGAR_INMATNINGAR">
-          <End Type="FNCOrderHanteringModel.INMATNINGAR" Role="INMATNINGAR" Multiplicity="1" />
-          <End Type="FNCOrderHanteringModel.INMATNINGAR" Role="INMATNINGAR1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="INMATNINGAR">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="INMATNINGAR1">
-              <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -478,6 +462,7 @@
           <EntitySetMapping Name="INMATNINGAR">
             <EntityTypeMapping TypeName="FNCOrderHanteringModel.INMATNINGAR">
               <MappingFragment StoreEntitySet="INMATNINGAR">
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="AID" ColumnName="AID" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Ovrigt" ColumnName="Ovrigt" />
@@ -491,7 +476,6 @@
                 <ScalarProperty Name="Ort" ColumnName="Ort" />
                 <ScalarProperty Name="Telefonnr" ColumnName="Telefonnr" />
                 <ScalarProperty Name="Kund" ColumnName="Kund" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Ordernr" ColumnName="Ordernr" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -507,6 +491,7 @@
           <EntitySetMapping Name="Utsattningar">
             <EntityTypeMapping TypeName="FNCOrderHanteringModel.Utsattningar">
               <MappingFragment StoreEntitySet="Utsattningar">
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="AID" ColumnName="AID" />
                 <ScalarProperty Name="GPS" ColumnName="GPS" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
@@ -522,7 +507,6 @@
                 <ScalarProperty Name="Telefonnr" ColumnName="Telefonnr" />
                 <ScalarProperty Name="Kund" ColumnName="Kund" />
                 <ScalarProperty Name="Ordernr" ColumnName="Ordernr" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
