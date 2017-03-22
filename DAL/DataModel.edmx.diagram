@@ -10,11 +10,14 @@
         <EntityTypeShape EntityType="FNCOrderHanteringModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="FNCOrderHanteringModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FNCOrderHanteringModel.AspNetUsers" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="FNCOrderHanteringModel.INMATNINGAR" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FNCOrderHanteringModel.INMATNINGAR" Width="1.5" PointX="9.25" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="FNCOrderHanteringModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="FNCOrderHanteringModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="FNCOrderHanteringModel.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="FNCOrderHanteringModel.Utsattningar" Width="1.5" PointX="7.375" PointY="0.75" />
+        <AssociationConnector Association="FNCOrderHanteringModel.FK_INMATNINGAR_Id" />
+        <AssociationConnector Association="FNCOrderHanteringModel.FK_Utsattningar_Id" />
+        <AssociationConnector Association="FNCOrderHanteringModel.FK_INMATNINGAR_INMATNINGAR" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
