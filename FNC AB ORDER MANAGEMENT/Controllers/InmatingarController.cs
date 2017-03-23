@@ -14,7 +14,39 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         // GET: Inmatningar
         public ActionResult Inmatningar()
         {
-            return View();
+            InmatningarModel i2 = new InmatningarModel();
+            
+            var db = new InmatningarRepository();
+            var listAll = db.ShowAll();
+
+            foreach(INMATNINGAR e in listAll)
+            {
+                InmatningarModel i = new InmatningarModel();
+
+                //DateTime UpdatedDate = e.InDatum.UpdatedDate.Get
+                // DateTime.TryParse(reader[e.InDatum]),out date1);
+
+                i.Ordernr = e.Ordernr;
+                i.Kund = e.Kund;
+                i.Telefonnr = e.Telefonnr;
+                i.Ort = e.Ort;
+                i.Adress = e.Adress;
+                //i.InDatum = (DateTime) e.InDatum;
+                //i.UtDatum = (DateTime) e.UtDatum;
+                //i.StyckPris = (bool) e.StyckPris;
+                //i.Langd = (decimal) e.Langd;
+                //i.Timmar = (decimal) e.Timmar;
+                //i.Fakturerad = (bool)e.Fakturerad;
+                i.Ovrigt = e.Ovrigt;
+                i.Status = e.Status;
+
+                i2.InmatningsLista.Add(i);
+
+
+            }
+
+
+            return View(i2);
         }
         public ActionResult NyInmatning()
         {
@@ -26,8 +58,8 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult NyInmatning(InmatningarModel model)
         {
-            if(!ModelState.IsValid)
-            return View();
+            if (!ModelState.IsValid)
+                return View();
 
             else
             {
@@ -55,5 +87,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             }
 
         }
+      
+     
     }
 }

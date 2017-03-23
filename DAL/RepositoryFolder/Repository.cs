@@ -23,5 +23,24 @@ namespace DAL.RepositoryFolder
                 Console.WriteLine(e);
             }
         }
+
+        public List<T> ShowAll()
+        {
+            try
+            {
+                using (var db = new FNCOrderHanteringEntitiesConnections())
+                {
+                    return db.Set<T>().ToList();
+
+
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
     }
 }

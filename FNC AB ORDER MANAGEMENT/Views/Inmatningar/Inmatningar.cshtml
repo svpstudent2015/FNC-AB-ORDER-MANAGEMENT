@@ -1,13 +1,77 @@
-﻿
+﻿@model FNC_AB_ORDER_MANAGEMENT.Models.InmatningarModel
+
 @{
     ViewBag.Title = "Inmatningar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+ <header>
+     <style type="text/css" src="content/jquery.dataTables.min.css"></style>
+     <script type="text/javascript" src="~/scripts/jquery-1.12.4.js"></script>
+     <script type="text/javascript" src="~/scripts/jquery.dataTables.min.js"></script>
+ </header>
+
 <div class="container">
     <h2>Inmätningar</h2>
     <p>Ny inmätning</p>
-    <button>Klicka</button>
+    <input type="button" value="Ny Inmätning" onclick="location.href='@Url.Action("NyInmatning", "Inmatningar")'" />
+
 </div>
+
+<table id="example" class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Kund</th>
+            <th>Status</th>
+            <th>Adress</th>
+            <th>Ordernr</th>
+            <th>Start datum</th>
+            <th>Övrigt</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>Kund</th>
+            <th>Status</th>
+            <th>Adress</th>
+            <th>Ordernr</th>
+            <th>Start datum</th>
+            <th>Övrigt</th>
+        </tr>
+    </tfoot>
+    <tbody>
+        @{ 
+            if (Model != null)
+            {
+                foreach (var item in Model.InmatningsLista)
+                {
+        <tr>
+            <td>@item.Kund</td>
+            <td>@item.Status</td>
+            <td>@item.Adress</td>
+            <td>@item.Ordernr</td>
+            <td>@item.InDatum</td>
+            <td>@item.Ovrigt</td>
+        </tr>
+
+                    }
+                }
+            }
+
+        </tbody>
+    </table>
+
+ <script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>   
+
+
+
+
+
+
 
 
 
