@@ -6,6 +6,9 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <style type="text/css" src ="content/jquery.dataTables.min.css" ></style>
+    <script type="text/javascript" src="~/scripts/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="~/scripts/jquery.dataTables.min.js"></script>
 
 </head>
 <body>
@@ -43,5 +46,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    
 </body>
 </html>
