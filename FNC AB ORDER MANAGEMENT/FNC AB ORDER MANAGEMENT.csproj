@@ -257,6 +257,7 @@
     <Content Include="Views\Utmatningar\Utmatningar.cshtml" />
     <Content Include="Views\HanteraKonton\HanteraKonton.cshtml" />
     <Content Include="Views\Inmatningar\NyInmatning.cshtml" />
+    <Content Include="Views\Inmatningar\RedigeraInmatningar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
