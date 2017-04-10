@@ -8,15 +8,15 @@ using System.Data.Entity.Infrastructure;
 
 namespace DAL.RepositoryFolder
 {
-    public class InmatningarRepository : Repository<INMATNINGAR>
+    public class UtsattningarRepository : Repository<Utsattningar>
     {
-        public INMATNINGAR ShowRowByID(int id)
+        public Utsattningar ShowRowByID(int id)
         {
             try
             {
                 using (var db = new FNCOrderHanteringEntitiesConnections())
                 {
-                    return db.INMATNINGAR.FirstOrDefault(x => x.ID == id);
+                    return db.Utsattningar.FirstOrDefault(x => x.ID == id);
 
 
                 }
@@ -28,14 +28,14 @@ namespace DAL.RepositoryFolder
             }
         }
 
-        public void SparaRedigeraInmatningar(INMATNINGAR e)
+        public void SparaRedigeraUtsattningar(Utsattningar e)
         {
             try
             {
                 using (var db = new FNCOrderHanteringEntitiesConnections())
                 {
 
-                    INMATNINGAR i = db.INMATNINGAR.FirstOrDefault(x => x.ID == e.ID);
+                    Utsattningar i = db.Utsattningar.FirstOrDefault(x => x.ID == e.ID);
 
                     i.Ordernr = e.Ordernr;
                     i.Kund = e.Kund;
@@ -55,13 +55,11 @@ namespace DAL.RepositoryFolder
                     db.SaveChanges();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
 
             }
         }
-        
-
     }
 }

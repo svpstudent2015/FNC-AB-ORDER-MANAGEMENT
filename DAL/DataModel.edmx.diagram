@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="036cd569da5748fa9919a7c8f8891ee4" Name="Diagram1">
-        <EntityTypeShape EntityType="FNCOrderHanteringModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FNCOrderHanteringModel.C__MigrationHistory" Width="1.5" PointX="1.25" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="FNCOrderHanteringModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="FNCOrderHanteringModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="FNCOrderHanteringModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />

@@ -182,7 +182,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InmatingarController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\UtmatningarController.cs" />
+    <Compile Include="Controllers\UtsattningarController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -191,6 +191,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InmatningarModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\UtsattningarModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -254,10 +255,12 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Test.cshtml" />
     <Content Include="Views\Inmatningar\Inmatningar.cshtml" />
-    <Content Include="Views\Utmatningar\Utmatningar.cshtml" />
+    <Content Include="Views\Utsattningar\Utsattningar.cshtml" />
     <Content Include="Views\HanteraKonton\HanteraKonton.cshtml" />
     <Content Include="Views\Inmatningar\NyInmatning.cshtml" />
     <Content Include="Views\Inmatningar\RedigeraInmatningar.cshtml" />
+    <Content Include="Views\Utsattningar\NyUtsattning.cshtml" />
+    <Content Include="Views\Utsattningar\RedigerUtsattningar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
