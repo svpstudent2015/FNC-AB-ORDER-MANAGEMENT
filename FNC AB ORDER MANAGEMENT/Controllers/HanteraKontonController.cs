@@ -10,7 +10,9 @@ using System.Security.Claims;
 using System.Globalization;
 using System.Security.AccessControl;
 using System.Web.Http;
-
+using DAL;
+using FNC_AB_ORDER_MANAGEMENT.Models;
+using DAL.RepositoryFolder;
 namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 {
     [System.Web.Mvc.Authorize(Roles = "Admin")]
@@ -20,5 +22,37 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         {
             return View();
         }
+
+        public ActionResult VisaAnvandare()
+        {
+
+            AnvandareModel i2 = new AnvandareModel();
+
+            var db = new AnvandareRepository();
+            var listAll = db.ShowAll();
+
+            foreach (AspNetUsers e in listAll)
+            {
+                AnvandareModel i = new AnvandareModel();
+
+             
+
+                i.UserName = e.UserName;
+                i.PasswordHash = e.PasswordHash;
+
+                i.Email = e.Email;
+                i.Id = e.Id;
+
+                i2.AnvandareLista.Add(i);
+
+
+            }
+
+
+            return View(i2);
+        }
+
     }
-}
+
+
+    }

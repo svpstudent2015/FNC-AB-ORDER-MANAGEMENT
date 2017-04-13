@@ -178,7 +178,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HanteraKontonController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InmatingarController.cs" />
@@ -189,6 +188,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AnvandareModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InmatningarModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -262,6 +262,8 @@
     <Content Include="Views\Inmatningar\RedigeraInmatningar.cshtml" />
     <Content Include="Views\Utsattningar\NyUtsattning.cshtml" />
     <Content Include="Views\Utsattningar\RedigerUtsattningar.cshtml" />
+    <Content Include="Views\HanteraKonton\VisaAnvandare.cshtml" />
+    <Content Include="Views\HanteraKonton\RedigeraAnvandare.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

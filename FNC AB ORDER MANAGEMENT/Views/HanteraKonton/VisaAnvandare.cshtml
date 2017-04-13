@@ -1,0 +1,58 @@
+﻿@model FNC_AB_ORDER_MANAGEMENT.Models.AnvandareModel
+@{
+    ViewBag.Title = "VisaAnvandare";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>VisaAnvandare</h2>
+
+<table id="example" class="display" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Password</th>
+      
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Password</th>
+     
+    </tr>
+    </tfoot>
+    <tbody>
+    @{ 
+        if (Model != null)
+        {
+            foreach (var item in Model.AnvandareLista)
+            {
+                    
+              
+                <tr>
+                    <td Onclick="location.href='@Url.Action("RedigeraInmatningar/"+item.Id, "Inmatningar")'">@item.UserName</td>
+                  
+                    <td>@item.Email</td>
+                    <td>@item.PasswordHash</td>
+                 
+                </tr>
+
+            }
+        }
+    }
+
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable();
+    } );
+</script>   
+
+
+
+
+
