@@ -13,6 +13,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -20,6 +21,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
