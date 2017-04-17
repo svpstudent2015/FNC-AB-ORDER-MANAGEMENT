@@ -11,7 +11,7 @@
     <tr>
         <th>Username</th>
         <th>Email</th>
-        <th>Password</th>
+        
       
     </tr>
     </thead>
@@ -19,7 +19,7 @@
     <tr>
         <th>Username</th>
         <th>Email</th>
-        <th>Password</th>
+       
      
     </tr>
     </tfoot>
@@ -32,10 +32,10 @@
                     
               
                 <tr>
-                    <td Onclick="location.href='@Url.Action("RedigeraInmatningar/"+item.Id, "Inmatningar")'">@item.UserName</td>
+                    <td Onclick="location.href='@Url.Action("RedigeraAnvandare/"+item.Id, "HanteraKonton")'">@item.UserName</td>
                   
                     <td>@item.Email</td>
-                    <td>@item.PasswordHash</td>
+                    
                  
                 </tr>
 

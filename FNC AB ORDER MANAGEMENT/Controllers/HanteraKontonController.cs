@@ -52,6 +52,21 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             return View(i2);
         }
 
+        public ActionResult RedigeraAnvandare(String id)
+        {
+
+            var db = new AnvandareRepository();
+            AspNetUsers e = db.ShowRowByID(id);
+            AnvandareModel model = new AnvandareModel();
+
+            model.Email = e.Email;
+            model.UserName = e.UserName;
+         
+
+            return View(model);
+            //    return RedirectToAction("RedigeraInmatningar", "Inmatningar", model);
+        }
+
     }
 
 
