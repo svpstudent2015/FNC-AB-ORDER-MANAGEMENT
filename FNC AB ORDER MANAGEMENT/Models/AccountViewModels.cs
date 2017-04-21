@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace FNC_AB_ORDER_MANAGEMENT.Models
@@ -42,23 +43,23 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
     public class ForgotViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [DisplayName("Email")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [DisplayName("Email")]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Lösenord")]
+        [DisplayName("Lösenord")]
         public string Password { get; set; }
 
-        [Display(Name = "Kom ihåg mig?")]
+        [DisplayName("Kom ihåg mig?")]
         public bool RememberMe { get; set; }
     }
 
@@ -66,18 +67,18 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [DisplayName("Email")]
         public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Lösenord")]
+        [DisplayName("Lösenord")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Bekräfta lösenord")]
-        [Compare("Lösenord", ErrorMessage = "Lösenordet och bekräftelse lösenordet matchar inte.")]
+        [DisplayName("Bekräfta lösenord")]
+        [Compare("Password", ErrorMessage = "Lösenordet och bekräftelse lösenordet matchar inte.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -85,18 +86,18 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [DisplayName("Email")]
         public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Lösenord")]
+        [DisplayName("Lösenord")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Bekräfta lösenord")]
-        [Compare("Lösenord", ErrorMessage = "Lösenordet och bekräftelse lösenordet matchar inte.")]
+        [DisplayName("Bekräfta lösenord")]
+        [Compare("Password", ErrorMessage = "Lösenordet och bekräftelse lösenordet matchar inte.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
@@ -106,7 +107,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [DisplayName("Email")]
         public string Email { get; set; }
     }
 }

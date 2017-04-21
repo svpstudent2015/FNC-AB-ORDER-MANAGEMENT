@@ -23,6 +23,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         public ActionResult HanteraKonton()
         {
             return View();
+        
         }
 
         public ActionResult VisaAnvandare()
@@ -75,7 +76,8 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
             model.Email = e.Email;
             model.UserName = e.UserName;
-         
+            model.Id = e.Id;
+
 
             return View(model);
             //    return RedirectToAction("RedigeraInmatningar", "Inmatningar", model);
@@ -101,6 +103,14 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             return RedirectToAction("VisaAnvandare", "HanteraKonton");
         }
 
+        public ActionResult TaBortAnvandare(string id)
+        {
+            AnvandareRepository rep = new AnvandareRepository();
+            rep.TaBortEnAnvandare(id);
+            
+            return RedirectToAction("VisaAnvandare", "HanteraKonton");
+
+        }
        
  //ApplicationDbContext context = new ApplicationDbContext();
 
