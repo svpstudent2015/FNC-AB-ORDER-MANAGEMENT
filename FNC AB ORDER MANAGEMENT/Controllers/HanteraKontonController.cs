@@ -13,6 +13,8 @@ using System.Web.Http;
 using DAL;
 using FNC_AB_ORDER_MANAGEMENT.Models;
 using DAL.RepositoryFolder;
+using Microsoft.AspNet.Identity.EntityFramework;
+
 namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 {
     [System.Web.Mvc.Authorize(Roles = "Admin")]
@@ -57,7 +59,19 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
             var db = new AnvandareRepository();
             AspNetUsers e = db.ShowRowByID(id);
+
             AnvandareModel model = new AnvandareModel();
+
+            //var roll = e.AspNetRoles.ToList();
+            //var admin=roll[0];
+
+            bool admin=db.ShowUserRoll(e);
+
+            if (admin==true)
+            {
+                model.Roll = true;
+            }
+
 
             model.Email = e.Email;
             model.UserName = e.UserName;
@@ -67,7 +81,52 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             //    return RedirectToAction("RedigeraInmatningar", "Inmatningar", model);
         }
 
+
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult RedigeraAnvandare(AnvandareModel model)
+        {
+            AspNetUsers i = new AspNetUsers();
+            var db = new AnvandareRepository();
+            bool admin;
+
+            i.Email = model.Email;
+            admin = model.Roll;
+           // i.Telefonnr = model.Telefonnr;
+           
+
+            db.SparaRedigeraAnvandare(i,admin);
+
+            return RedirectToAction("VisaAnvandare", "HanteraKonton");
+        }
+
+       
+ //ApplicationDbContext context = new ApplicationDbContext();
+
+ //       internal void AddUserToRole(string userName, string roleName)
+ //       {
+ //           var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+
+ //           try
+ //           {
+ //               var user = UserManager.FindByName(userName);
+ //               UserManager.AddToRole(user.Id, roleName);
+ //               context.SaveChanges();
+ //           }
+ //           catch
+ //           {
+ //               throw;
+ //           }
+ //       }
     }
 
 
-    }
+}
+
+
+
+
+
+
+    

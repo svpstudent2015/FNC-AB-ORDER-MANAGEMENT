@@ -25,21 +25,97 @@ namespace DAL.RepositoryFolder
                 return null;
             }
         }
+        public bool ShowUserRoll(AspNetUsers u)
+        {
+            try
+            {
+                using (var db = new FNCOrderHanteringEntitiesConnections())
+                {
+                    bool admin = false;
+                    var user = db.AspNetUsers.FirstOrDefault(x => x.Id.Equals(u.Id));
 
-        public void SparaRedigeraAnvandare(AspNetUsers e)
+
+                   var roller = user.AspNetRoles.ToList();
+                   
+
+                    if (roller.Count > 0)
+                    {
+
+                        var roll = roller[0];
+
+
+
+
+
+
+
+                        if (roll.Name.Equals("Admin"))
+                        {
+                            admin = true;
+
+                        }
+                    }
+
+
+                    return admin;
+
+
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
+
+
+
+        public void SparaRedigeraAnvandare(AspNetUsers e,bool admin)
         {
             try
             {
                 using (var db = new FNCOrderHanteringEntitiesConnections())
                 {
 
-                    AspNetUsers i = db.AspNetUsers.FirstOrDefault(x => x.Id.Equals(e.Id));
+                    AspNetUsers i = db.AspNetUsers.FirstOrDefault(x => x.Email.Equals(e.Email));
 
-                    i.UserName = e.UserName;
-                    i.PasswordHash = e.PasswordHash;
+                    
                     i.Email = e.Email;
-                  
-                 
+
+
+                    var roller = i.AspNetRoles.ToList();
+
+                    //är admin vill ta bort admin
+                    if (roller.Count > 0 && admin == false)
+                    {
+
+                       // var roll = roller[0];
+
+                       i.AspNetRoles.Clear();
+
+
+                    }
+
+                    if ( roller.Count < 1 && admin==true)
+                    {
+                      //  AspNetRoles role = new AspNetRoles();
+
+                     //   var UserManager = new UserManager
+
+                        var r = db.AspNetRoles.Where(x => x.Id == "1").FirstOrDefault();
+
+                       i.AspNetRoles.Add(r);
+
+
+                       // i.AspNetRoles.Add(role);
+                    }
+
+
+
+
                     db.SaveChanges();
                 }
             }
