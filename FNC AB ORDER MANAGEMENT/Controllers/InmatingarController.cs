@@ -19,7 +19,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             var db = new InmatningarRepository();
             var listAll = db.ShowAll();
 
-            foreach(INMATNINGAR e in listAll)
+            foreach(Inmatningar e in listAll)
             {
                 InmatningarModel i = new InmatningarModel();
 
@@ -37,7 +37,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 i.AID = e.AID;
 
                 i.Ordernr = e.Ordernr;
-                i.Kund = e.Kund;
+              //  i.Kund = e.Kund;
                 i.Telefonnr = e.Telefonnr;
                 i.Ort = e.Ort;
                 i.Adress = e.Adress;                           
@@ -68,10 +68,10 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
             else
             {
-                INMATNINGAR i = new INMATNINGAR();
+                Inmatningar i = new Inmatningar();
 
                 i.Ordernr = model.Ordernr;
-                i.Kund = model.Kund;
+             //   i.Kund = model.Kund;
                 i.Telefonnr = model.Telefonnr;
                 i.Ort = model.Ort;
                 i.Adress = model.Adress;
@@ -98,11 +98,11 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         {
 
             var db = new InmatningarRepository();
-            INMATNINGAR e = db.ShowRowByID(id);
+            Inmatningar e = db.ShowRowByID(id);
             InmatningarModel model = new InmatningarModel();
 
             model.Ordernr = e.Ordernr;
-            model.Kund = e.Kund;
+        //    model.Kund = e.Kund;
             model.Telefonnr = e.Telefonnr;
             model.Ort = e.Ort;
             model.Adress = e.Adress;
@@ -127,11 +127,11 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RedigeraInmatningar(InmatningarModel model)
         {
-            INMATNINGAR i = new INMATNINGAR();
+            Inmatningar i = new Inmatningar();
             var db = new InmatningarRepository();
 
             i.Ordernr = model.Ordernr;
-            i.Kund = model.Kund;
+         //   i.Kund = model.Kund;
             i.Telefonnr = model.Telefonnr;
             i.Ort = model.Ort;
             i.Adress = model.Adress;

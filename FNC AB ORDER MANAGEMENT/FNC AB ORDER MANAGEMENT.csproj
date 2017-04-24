@@ -181,6 +181,7 @@
     <Compile Include="Controllers\HanteraKontonController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InmatingarController.cs" />
+    <Compile Include="Controllers\KundController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UtsattningarController.cs" />
     <Compile Include="Global.asax.cs">
@@ -191,6 +192,7 @@
     <Compile Include="Models\AnvandareModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InmatningarModel.cs" />
+    <Compile Include="Models\KundModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UtsattningarModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -199,6 +201,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\chosen.css" />
     <Content Include="Content\jquery.dataTables.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -207,6 +210,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -264,6 +268,7 @@
     <Content Include="Views\Utsattningar\RedigerUtsattningar.cshtml" />
     <Content Include="Views\HanteraKonton\VisaAnvandare.cshtml" />
     <Content Include="Views\HanteraKonton\RedigeraAnvandare.cshtml" />
+    <Content Include="Views\Kund\NyKund.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -66,12 +66,11 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
-        <EntityType Name="INMATNINGAR">
+        <EntityType Name="Inmatningar">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="Ordernr" Type="nvarchar" MaxLength="50" />
-          <Property Name="Kund" Type="nvarchar" MaxLength="50" />
           <Property Name="Telefonnr" Type="nvarchar" MaxLength="50" />
           <Property Name="Ort" Type="nvarchar" MaxLength="50" />
           <Property Name="Adress" Type="nvarchar" MaxLength="50" />
@@ -85,13 +84,22 @@
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="AID" Type="nvarchar" MaxLength="128" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KundID" Type="int" />
+        </EntityType>
+        <EntityType Name="Kund">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Namn" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Telefonnr" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Utsattningar">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="Ordernr" Type="nvarchar" MaxLength="50" />
-          <Property Name="Kund" Type="nvarchar" MaxLength="50" />
           <Property Name="Telefonnr" Type="nvarchar" MaxLength="50" />
           <Property Name="Ort" Type="nvarchar" MaxLength="50" />
           <Property Name="Adress" Type="nvarchar" MaxLength="50" />
@@ -106,7 +114,44 @@
           <Property Name="GPS" Type="bit" />
           <Property Name="AID" Type="nvarchar" MaxLength="128" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KundID" Type="int" />
         </EntityType>
+        <Association Name="FK__Inmatning__KundI__03F0984C">
+          <End Role="Kund" Type="Self.Kund" Multiplicity="0..1" />
+          <End Role="Inmatningar" Type="Self.Inmatningar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kund">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Inmatningar">
+              <PropertyRef Name="KundID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inmatningar__AID__05D8E0BE">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="Inmatningar" Type="Self.Inmatningar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inmatningar">
+              <PropertyRef Name="AID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Utsattnin__KundI__04E4BC85">
+          <End Role="Kund" Type="Self.Kund" Multiplicity="0..1" />
+          <End Role="Utsattningar" Type="Self.Utsattningar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kund">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Utsattningar">
+              <PropertyRef Name="KundID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -182,8 +227,21 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="INMATNINGAR" EntityType="Self.INMATNINGAR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inmatningar" EntityType="Self.Inmatningar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kund" EntityType="Self.Kund" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Utsattningar" EntityType="Self.Utsattningar" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Inmatning__KundI__03F0984C" Association="Self.FK__Inmatning__KundI__03F0984C">
+            <End Role="Kund" EntitySet="Kund" />
+            <End Role="Inmatningar" EntitySet="Inmatningar" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inmatningar__AID__05D8E0BE" Association="Self.FK__Inmatningar__AID__05D8E0BE">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Inmatningar" EntitySet="Inmatningar" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Utsattnin__KundI__04E4BC85" Association="Self.FK__Utsattnin__KundI__04E4BC85">
+            <End Role="Kund" EntitySet="Kund" />
+            <End Role="Utsattningar" EntitySet="Utsattningar" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -267,29 +325,8 @@
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-          <NavigationProperty Name="INMATNINGAR" Relationship="FNCOrderHanteringModel.FK_INMATNINGAR_Id" FromRole="AspNetUsers" ToRole="INMATNINGAR" />
+          <NavigationProperty Name="Inmatningar" Relationship="FNCOrderHanteringModel.FK__Inmatningar__AID__05D8E0BE" FromRole="AspNetUsers" ToRole="Inmatningar" />
           <NavigationProperty Name="Utsattningar" Relationship="FNCOrderHanteringModel.FK_Utsattningar_Id" FromRole="AspNetUsers" ToRole="Utsattningar" />
-        </EntityType>
-        <EntityType Name="INMATNINGAR">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="Ordernr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Kund" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Telefonnr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Ort" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Adress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="InDatum" Type="DateTime" Precision="0" />
-          <Property Name="UtDatum" Type="DateTime" Precision="0" />
-          <Property Name="StyckPris" Type="Boolean" />
-          <Property Name="Langd" Type="Decimal" Precision="18" Scale="4" />
-          <Property Name="Timmar" Type="Decimal" Precision="18" Scale="4" />
-          <Property Name="Fakturerad" Type="Boolean" />
-          <Property Name="Ovrigt" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="FNCOrderHanteringModel.FK_INMATNINGAR_Id" FromRole="INMATNINGAR" ToRole="AspNetUsers" />
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -329,7 +366,6 @@
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
-          <EntitySet Name="INMATNINGAR" EntityType="Self.INMATNINGAR" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -342,22 +378,88 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="Utsattningar" EntityType="FNCOrderHanteringModel.Utsattningar" />
-          <AssociationSet Name="FK_INMATNINGAR_Id" Association="FNCOrderHanteringModel.FK_INMATNINGAR_Id">
+          <EntitySet Name="Kund" EntityType="FNCOrderHanteringModel.Kund" />
+          <EntitySet Name="Inmatningar" EntityType="FNCOrderHanteringModel.Inmatningar" />
+          <AssociationSet Name="FK__Inmatningar__AID__05D8E0BE" Association="FNCOrderHanteringModel.FK__Inmatningar__AID__05D8E0BE">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="INMATNINGAR" EntitySet="INMATNINGAR" />
+            <End Role="Inmatningar" EntitySet="Inmatningar" />
           </AssociationSet>
+          <AssociationSet Name="FK__Inmatning__KundI__03F0984C" Association="FNCOrderHanteringModel.FK__Inmatning__KundI__03F0984C">
+            <End Role="Kund" EntitySet="Kund" />
+            <End Role="Inmatningar" EntitySet="Inmatningar" />
+          </AssociationSet>
+          <EntitySet Name="Utsattningar" EntityType="FNCOrderHanteringModel.Utsattningar" />
           <AssociationSet Name="FK_Utsattningar_Id" Association="FNCOrderHanteringModel.FK_Utsattningar_Id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Utsattningar" EntitySet="Utsattningar" />
           </AssociationSet>
+          <AssociationSet Name="FK__Utsattnin__KundI__04E4BC85" Association="FNCOrderHanteringModel.FK__Utsattnin__KundI__04E4BC85">
+            <End Role="Kund" EntitySet="Kund" />
+            <End Role="Utsattningar" EntitySet="Utsattningar" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Kund">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Namn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefonnr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Inmatningar" Relationship="FNCOrderHanteringModel.FK__Inmatning__KundI__03F0984C" FromRole="Kund" ToRole="Inmatningar" />
+          <NavigationProperty Name="Utsattningar" Relationship="FNCOrderHanteringModel.FK__Utsattnin__KundI__04E4BC85" FromRole="Kund" ToRole="Utsattningar" />
+        </EntityType>
+        <EntityType Name="Inmatningar">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Ordernr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telefonnr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ort" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InDatum" Type="DateTime" Precision="0" />
+          <Property Name="UtDatum" Type="DateTime" Precision="0" />
+          <Property Name="StyckPris" Type="Boolean" />
+          <Property Name="Langd" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Timmar" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Fakturerad" Type="Boolean" />
+          <Property Name="Ovrigt" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KundID" Type="Int32" />
+          <NavigationProperty Name="AspNetUsers" Relationship="FNCOrderHanteringModel.FK__Inmatningar__AID__05D8E0BE" FromRole="Inmatningar" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Kund" Relationship="FNCOrderHanteringModel.FK__Inmatning__KundI__03F0984C" FromRole="Inmatningar" ToRole="Kund" />
+        </EntityType>
+        <Association Name="FK__Inmatningar__AID__05D8E0BE">
+          <End Type="FNCOrderHanteringModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="FNCOrderHanteringModel.Inmatningar" Role="Inmatningar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inmatningar">
+              <PropertyRef Name="AID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inmatning__KundI__03F0984C">
+          <End Type="FNCOrderHanteringModel.Kund" Role="Kund" Multiplicity="0..1" />
+          <End Type="FNCOrderHanteringModel.Inmatningar" Role="Inmatningar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kund">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Inmatningar">
+              <PropertyRef Name="KundID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="Utsattningar">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="Ordernr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Kund" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Telefonnr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Ort" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Adress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -371,21 +473,11 @@
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="GPS" Type="Boolean" />
           <Property Name="AID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="FNCOrderHanteringModel.FK_Utsattningar_Id" FromRole="Utsattningar" ToRole="AspNetUsers" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KundID" Type="Int32" />
+          <NavigationProperty Name="AspNetUsers" Relationship="FNCOrderHanteringModel.FK_Utsattningar_Id" FromRole="Utsattningar" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Kund" Relationship="FNCOrderHanteringModel.FK__Utsattnin__KundI__04E4BC85" FromRole="Utsattningar" ToRole="Kund" />
         </EntityType>
-        <Association Name="FK_INMATNINGAR_Id">
-          <End Type="FNCOrderHanteringModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
-          <End Type="FNCOrderHanteringModel.INMATNINGAR" Role="INMATNINGAR" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="INMATNINGAR">
-              <PropertyRef Name="AID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Utsattningar_Id">
           <End Type="FNCOrderHanteringModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
           <End Type="FNCOrderHanteringModel.Utsattningar" Role="Utsattningar" Multiplicity="*" />
@@ -395,6 +487,18 @@
             </Principal>
             <Dependent Role="Utsattningar">
               <PropertyRef Name="AID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Utsattnin__KundI__04E4BC85">
+          <End Type="FNCOrderHanteringModel.Kund" Role="Kund" Multiplicity="0..1" />
+          <End Type="FNCOrderHanteringModel.Utsattningar" Role="Utsattningar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kund">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Utsattningar">
+              <PropertyRef Name="KundID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -459,9 +563,28 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="INMATNINGAR">
-            <EntityTypeMapping TypeName="FNCOrderHanteringModel.INMATNINGAR">
-              <MappingFragment StoreEntitySet="INMATNINGAR">
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="FNCOrderHanteringModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Kund">
+            <EntityTypeMapping TypeName="FNCOrderHanteringModel.Kund">
+              <MappingFragment StoreEntitySet="Kund">
+                <ScalarProperty Name="Telefonnr" ColumnName="Telefonnr" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Namn" ColumnName="Namn" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inmatningar">
+            <EntityTypeMapping TypeName="FNCOrderHanteringModel.Inmatningar">
+              <MappingFragment StoreEntitySet="Inmatningar">
+                <ScalarProperty Name="KundID" ColumnName="KundID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="AID" ColumnName="AID" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
@@ -475,22 +598,14 @@
                 <ScalarProperty Name="Adress" ColumnName="Adress" />
                 <ScalarProperty Name="Ort" ColumnName="Ort" />
                 <ScalarProperty Name="Telefonnr" ColumnName="Telefonnr" />
-                <ScalarProperty Name="Kund" ColumnName="Kund" />
                 <ScalarProperty Name="Ordernr" ColumnName="Ordernr" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="FNCOrderHanteringModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetRoles">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-            <EndProperty Name="AspNetUsers">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="Utsattningar">
             <EntityTypeMapping TypeName="FNCOrderHanteringModel.Utsattningar">
               <MappingFragment StoreEntitySet="Utsattningar">
+                <ScalarProperty Name="KundID" ColumnName="KundID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="AID" ColumnName="AID" />
                 <ScalarProperty Name="GPS" ColumnName="GPS" />
@@ -505,7 +620,6 @@
                 <ScalarProperty Name="Adress" ColumnName="Adress" />
                 <ScalarProperty Name="Ort" ColumnName="Ort" />
                 <ScalarProperty Name="Telefonnr" ColumnName="Telefonnr" />
-                <ScalarProperty Name="Kund" ColumnName="Kund" />
                 <ScalarProperty Name="Ordernr" ColumnName="Ordernr" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -37,7 +37,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 i.AID = e.AID;
 
                 i.Ordernr = e.Ordernr;
-                i.Kund = e.Kund;
+           //     i.Kund = e.Kund;
                 i.Telefonnr = e.Telefonnr;
                 i.Ort = e.Ort;
                 i.Adress = e.Adress;
@@ -55,7 +55,24 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         }
         public ActionResult NyUtsattning()
         {
-            return View();
+            KundRepository k = new KundRepository();
+            List<Kund>klista = k.ShowAll();
+            UtsattningarModel umodel = new UtsattningarModel();
+
+
+            foreach (var kund in klista )
+            {
+                KundModel km= new KundModel();
+                km.Namn = kund.Namn;
+                km.Telefonnr = kund.Telefonnr;
+                km.Email = kund.Email;
+                km.ID = kund.ID;
+
+                umodel.KundLista.Add(km);
+            }
+            
+
+            return View(umodel);
         }
 
         [HttpPost]
@@ -71,7 +88,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 Utsattningar i = new Utsattningar();
 
                 i.Ordernr = model.Ordernr;
-                i.Kund = model.Kund;
+            //    i.Kund = model.Kund;
                 i.Telefonnr = model.Telefonnr;
                 i.Ort = model.Ort;
                 i.Adress = model.Adress;
@@ -103,7 +120,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             UtsattningarModel model = new UtsattningarModel();
 
             model.Ordernr = e.Ordernr;
-            model.Kund = e.Kund;
+         //   model.Kund = e.Kund;
             model.Telefonnr = e.Telefonnr;
             model.Ort = e.Ort;
             model.Adress = e.Adress;
@@ -134,7 +151,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             var db = new UtsattningarRepository();
 
             i.Ordernr = model.Ordernr;
-            i.Kund = model.Kund;
+        //    i.Kund = model.Kund;
             i.Telefonnr = model.Telefonnr;
             i.Ort = model.Ort;
             i.Adress = model.Adress;

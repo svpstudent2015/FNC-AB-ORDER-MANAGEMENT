@@ -30,7 +30,8 @@ namespace DAL
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
-        public virtual DbSet<INMATNINGAR> INMATNINGAR { get; set; }
+        public virtual DbSet<Kund> Kund { get; set; }
+        public virtual DbSet<Inmatningar> Inmatningar { get; set; }
         public virtual DbSet<Utsattningar> Utsattningar { get; set; }
     }
 }

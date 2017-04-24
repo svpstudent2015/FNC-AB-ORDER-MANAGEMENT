@@ -15,7 +15,6 @@ namespace DAL
     public partial class Utsattningar
     {
         public string Ordernr { get; set; }
-        public string Kund { get; set; }
         public string Telefonnr { get; set; }
         public string Ort { get; set; }
         public string Adress { get; set; }
@@ -30,7 +29,9 @@ namespace DAL
         public Nullable<bool> GPS { get; set; }
         public string AID { get; set; }
         public int ID { get; set; }
+        public Nullable<int> KundID { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual Kund Kund { get; set; }
     }
 }

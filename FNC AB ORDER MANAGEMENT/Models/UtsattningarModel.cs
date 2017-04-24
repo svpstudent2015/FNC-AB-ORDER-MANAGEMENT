@@ -26,9 +26,12 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
 
         public List<UtsattningarModel> UtsattningsLista;
 
+        public List<KundModel> KundLista;
+
         public UtsattningarModel()
         {
             UtsattningsLista = new List<UtsattningarModel>();
+            KundLista = new List<KundModel>();
         }
 
     }

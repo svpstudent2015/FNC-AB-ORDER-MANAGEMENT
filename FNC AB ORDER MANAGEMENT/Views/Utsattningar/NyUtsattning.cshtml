@@ -1,9 +1,9 @@
-﻿@model FNC_AB_ORDER_MANAGEMENT.Models.UtsattningarModel
+﻿@using DAL
+@model FNC_AB_ORDER_MANAGEMENT.Models.UtsattningarModel
 
 @{
     ViewBag.Title = "NyUtsattning";
 }
-
 <h2>NyUtsattning</h2>
 
 @using (Html.BeginForm()) 
@@ -24,9 +24,28 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Kund, htmlAttributes: new { @class = "control-label col-md-2" })
+        @{
+            if (Model != null)
+            {
+               
+                    <div>
+                        <select data-placeholder="Choose a Country..." class="chzn-select" style="width: 350px;" tabindex="2">
+                            @foreach (var item in Model.KundLista)
+                            {
+                            <option value="@item.Namn">@item.Namn</option>
+                           
+                            }
+                        </select>
+                    </div>
+               
+            }
+        }
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Kund, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Kund, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Kund, "", new { @class = "text-danger" })               
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="button" value="Lägg till ny kund" class="btn btn-default" onclick="location.href='@Url.Action("NyKund", "Kund")'" />
+                    </div>                
             </div>
         </div>
 
@@ -143,5 +162,11 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Tillbaka", "Utsattningar")
 </div>
+
+<script type="text/javascript"> 
+    $(document).ready(function(){
+        $("select").chosen({allow_single_deselect:true});
+    });
+</script>

@@ -12,10 +12,9 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class INMATNINGAR
+    public partial class Inmatningar
     {
         public string Ordernr { get; set; }
-        public string Kund { get; set; }
         public string Telefonnr { get; set; }
         public string Ort { get; set; }
         public string Adress { get; set; }
@@ -29,7 +28,9 @@ namespace DAL
         public string Status { get; set; }
         public string AID { get; set; }
         public int ID { get; set; }
+        public Nullable<int> KundID { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual Kund Kund { get; set; }
     }
 }
