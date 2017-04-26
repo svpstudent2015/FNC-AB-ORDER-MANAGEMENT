@@ -88,7 +88,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 Utsattningar i = new Utsattningar();
 
                 i.Ordernr = model.Ordernr;
-            //    i.Kund = model.Kund;
+                i.KundID = model.KundID;
                 i.Telefonnr = model.Telefonnr;
                 i.Ort = model.Ort;
                 i.Adress = model.Adress;
@@ -120,7 +120,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             UtsattningarModel model = new UtsattningarModel();
 
             model.Ordernr = e.Ordernr;
-         //   model.Kund = e.Kund;
+            model.KundID = e.KundID;
             model.Telefonnr = e.Telefonnr;
             model.Ort = e.Ort;
             model.Adress = e.Adress;

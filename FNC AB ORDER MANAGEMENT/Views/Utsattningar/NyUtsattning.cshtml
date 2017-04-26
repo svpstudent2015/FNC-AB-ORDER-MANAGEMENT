@@ -1,4 +1,5 @@
-﻿@using DAL
+﻿@using System.Web.UI.WebControls
+@using DAL
 @model FNC_AB_ORDER_MANAGEMENT.Models.UtsattningarModel
 
 @{
@@ -10,7 +11,7 @@
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
+    <div class="form-horizontal" id="SparaForm">
         <h4>UtsattningarModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -23,30 +24,33 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Kund, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.KundID, htmlAttributes: new { @class = "control-label col-md-2" })
+           
         @{
             if (Model != null)
             {
                
-                    <div>
-                        <select data-placeholder="Choose a Country..." class="chzn-select" style="width: 350px;" tabindex="2">
+                    <div class="col-md-10">
+                        <select id="selectlista" data-placeholder="Välj en kund..." class="chzn-select" style="width: 350px;" tabindex="2" >
                             @foreach (var item in Model.KundLista)
                             {
-                            <option value="@item.Namn">@item.Namn</option>
-                           
+                               <option id="@item.ID" value="@item.ID"> @item.ID</option>
+
+
                             }
                         </select>
                     </div>
                
             }
         }
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Kund, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Kund, "", new { @class = "text-danger" })               
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="button" value="Lägg till ny kund" class="btn btn-default" onclick="location.href='@Url.Action("NyKund", "Kund")'" />
-                    </div>                
-            </div>
+            @*<div class="col-md-10" style="visibility:">
+                
+                @Html.EditorFor(model => model.KundID, new {htmlAttributes = new {@class = "chzn-select"}})
+                @Html.ValidationMessageFor(model => model.KundID, "", new {@class = "text-danger"})
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="button" value="Lägg till ny kund" class="btn btn-default" onclick="location.href = '@Url.Action("NyKund", "Kund")'"/>
+                </div>
+            </div>*@
         </div>
 
         <div class="form-group">
@@ -169,4 +173,35 @@
     $(document).ready(function(){
         $("select").chosen({allow_single_deselect:true});
     });
+    console.log("funkar");
+
 </script>
+
+<script type="text/javascript">
+    //$("#submit").click(function () {
+    //    $("#Create").submit(function()
+    //    {var e = document.getElementById("selectlista");
+    //        var strUser = e.options[e.selectedIndex].value;
+    //        console.log(strUser);
+            
+    //    }
+        
+    //});
+
+    //});
+
+    $('#submit').click(function () {
+        $('#SparaForm').submit(function () {
+            var e = document.getElementById("selectlista");
+                   var strUser = e.options[e.selectedIndex].value;
+                    console.log(strUser);
+
+            });
+    });
+        @*var input = $("<input>")
+            .attr("type", "hidden")
+            .attr("@Model.KundID", strUser).val("bla");*@
+      //  $('#SparaForm').append($(strUser));
+    
+</script>
+

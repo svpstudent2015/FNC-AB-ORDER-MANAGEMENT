@@ -5,12 +5,13 @@
     {
     @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Mitt Konto"@*"Hello " + User.Identity.GetUserName() + "!"*@, "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Logga ut</a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>Du är inloggad som @User.Identity.GetUserName()</li>
+            <li>
+                @Html.ActionLink("Mitt Konto"@*"Hello " + User.Identity.GetUserName() + "!"*@, "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Manage"})
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Logga ut</a></li>
+        </ul>
     }
 }
 else
