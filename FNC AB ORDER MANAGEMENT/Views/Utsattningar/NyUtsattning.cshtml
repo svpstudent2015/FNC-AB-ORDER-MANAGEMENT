@@ -11,7 +11,7 @@
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal" id="SparaForm">
+    <div class="form-horizontal" >
         <h4>UtsattningarModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -34,7 +34,7 @@
                         <select id="selectlista" data-placeholder="Välj en kund..." class="chzn-select" style="width: 350px;" tabindex="2" >
                             @foreach (var item in Model.KundLista)
                             {
-                               <option id="@item.ID" value="@item.ID"> @item.ID</option>
+                               <option id="@item.ID" value="@item.ID"> @item.Namn</option>
 
 
                             }
@@ -169,13 +169,49 @@
     @Html.ActionLink("Tillbaka", "Utsattningar")
 </div>
 
-<script type="text/javascript"> 
+<script type="text/javascript">
+    
+
+
+    $("form").submit(function (eventObj) {
+     
+
+                var e = document.getElementById("selectlista");
+                var strUser = e.options[e.selectedIndex].value;
+                console.log(strUser);
+
+                    $('<input />').attr('type', 'hidden')
+                    .attr('name', "KundID")
+                    .attr('value', strUser)
+                    .appendTo('form');
+
+             
+               
+       
+
+    }
+
+    )
+
+    ;
+
+
+
+
+
+
     $(document).ready(function(){
         $("select").chosen({allow_single_deselect:true});
     });
-    console.log("funkar");
 
+
+    
 </script>
+
+
+    @*//console.log("funkar");
+
+    </script>
 
 <script type="text/javascript">
     //$("#submit").click(function () {
@@ -190,18 +226,18 @@
 
     //});
 
-    $('#submit').click(function () {
-        $('#SparaForm').submit(function () {
-            var e = document.getElementById("selectlista");
-                   var strUser = e.options[e.selectedIndex].value;
-                    console.log(strUser);
+    //$('#submit').click(function () {
+    //    $('#SparaForm').submit(function () {
+    //        var e = document.getElementById("selectlista");
+    //               var strUser = e.options[e.selectedIndex].value;
+    //                console.log(strUser);
 
-            });
-    });
-        @*var input = $("<input>")
+    //        });
+    //});
+    var input = $("<input>")
             .attr("type", "hidden")
-            .attr("@Model.KundID", strUser).val("bla");*@
-      //  $('#SparaForm').append($(strUser));
-    
-</script>
+            .attr("@Model.KundID", strUser).val("bla");
+    //  $('#SparaForm').append($(strUser));*@
 
+
+<script ></script>
