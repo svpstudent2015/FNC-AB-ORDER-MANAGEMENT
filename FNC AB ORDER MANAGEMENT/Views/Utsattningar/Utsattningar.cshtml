@@ -2,7 +2,7 @@
 
 
 @{
-    ViewBag.Title = "Utsattningar";
+    ViewBag.Title = "Utsättningar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,7 +13,7 @@
 </header>
 
 <div class="container">
-    <h2>Utsattningar</h2>
+    <h2>Utsättningar</h2>
     <p>Ny Utsattning</p>
     <input type="button" value="Ny Utsattning" onclick="location.href='@Url.Action("NyUtsattning", "Utsattningar")'" />
 
@@ -46,8 +46,6 @@
             {
                 foreach (var item in Model.UtsattningsLista)
                 {
-
-
                     <tr>
                         <td Onclick="location.href='@Url.Action("RedigeraUtsattningar/"+item.ID, "Utsattningar")'">@item.KundID</td>
                         <td>@item.Status</td>
@@ -56,7 +54,6 @@
                         <td>@item.InDatum</td>
                         <td>@item.Ovrigt</td>
                     </tr>
-
                 }
             }
         }

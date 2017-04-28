@@ -3,16 +3,15 @@
 @model FNC_AB_ORDER_MANAGEMENT.Models.UtsattningarModel
 
 @{
-    ViewBag.Title = "NyUtsattning";
+    ViewBag.Title = "Ny Utsättning";
 }
-<h2>NyUtsattning</h2>
+<h2>Ny Utsättning</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal" >
-        <h4>UtsattningarModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -171,11 +170,8 @@
 
 <script type="text/javascript">
     
-
-
     $("form").submit(function (eventObj) {
      
-
                 var e = document.getElementById("selectlista");
                 var strUser = e.options[e.selectedIndex].value;
                 console.log(strUser);
@@ -185,59 +181,12 @@
                     .attr('value', strUser)
                     .appendTo('form');
 
-             
-               
-       
-
-    }
-
-    )
-
-    ;
-
-
-
-
-
+    });
 
     $(document).ready(function(){
         $("select").chosen({allow_single_deselect:true});
-    });
-
-
-    
+    });   
 </script>
 
 
-    @*//console.log("funkar");
 
-    </script>
-
-<script type="text/javascript">
-    //$("#submit").click(function () {
-    //    $("#Create").submit(function()
-    //    {var e = document.getElementById("selectlista");
-    //        var strUser = e.options[e.selectedIndex].value;
-    //        console.log(strUser);
-            
-    //    }
-        
-    //});
-
-    //});
-
-    //$('#submit').click(function () {
-    //    $('#SparaForm').submit(function () {
-    //        var e = document.getElementById("selectlista");
-    //               var strUser = e.options[e.selectedIndex].value;
-    //                console.log(strUser);
-
-    //        });
-    //});
-    var input = $("<input>")
-            .attr("type", "hidden")
-            .attr("@Model.KundID", strUser).val("bla");
-    //  $('#SparaForm').append($(strUser));*@
-
-
-<script ></script>
