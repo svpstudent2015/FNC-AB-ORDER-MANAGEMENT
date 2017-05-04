@@ -269,6 +269,8 @@
     <Content Include="Views\HanteraKonton\VisaAnvandare.cshtml" />
     <Content Include="Views\HanteraKonton\RedigeraAnvandare.cshtml" />
     <Content Include="Views\Kund\NyKund.cshtml" />
+    <Content Include="Views\Kund\Kund.cshtml" />
+    <Content Include="Views\Kund\RedigeraKund.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

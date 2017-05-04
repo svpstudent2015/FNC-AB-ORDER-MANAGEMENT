@@ -11,5 +11,12 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
         public string Namn { get; set; }
         public string Email { get; set; }
         public string Telefonnr { get; set; }
+        public List<KundModel> KundLista;
+
+        public KundModel()
+        {
+            
+            KundLista = new List<KundModel>();
+        }
     }
 }

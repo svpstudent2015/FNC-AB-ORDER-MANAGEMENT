@@ -1,0 +1,64 @@
+﻿
+@model FNC_AB_ORDER_MANAGEMENT.Models.KundModel
+@{
+    ViewBag.Title = "Kund";
+}
+
+<h2>Kund</h2>
+<header>
+    <style type="text/css" src="content/jquery.dataTables.min.css"></style>
+    <script type="text/javascript" src="~/scripts/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="~/scripts/jquery.dataTables.min.js"></script>
+</header>
+
+<div class="container">
+    
+    <input type="button" value="Lägg till ny kund" class="btn btn-default" onclick="location.href = '@Url.Action("NyKund", "Kund")'" />
+
+</div>
+
+<table id="example" class="display" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>Kund</th>
+        <th>Telefonnummer</th>
+        <th>Email</th>
+        
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <th>Kund</th>
+        <th>Telefonnummer</th>
+        <th>Email</th>
+        
+    </tr>
+    </tfoot>
+    <tbody>
+    @{ 
+        if (Model != null)
+        {
+            foreach (var item in Model.KundLista)
+            {
+                    
+              
+                <tr>
+                    <td Onclick="location.href='@Url.Action("RedigeraKund/"+item.ID, "Kund")'">@item.Namn</td>
+                    <td>@item.Telefonnr</td>
+                    <td>@item.Email</td>
+                    
+                </tr>
+
+            }
+        }
+    }
+
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable();
+    } );
+</script>   
+
