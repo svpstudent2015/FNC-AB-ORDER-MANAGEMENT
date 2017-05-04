@@ -24,8 +24,34 @@
         <div class="form-group">
             @Html.LabelFor(model => model.KundID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.KundID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.KundID, "", new { @class = "text-danger" })
+                @{
+                    if (Model != null)
+                    {
+               
+                        <div class="col-md-10">
+                            <select id="selectlista" data-placeholder="Välj en kund..." class="chzn-select" style="width: 350px;" tabindex="2" >
+                                @foreach (var item in Model.KundLista)
+                                {
+                                    if (item.ID == Model.KundID)
+                                    {
+                                       
+                                        <option selected="selected" id="@item.ID" value="@item.ID"> @item.Namn</option>
+                                    }
+                                    else
+                                    {
+                                        <option id="@item.ID" value="@item.ID"> @item.Namn</option>
+                                    }
+                                   
+
+
+                                }
+                            </select>
+                        </div>
+               
+                    }
+                }
+                @*@Html.EditorFor(model => model.KundNamn, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.KundNamn, "", new { @class = "text-danger" })*@
             </div>
         </div>
 
@@ -146,3 +172,22 @@
 <div>
     @Html.ActionLink("Back to List", "Utsattningar")
 </div>
+<script type="text/javascript">
+    
+    $("form").submit(function (eventObj) {
+     
+        var e = document.getElementById("selectlista");
+        var strUser = e.options[e.selectedIndex].value;
+        console.log(strUser);
+
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "KundID")
+            .attr('value', strUser)
+            .appendTo('form');
+
+    });
+
+    $(document).ready(function(){
+        $("select").chosen({allow_single_deselect:true});
+    });   
+</script>

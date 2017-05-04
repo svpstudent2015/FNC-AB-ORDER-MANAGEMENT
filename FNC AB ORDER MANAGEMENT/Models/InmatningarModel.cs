@@ -8,7 +8,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
     public class InmatningarModel
     {
         public string Ordernr { get; set; }
-        public string Kund { get; set; }
+        public string KundNamn { get; set; }
         public string Telefonnr { get; set; }
         public string Ort { get; set; }
         public string Adress { get; set; }
@@ -22,12 +22,15 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
         public string Status { get; set; }
         public string AID { get; set; }
         public int ID { get; set; }
+        public Nullable<int> KundID { get; set; }
 
         public List<InmatningarModel> InmatningsLista;
+        public List<KundModel> KundLista;
 
         public InmatningarModel()
         {
             InmatningsLista = new List<InmatningarModel>();
+            KundLista = new List<KundModel>();
         }
     
        // public virtual AspNetUsers AspNetUsers { get; set; }

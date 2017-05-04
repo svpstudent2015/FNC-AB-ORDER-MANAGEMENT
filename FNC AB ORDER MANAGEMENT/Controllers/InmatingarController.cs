@@ -16,46 +16,82 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         {
             InmatningarModel i2 = new InmatningarModel();
             
-            var db = new InmatningarRepository();
-            var listAll = db.ShowAll();
+            var dbInmatningar = new InmatningarRepository();            
+            var dbKund = new KundRepository();
+            var InmatningsListan = dbInmatningar.ShowAll();
+            var KundListan = dbKund.ShowAll();
 
-            foreach(Inmatningar e in listAll)
+            if (InmatningsListan != null)
             {
-                InmatningarModel i = new InmatningarModel();
 
-                if (e.InDatum != null)
+
+                var lista = from k in InmatningsListan
+                    join i in KundListan
+                    on k.KundID equals i.ID
+                    select new InmatningarModel()
+                    {
+                        KundNamn = i.Namn,
+                        Status = k.Status,
+                        Adress = k.Adress,
+                        Ordernr = k.Ordernr,
+                        InDatum = k.InDatum,
+                        ID = k.ID,
+                        Ovrigt = k.Ovrigt
+
+                    };
+
+                foreach (InmatningarModel e in lista)
                 {
-                    i.InDatum = (DateTime)e.InDatum;
-                   
+                    //  InmatningarModel i = new InmatningarModel();
+
+                    //  if (e.InDatum != null)
+                    //  {
+                    //      i.InDatum = (DateTime)e.InDatum;
+
+                    //  }
+                    //  if(e.UtDatum != null)
+                    //  {
+                    //      i.UtDatum = (DateTime)e.UtDatum;
+                    //  }
+
+                    //  i.ID = e.ID;
+                    //  i.AID = e.AID;
+
+                    //  i.Ordernr = e.Ordernr;
+                    ////  i.Kund = e.Kund;
+                    //  i.Telefonnr = e.Telefonnr;
+                    //  i.Ort = e.Ort;
+                    //  i.Adress = e.Adress;                           
+                    //  //i.Fakturerad = (bool)e.Fakturerad;
+                    //  i.Ovrigt = e.Ovrigt;
+                    //  i.Status = e.Status;
+
+                    i2.InmatningsLista.Add(e);
+
+
                 }
-                if(e.UtDatum != null)
-                {
-                    i.UtDatum = (DateTime)e.UtDatum;
-                }
-
-                i.ID = e.ID;
-                i.AID = e.AID;
-
-                i.Ordernr = e.Ordernr;
-              //  i.Kund = e.Kund;
-                i.Telefonnr = e.Telefonnr;
-                i.Ort = e.Ort;
-                i.Adress = e.Adress;                           
-                //i.Fakturerad = (bool)e.Fakturerad;
-                i.Ovrigt = e.Ovrigt;
-                i.Status = e.Status;
-
-                i2.InmatningsLista.Add(i);
-
-
             }
-
 
             return View(i2);
         }
         public ActionResult NyInmatning()
         {
-            return View();
+            KundRepository k = new KundRepository();
+            List<Kund> klista = k.ShowAll();
+            InmatningarModel imodel = new InmatningarModel();
+
+            foreach (var kund in klista)
+            {
+                KundModel km = new KundModel();
+                km.Namn = kund.Namn;
+                km.Telefonnr = kund.Telefonnr;
+                km.Email = kund.Email;
+                km.ID = kund.ID;
+
+                imodel.KundLista.Add(km);
+            }
+
+            return View(imodel);
         }
 
         [HttpPost]
@@ -71,7 +107,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 Inmatningar i = new Inmatningar();
 
                 i.Ordernr = model.Ordernr;
-             //   i.Kund = model.Kund;
+                i.KundID = model.KundID;
                 i.Telefonnr = model.Telefonnr;
                 i.Ort = model.Ort;
                 i.Adress = model.Adress;
@@ -100,9 +136,22 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             var db = new InmatningarRepository();
             Inmatningar e = db.ShowRowByID(id);
             InmatningarModel model = new InmatningarModel();
+            KundRepository k = new KundRepository();
+            List<Kund> klista = k.ShowAll();
+
+            foreach (var kund in klista)
+            {
+                KundModel km = new KundModel();
+                km.Namn = kund.Namn;
+                km.Telefonnr = kund.Telefonnr;
+                km.Email = kund.Email;
+                km.ID = kund.ID;
+
+                model.KundLista.Add(km);
+            }
 
             model.Ordernr = e.Ordernr;
-        //    model.Kund = e.Kund;
+            model.KundID = e.KundID;
             model.Telefonnr = e.Telefonnr;
             model.Ort = e.Ort;
             model.Adress = e.Adress;
@@ -131,7 +180,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             var db = new InmatningarRepository();
 
             i.Ordernr = model.Ordernr;
-         //   i.Kund = model.Kund;
+            i.KundID = model.KundID;
             i.Telefonnr = model.Telefonnr;
             i.Ort = model.Ort;
             i.Adress = model.Adress;

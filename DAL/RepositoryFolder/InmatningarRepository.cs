@@ -38,7 +38,7 @@ namespace DAL.RepositoryFolder
                     Inmatningar i = db.Inmatningar.FirstOrDefault(x => x.ID == e.ID);
 
                     i.Ordernr = e.Ordernr;
-                    i.Kund = e.Kund;
+                    i.KundID = e.KundID;
                     i.Telefonnr = e.Telefonnr;
                     i.Ort = e.Ort;
                     i.Adress = e.Adress;

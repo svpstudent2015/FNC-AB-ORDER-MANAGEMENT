@@ -7,6 +7,8 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
 {
     public class UtsattningarModel
     {
+
+        public string KundNamn { get; set; }
         public string Ordernr { get; set; }
         public string Telefonnr { get; set; }
         public string Ort { get; set; }

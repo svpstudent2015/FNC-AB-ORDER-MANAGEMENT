@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Security.Cryptography;
+using System.Xml;
+using DAL;
 
 namespace DAL.RepositoryFolder
 {
@@ -38,7 +41,7 @@ namespace DAL.RepositoryFolder
                     Utsattningar i = db.Utsattningar.FirstOrDefault(x => x.ID == e.ID);
 
                     i.Ordernr = e.Ordernr;
-                    i.Kund = e.Kund;
+                    i.KundID = e.KundID;
                     i.Telefonnr = e.Telefonnr;
                     i.Ort = e.Ort;
                     i.Adress = e.Adress;
@@ -61,5 +64,41 @@ namespace DAL.RepositoryFolder
 
             }
         }
+
+        //public List<object> ShowUtsattningarAndKund()
+        //{
+        //    try
+        //    {
+
+           
+            
+        //    using (var db = new FNCOrderHanteringEntitiesConnections())
+        //    {
+        //            List<Utsattningar> UtsattningsLista = db.Utsattningar.ToList();
+        //            List<Kund> KundLista = db.Kund.ToList();
+
+
+        //        var lista = from k in UtsattningsLista
+        //            join i in KundLista
+        //            on k.KundID equals i.ID
+        //            select new List<KeyValuePair<string,string>>()
+        //            {
+                        
+
+        //            } ;
+
+
+
+
+        //        //      i.Namn , k.Status , k.Adress , k.Ordernr , k.InDatum , k.ID , k.Ovrigt;
+
+        //    }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e);
+        //        throw;
+        //    }
+        //}
     }
 }

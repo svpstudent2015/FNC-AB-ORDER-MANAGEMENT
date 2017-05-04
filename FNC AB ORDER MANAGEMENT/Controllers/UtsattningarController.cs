@@ -16,36 +16,53 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         {
             UtsattningarModel i2 = new UtsattningarModel();
 
-            var db = new UtsattningarRepository();
-            var listAll = db.ShowAll();
+            var dbUtsattningar = new UtsattningarRepository();
+            var dbKund = new KundRepository();
+            var UtsattningsLista = dbUtsattningar.ShowAll();
+            var KundLista = dbKund.ShowAll();
 
-            foreach (Utsattningar e in listAll)
+            var lista = from k in UtsattningsLista
+                join i in KundLista
+                on k.KundID equals i.ID
+                select new UtsattningarModel()
+                {
+                    KundNamn = i.Namn,
+                    Status = k.Status,
+                    Adress = k.Adress,
+                    Ordernr = k.Ordernr,
+                    InDatum = k.InDatum,
+                    ID = k.ID,
+                    Ovrigt = k.Ovrigt
+
+        };
+
+            foreach (UtsattningarModel e in lista)
             {
-                UtsattningarModel i = new UtsattningarModel();
+                //UtsattningarModel i = new UtsattningarModel();
 
-                if (e.InDatum != null)
-                {
-                    i.InDatum = (DateTime)e.InDatum;
+                //if (e.InDatum != null)
+                //{
+                //    i.InDatum = (DateTime)e.InDatum;
 
-                }
-                if (e.UtDatum != null)
-                {
-                    i.UtDatum = (DateTime)e.UtDatum;
-                }
+                //}
+                //if (e.UtDatum != null)
+                //{
+                //    i.UtDatum = (DateTime)e.UtDatum;
+                //}
 
-                i.ID = e.ID;
-                i.AID = e.AID;
+           //     i.ID = e.ID;
+           //     i.AID = e.AID;
 
-                i.Ordernr = e.Ordernr;
-           //     i.Kund = e.Kund;
-                i.Telefonnr = e.Telefonnr;
-                i.Ort = e.Ort;
-                i.Adress = e.Adress;
-                //i.Fakturerad = (bool)e.Fakturerad;
-                i.Ovrigt = e.Ovrigt;
-                i.Status = e.Status;
+           //     i.Ordernr = e.Ordernr;
+           ////     i.Kund = e.Kund;
+           //     i.Telefonnr = e.Telefonnr;
+           //     i.Ort = e.Ort;
+           //     i.Adress = e.Adress;
+           //     //i.Fakturerad = (bool)e.Fakturerad;
+           //     i.Ovrigt = e.Ovrigt;
+           //     i.Status = e.Status;
 
-                i2.UtsattningsLista.Add(i);
+                i2.UtsattningsLista.Add(e);
 
 
             }
@@ -112,12 +129,27 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         }
 
         // Metod för att visa en inmätning med hjälp av ID
-        public ActionResult RedigeraUtsattningar(int id)
+        public ActionResult RedigerUtsattningar(int id)
         {
 
             var db = new UtsattningarRepository();
             Utsattningar e = db.ShowRowByID(id);
             UtsattningarModel model = new UtsattningarModel();
+            KundRepository k = new KundRepository();
+            List<Kund> klista = k.ShowAll();
+            
+
+
+            foreach (var kund in klista)
+            {
+                KundModel km = new KundModel();
+                km.Namn = kund.Namn;
+                km.Telefonnr = kund.Telefonnr;
+                km.Email = kund.Email;
+                km.ID = kund.ID;
+
+                model.KundLista.Add(km);
+            }
 
             model.Ordernr = e.Ordernr;
             model.KundID = e.KundID;
@@ -145,13 +177,13 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult RedigeraUtsattningar(UtsattningarModel model)
+        public ActionResult RedigerUtsattningar(UtsattningarModel model)
         {
             Utsattningar i = new Utsattningar();
             var db = new UtsattningarRepository();
 
             i.Ordernr = model.Ordernr;
-        //    i.Kund = model.Kund;
+            i.KundID = model.KundID;
             i.Telefonnr = model.Telefonnr;
             i.Ort = model.Ort;
             i.Adress = model.Adress;

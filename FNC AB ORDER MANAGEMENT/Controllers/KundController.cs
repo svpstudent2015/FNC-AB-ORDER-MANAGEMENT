@@ -32,6 +32,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             db.Add(k);
 
             return RedirectToAction("NyUtsattning", "Utsattningar");
+            
         }
 
 

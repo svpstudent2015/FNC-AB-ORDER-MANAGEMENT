@@ -23,7 +23,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.KundID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.KundNamn, htmlAttributes: new { @class = "control-label col-md-2" })
            
         @{
             if (Model != null)
@@ -50,6 +50,7 @@
                     <input type="button" value="Lägg till ny kund" class="btn btn-default" onclick="location.href = '@Url.Action("NyKund", "Kund")'"/>
                 </div>
             </div>*@
+            <input type="button" value="Lägg till ny kund" class="btn btn-default" onclick="location.href = '@Url.Action("NyKund", "Kund")'"/>
         </div>
 
         <div class="form-group">
