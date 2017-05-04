@@ -202,5 +202,14 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
             return RedirectToAction("Utsattningar", "Utsattningar");
         }
+
+        public ActionResult TaBortUtsattning(int id)
+        {
+            UtsattningarRepository rep = new UtsattningarRepository();
+            rep.TaBortEnUtsattning(id);
+
+            return RedirectToAction("Utsattningar", "Utsattningar");
+
+        }
     }
 }

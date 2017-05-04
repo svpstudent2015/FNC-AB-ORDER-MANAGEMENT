@@ -199,5 +199,14 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             return RedirectToAction("Inmatningar", "Inmatningar");
         }
 
+        public ActionResult TaBortInmatning(int id)
+        {
+            InmatningarRepository rep = new InmatningarRepository();
+            rep.TaBortEnInmatning(id);
+
+            return RedirectToAction("Inmatningar", "Inmatningar");
+
+        }
+
     }
 }
