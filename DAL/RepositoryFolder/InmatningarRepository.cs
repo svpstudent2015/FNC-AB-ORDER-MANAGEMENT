@@ -61,7 +61,25 @@ namespace DAL.RepositoryFolder
 
             }
         }
-        
+
+        public void TaBortEnInmatning(int id)
+        {
+            try
+            {
+                using (var db = new FNCOrderHanteringEntitiesConnections())
+                {
+                    Inmatningar inmatningAttTaBort = db.Inmatningar.Where(x => x.ID == id)
+                        .FirstOrDefault();
+                    db.Entry(inmatningAttTaBort).State = System.Data.Entity.EntityState.Deleted;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+
+            }
+        }
 
     }
 }

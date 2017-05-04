@@ -65,40 +65,24 @@ namespace DAL.RepositoryFolder
             }
         }
 
-        //public List<object> ShowUtsattningarAndKund()
-        //{
-        //    try
-        //    {
+        public void TaBortEnUtsattning(int id)
+        {
+            try
+            {
+                using (var db = new FNCOrderHanteringEntitiesConnections())
+                {
+                    Utsattningar utsattningAttTaBort = db.Utsattningar.Where(x => x.ID==id)
+                        .FirstOrDefault();
+                    db.Entry(utsattningAttTaBort).State = System.Data.Entity.EntityState.Deleted;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
 
-           
-            
-        //    using (var db = new FNCOrderHanteringEntitiesConnections())
-        //    {
-        //            List<Utsattningar> UtsattningsLista = db.Utsattningar.ToList();
-        //            List<Kund> KundLista = db.Kund.ToList();
+            }
+        }
 
-
-        //        var lista = from k in UtsattningsLista
-        //            join i in KundLista
-        //            on k.KundID equals i.ID
-        //            select new List<KeyValuePair<string,string>>()
-        //            {
-                        
-
-        //            } ;
-
-
-
-
-        //        //      i.Namn , k.Status , k.Adress , k.Ordernr , k.InDatum , k.ID , k.Ovrigt;
-
-        //    }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e);
-        //        throw;
-        //    }
-        //}
     }
 }
