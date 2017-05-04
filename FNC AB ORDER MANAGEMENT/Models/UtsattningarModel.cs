@@ -31,10 +31,18 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
 
         public List<KundModel> KundLista;
 
+        public List<String> statuslista;
+
         public UtsattningarModel()
         {
             UtsattningsLista = new List<UtsattningarModel>();
             KundLista = new List<KundModel>();
+            statuslista = new List<string>();
+            statuslista.Add("Pågående");
+            statuslista.Add("Ej genomförbar");
+            statuslista.Add("Slutförd");
+            statuslista.Add("Ej slutförd");
+              
         }
 
     }

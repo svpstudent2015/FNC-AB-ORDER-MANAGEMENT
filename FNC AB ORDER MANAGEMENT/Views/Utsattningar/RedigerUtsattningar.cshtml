@@ -99,7 +99,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.StyckPris, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.StyckPris, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+               
+                 @Html.EditorFor(model => model.StyckPris, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
                 @Html.ValidationMessageFor(model => model.StyckPris, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -138,9 +139,37 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            
+            @{
+                if (Model != null)
+                {
+               
+                    <div class="col-md-10">
+                        <select id="statuslista" data-placeholder="Välj en kund..." class="chzn-select" style="width: 350px;" tabindex="2" disabled="disabled" >
+                            @foreach (var item in Model.statuslista)
+                            {
+                                if (item == Model.Status)
+                                {
+                                       
+                                    <option selected="selected" value="@item"> @item</option>
+                                }
+                                else
+                                {
+                                    <option id="@item" value="@item"> @item</option>
+                                }
+                               
+
+
+                            }
+                        </select>
+                    </div>
+               
+                }
+            }
+            
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                @*@Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })*@
             </div>
         </div>
 
@@ -191,6 +220,15 @@
             .attr('value', strUser)
             .appendTo('form');
 
+        var s = document.getElementById("statuslista");
+        var st = s.options[s.selectedIndex].value;
+        console.log(strUser);
+
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "Status")
+            .attr('value', st)
+            .appendTo('form');
+
     });
 
     $(document).ready(function(){
@@ -210,7 +248,8 @@
         $('#Timmar').prop('readOnly', false);
         $('#Fakturerad').prop('disabled', false).trigger("chosen:updated");
         $('#Ovrigt').prop('readOnly', false);
-        $('#Status').prop('readOnly', false);
+       // $('#Status').prop('readOnly', false);
         $('#GPS').prop('disabled', false).trigger("chosen:updated");
+        $('#statuslista').prop('disabled', false).trigger("chosen:updated");
     });
 </script>
