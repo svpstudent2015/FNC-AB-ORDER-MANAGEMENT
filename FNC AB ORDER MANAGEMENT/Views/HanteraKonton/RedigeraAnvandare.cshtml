@@ -45,7 +45,33 @@
             </div>
     </div>
 }
+<div id="part" @*style="display: none"*@>
+    @*@{Html.RenderAction("PartialPasswordChange"); }*@
+    <input type="button" @*onclick="@{Html.Partial("changePassword");}"*@id="partialbtn"/>
+    @*@Html.Partial("_LoginPartial")*@
+</div>
 
 <div>
     @Html.ActionLink("Tillbaka", "VisaAnvandare")
 </div>
+
+<script>
+    var url = '@Url.Action("PartialPasswordChange/"+Model.Id,"HanteraKonton")';
+    $('#partialbtn').click(function () {
+
+
+        @*var url = '@Url.Action("PartialPasswordChange","HanteraKonton")';*@
+        $('#part').load(url);
+        //$.ajax({
+        //    url: '/HanteraKonton/changePassword',
+        //    success: function (result) {
+        //        $('#part').html(result);
+        //    }
+        //});
+
+
+        //$('#part').RenderAction("returnPartialPasswordChange");
+    });
+    
+    
+</script>

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -10,7 +11,7 @@ using FNC_AB_ORDER_MANAGEMENT.Models;
 
 namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 {
-    [Authorize]
+    [System.Web.Mvc.Authorize]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -77,7 +78,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
         //
         // POST: /Manage/RemoveLogin
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
         {
@@ -108,7 +109,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
         //
         // POST: /Manage/AddPhoneNumber
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddPhoneNumber(AddPhoneNumberViewModel model)
         {
@@ -132,7 +133,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
         //
         // POST: /Manage/EnableTwoFactorAuthentication
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EnableTwoFactorAuthentication()
         {
@@ -147,7 +148,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
         //
         // POST: /Manage/DisableTwoFactorAuthentication
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DisableTwoFactorAuthentication()
         {
@@ -171,7 +172,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
         //
         // POST: /Manage/VerifyPhoneNumber
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> VerifyPhoneNumber(VerifyPhoneNumberViewModel model)
         {
@@ -196,7 +197,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
         //
         // POST: /Manage/RemovePhoneNumber
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RemovePhoneNumber()
         {
@@ -222,7 +223,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
         //
         // POST: /Manage/ChangePassword
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
@@ -253,7 +254,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
         //
         // POST: /Manage/SetPassword
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
         {
@@ -301,7 +302,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
         //
         // POST: /Manage/LinkLogin
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LinkLogin(string provider)
         {
@@ -309,6 +310,24 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
         }
 
+
+        [System.Web.Mvc.HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> changePassword2(AdminChangePasswordModel usermodel)
+        {
+            ApplicationUser user = await UserManager.FindByIdAsync(usermodel.Id);
+            if (user == null)
+            {
+                return View();
+            }
+            user.PasswordHash = UserManager.PasswordHasher.HashPassword(usermodel.NewPassword);
+            var result = await UserManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                //throw exception......
+            }
+            return RedirectToAction("RedigeraAnvandare/"+usermodel.Id, "HanteraKonton");
+        }
         //
         // GET: /Manage/LinkLoginCallback
         public async Task<ActionResult> LinkLoginCallback()

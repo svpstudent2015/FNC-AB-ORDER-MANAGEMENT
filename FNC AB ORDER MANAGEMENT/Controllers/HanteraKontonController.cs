@@ -9,11 +9,14 @@ using Microsoft.Owin.Security;
 using System.Security.Claims;
 using System.Globalization;
 using System.Security.AccessControl;
+using System.Threading.Tasks;
 using System.Web.Http;
 using DAL;
 using FNC_AB_ORDER_MANAGEMENT.Models;
 using DAL.RepositoryFolder;
 using Microsoft.AspNet.Identity.EntityFramework;
+
+
 
 namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 {
@@ -95,6 +98,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
             i.Email = model.Email;
             admin = model.Roll;
+            
            // i.Telefonnr = model.Telefonnr;
            
 
@@ -111,24 +115,36 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             return RedirectToAction("VisaAnvandare", "HanteraKonton");
 
         }
-       
- //ApplicationDbContext context = new ApplicationDbContext();
 
- //       internal void AddUserToRole(string userName, string roleName)
- //       {
- //           var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
- //           try
- //           {
- //               var user = UserManager.FindByName(userName);
- //               UserManager.AddToRole(user.Id, roleName);
- //               context.SaveChanges();
- //           }
- //           catch
- //           {
- //               throw;
- //           }
- //       }
+        //[ChildActionOnly]
+        public ActionResult PartialPasswordChange(string id)
+        {
+            AdminChangePasswordModel acpm=new AdminChangePasswordModel();
+            acpm.Id = id;
+            //stuff you need and then return the partial view 
+            //I recommend using "" quotes for a partial view
+            return PartialView("changePassword2",acpm);
+        }
+        
+
+        //ApplicationDbContext context = new ApplicationDbContext();
+
+        //       internal void AddUserToRole(string userName, string roleName)
+        //       {
+        //           var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+
+        //           try
+        //           {
+        //               var user = UserManager.FindByName(userName);
+        //               UserManager.AddToRole(user.Id, roleName);
+        //               context.SaveChanges();
+        //           }
+        //           catch
+        //           {
+        //               throw;
+        //           }
+        //       }
     }
 
 
