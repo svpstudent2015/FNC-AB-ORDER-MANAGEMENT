@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using DAL
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -30,7 +31,7 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>                   
                     @if (Request.IsAuthenticated)
                     { 
-                    <li>@Html.ActionLink("Inmätningar", "Inmatningar", "Inmatningar")</li>
+                    <li>@Html.ActionLink("Inmätningar", "Inmatningar", "Inmatningar", new {st = "Pågående"}, null)</li>
                     <li>@Html.ActionLink("Utsättningar", "Utsattningar", "Utsattningar")</li>
                     <li>@Html.ActionLink("Hantera Konton", "HanteraKonton", "HanteraKonton")</li>
                     <li>@Html.ActionLink("Hantera Kunder", "Kund", "Kund")</li>

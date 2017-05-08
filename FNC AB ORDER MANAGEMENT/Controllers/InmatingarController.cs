@@ -12,7 +12,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
     public class InmatningarController : Controller
     {
         // GET: Inmatningar
-        public ActionResult Inmatningar()
+        public ActionResult Inmatningar(string st)
         {
             InmatningarModel i2 = new InmatningarModel();
             
@@ -28,6 +28,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 var lista = from k in InmatningsListan
                     join i in KundListan
                     on k.KundID equals i.ID
+                            where k.Status == st
                     select new InmatningarModel()
                     {
                         KundNamn = i.Namn,
@@ -122,7 +123,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
                 var db = new InmatningarRepository();
                 db.Add(i);
-                return RedirectToAction("Inmatningar", "Inmatningar");
+                return RedirectToAction("Inmatningar", new {st = i.Status});
 
 
             }

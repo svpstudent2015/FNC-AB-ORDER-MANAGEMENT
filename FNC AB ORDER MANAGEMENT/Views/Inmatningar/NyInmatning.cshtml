@@ -135,10 +135,36 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @{
+                if (Model != null)
+                {
+
+                    <div class="col-md-10">
+                        <select id="statuslista" data-placeholder="Välj en kund..." class="chzn-select" style="width: 350px;" tabindex="2">
+                            @foreach (var item in Model.statuslista)
+                            {
+                                if (item == Model.Status)
+                                {
+
+                                    <option selected="selected" value="@item"> @item</option>
+                                }
+                                else
+                                {
+                                    <option id="@item" value="@item"> @item</option>
+                                }
+
+
+
+                            }
+                        </select>
+                    </div>
+
+                }
+            }
+            @*<div class="col-md-10">
                 @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-            </div>
+            </div>*@
         </div>
 
         <div class="form-group">
@@ -158,7 +184,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Inmatningar")
+    @Html.ActionLink("Back to List", "Inmatningar", new { st = "Pågående" }, null)
 </div>
 
 <script type="text/javascript">
@@ -172,6 +198,15 @@
         $('<input />').attr('type', 'hidden')
             .attr('name', "KundID")
             .attr('value', strUser)
+            .appendTo('form');
+
+        var s = document.getElementById("statuslista");
+        var st = s.options[s.selectedIndex].value;
+        console.log(strUser);
+
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "Status")
+            .attr('value', st)
             .appendTo('form');
 
     });

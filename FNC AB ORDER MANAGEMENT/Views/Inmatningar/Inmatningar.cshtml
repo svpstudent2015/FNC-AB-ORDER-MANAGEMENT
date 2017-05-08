@@ -1,4 +1,5 @@
-﻿@model FNC_AB_ORDER_MANAGEMENT.Models.InmatningarModel
+﻿@using DAL
+@model FNC_AB_ORDER_MANAGEMENT.Models.InmatningarModel
 
 @{
     ViewBag.Title = "Inmätningar";
@@ -13,9 +14,15 @@
 
 <div class="container">
     <h2>Inmätningar</h2>
-    <p>Ny inmätning</p>
-    <input type="button" value="Ny Inmätning" onclick="location.href='@Url.Action("NyInmatning", "Inmatningar")'" />
-
+    <hr/>
+   
+    <hr/><h2>Sortering :</h2><p id="StatusSortering"> </p>
+    <input id="p" type="button" Onclick="location.href='@Url.Action("Inmatningar",new {st="Pågående"})'" value="Pågående"/> 
+    <input id="es"type="button"  Onclick="location.href='@Url.Action("Inmatningar",new {st="Ej slutförd"})'" value="Ej slutförd" /> 
+    <input id="eg"type="button"  Onclick="location.href='@Url.Action("Inmatningar",new {st="Ej genomförbar"})'" value="Ej genomförbar" /> 
+    <input id="s"type="button"  Onclick="location.href='@Url.Action("Inmatningar",new {st="Slutförd"})'" value="Slutförd" />
+    
+    
 </div>
 
 <table id="example" class="display" cellspacing="0" width="100%">
@@ -63,11 +70,30 @@
         </tbody>
     </table>
 
- <script>
-$(document).ready(function() {
-    $('#example').DataTable();
-} );
+<input type="button" value="Ny Inmätning" onclick="location.href='@Url.Action("NyInmatning", "Inmatningar")'" />
+
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable();
+    } );
+
+
+   
+
 </script>   
+
+<script>
+    (function andraknapp() {
+
+       $('#s').addClass('myActive');
+      //  var knapp = document.getElementById('s');
+      //  knapp.style('myActive');
+
+        //$("#StatusSortering").text("Slutförd");
+        @*@Url.Action("Inmatningar",new {st="Slutförd"})*@
+        Console.log("klicklkopick");
+    });
+</script>
 
 
 
