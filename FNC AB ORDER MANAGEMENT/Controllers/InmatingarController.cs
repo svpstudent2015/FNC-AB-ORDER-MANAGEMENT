@@ -15,6 +15,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         public ActionResult Inmatningar(string st)
         {
             InmatningarModel i2 = new InmatningarModel();
+            i2.Status = st;
             
             var dbInmatningar = new InmatningarRepository();            
             var dbKund = new KundRepository();

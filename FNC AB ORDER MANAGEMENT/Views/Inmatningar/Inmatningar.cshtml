@@ -16,7 +16,7 @@
     <h2>Inmätningar</h2>
     <hr/>
    
-    <hr/><h2>Sortering :</h2><p id="StatusSortering"> </p>
+    <hr/><h2>Sortering :</h2><h3 id="StatusSortering">@Model.Status </h3>
     <input id="p" type="button" Onclick="location.href='@Url.Action("Inmatningar",new {st="Pågående"})'" value="Pågående"/> 
     <input id="es"type="button"  Onclick="location.href='@Url.Action("Inmatningar",new {st="Ej slutförd"})'" value="Ej slutförd" /> 
     <input id="eg"type="button"  Onclick="location.href='@Url.Action("Inmatningar",new {st="Ej genomförbar"})'" value="Ej genomförbar" /> 
@@ -82,18 +82,35 @@
 
 </script>   
 
-<script>
+@*<script>
     (function andraknapp() {
 
        $('#s').addClass('myActive');
-      //  var knapp = document.getElementById('s');
-      //  knapp.style('myActive');
+        var knapp = document.getElementById('s');
+        knapp.style('myActive');
 
-        //$("#StatusSortering").text("Slutförd");
-        @*@Url.Action("Inmatningar",new {st="Slutförd"})*@
+        $("#StatusSortering").text("Slutförd");
+        @Url.Action("Inmatningar",new {st="Slutförd"})
         Console.log("klicklkopick");
     });
-</script>
+
+
+    $('#s').click(function (eventObj) {
+
+        document.getElementById("StatusSortering").innerHTML = "Slutförd";
+
+        window.location.href='@Url.Action("Inmatningar",new { st = "Slutförd" })' ;
+
+        $('#s').addClass('myActive');
+        $('#StatusSortering').text = "Slutförd";
+        document.getElementById("StatusSortering").innerHTML = "Slutförd";
+
+        var tee = document.getElementById('StatusSortering');
+        tee.text = "Slutförd";
+
+
+    });
+</script>*@
 
 
 
