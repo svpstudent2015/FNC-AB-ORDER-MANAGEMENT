@@ -12,10 +12,10 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
     public class UtsattningarController : Controller
     {
         // GET: Utsattningar
-        public ActionResult Utsattningar()
+        public ActionResult Utsattningar(string sta)
         {
             UtsattningarModel i2 = new UtsattningarModel();
-
+            i2.Status = sta;
             var dbUtsattningar = new UtsattningarRepository();
             var dbKund = new KundRepository();
             var UtsattningsLista = dbUtsattningar.ShowAll();
@@ -24,6 +24,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             var lista = from k in UtsattningsLista
                 join i in KundLista
                 on k.KundID equals i.ID
+                where k.Status == sta
                 select new UtsattningarModel()
                 {
                     KundNamn = i.Namn,
@@ -121,7 +122,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
                 var db = new UtsattningarRepository();
                 db.Add(i);
-                return RedirectToAction("Utsattningar", "Utsattningar");
+                return RedirectToAction("Utsattningar", new { sta = i.Status });
 
 
             }

@@ -14,8 +14,14 @@
 
 <div class="container">
     <h2>Utsättningar</h2>
-    <p>Ny Utsattning</p>
-    <input type="button" value="Ny Utsattning" onclick="location.href='@Url.Action("NyUtsattning", "Utsattningar")'" />
+    <hr />
+
+    <hr /><h2>Sortering :</h2><h3 id="StatusSortering">@Model.Status </h3>
+    <input id="p" type="button" Onclick="location.href='@Url.Action("Utsattningar",new {sta="Pågående"})'" value="Pågående" />
+    <input id="es" type="button" Onclick="location.href='@Url.Action("Utsattningar",new {sta="Ej slutförd"})'" value="Ej slutförd" />
+    <input id="eg" type="button" Onclick="location.href='@Url.Action("Utsattningar",new {sta="Ej genomförbar"})'" value="Ej genomförbar" />
+    <input id="s" type="button" Onclick="location.href='@Url.Action("Utsattningar",new {sta="Slutförd"})'" value="Slutförd" />
+    
 
 </div>
 
@@ -60,7 +66,7 @@
 
     </tbody>
 </table>
-
+<input type="button" value="Ny Utsattning" onclick="location.href='@Url.Action("NyUtsattning", "Utsattningar")'" />
 <script>
 $(document).ready(function() {
     $('#example').DataTable();

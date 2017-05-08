@@ -29,7 +29,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 var lista = from k in InmatningsListan
                     join i in KundListan
                     on k.KundID equals i.ID
-                            where k.Status == st
+                    where k.Status == st
                     select new InmatningarModel()
                     {
                         KundNamn = i.Namn,
