@@ -27,9 +27,13 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
         public List<InmatningarModel> InmatningsLista;
         public List<KundModel> KundLista;
         public List<String> statuslista;
+        public List<String> styckPrislista;
 
         public InmatningarModel()
         {
+            styckPrislista = new List<string>();
+            styckPrislista.Add("Ja");
+            styckPrislista.Add("Nej");
             InmatningsLista = new List<InmatningarModel>();
             KundLista = new List<KundModel>();
             statuslista = new List<string>();
@@ -38,7 +42,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
             statuslista.Add("Slutförd");
             statuslista.Add("Ej slutförd");
         }
+ 
     
-       // public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

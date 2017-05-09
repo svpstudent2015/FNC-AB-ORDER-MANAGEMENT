@@ -13,16 +13,24 @@
  </header>
 
 <div class="container">
-    <h2>Inmätningar</h2>
-    <hr/>
-   
-    <hr/><h2>Sortering :</h2><h3 id="StatusSortering">@Model.Status </h3>
-    <input id="p" type="button" Onclick="location.href='@Url.Action("Inmatningar",new {st="Pågående"})'" value="Pågående"/> 
-    <input id="es"type="button"  Onclick="location.href='@Url.Action("Inmatningar",new {st="Ej slutförd"})'" value="Ej slutförd" /> 
-    <input id="eg"type="button"  Onclick="location.href='@Url.Action("Inmatningar",new {st="Ej genomförbar"})'" value="Ej genomförbar" /> 
-    <input id="s"type="button"  Onclick="location.href='@Url.Action("Inmatningar",new {st="Slutförd"})'" value="Slutförd" />
-    
-    
+    <h2 style="vertical-align: middle; text-align: center; font-weight: bold">Inmätningar</h2>
+    <hr />
+    <div class="form-group">
+        <div >
+            <hr />
+            @*<h3 style="float: left; width: 50%; text-align: right;" >Sortering : </h3>*@
+            <h3 style=" width: 50%; text-align: center;" id="StatusSortering">   @Model.Status </h3>
+        </div>
+        <div class="col-md-offset-2 col-md-10">
+
+
+            <input id="p" type="button" Onclick="location.href = '@Url.Action("Inmatningar", new {st = "Pågående"})'" value="Pågående" class="btn btn-default"/>
+            <input id="es" type="button" Onclick="location.href = '@Url.Action("Inmatningar", new {st = "Ej slutförd"})'" value="Ej slutförd" class="btn btn-default"/>
+            <input id="eg" type="button" Onclick="location.href = '@Url.Action("Inmatningar", new {st = "Ej genomförbar"})'" value="Ej genomförbar" class="btn btn-default"/>
+            <input id="s" type="button" Onclick="location.href = '@Url.Action("Inmatningar", new {st = "Slutförd"})'" value="Slutförd" class="btn btn-default"/>
+
+        </div>
+    </div>
 </div>
 
 <table id="example" class="display" cellspacing="0" width="100%">
@@ -69,18 +77,56 @@
 
         </tbody>
     </table>
-
-<input type="button" value="Ny Inmätning" onclick="location.href='@Url.Action("NyInmatning", "Inmatningar")'" />
-
+<div class="form-group">
+<div class="col-md-offset-2 col-md-10">
+    <input type="button" value="Ny Inmätning" class="btn btn-default" onclick="location.href='@Url.Action("NyInmatning", "Inmatningar")'" />
+</div>
+    </div>
 <script>
-    $(document).ready(function() {
-        $('#example').DataTable();
-    } );
-
-
    
 
+   //var chosen = new $.fn.dataTable.Editor({
+   //     ajax: "../php/todo.php",
+   //     table: "#example",
+   //     fields: [{
+   //         label: "Description:",
+   //         name: "description",
+   //         type: "chosen"         
+   //     }]
+   // });
+    
+
+    $(document).ready(function() {
+        $('#example').DataTable();
+
+    } );
+
 </script>   
+
+@*jQuery.extend(true,chosen, {
+"chosen": {
+sProcessing: "Przetwarzanie...",
+sSearch: "Szukaj:",
+sLengthMenu: "Pokaż _MENU_ pozycji",
+sInfo: "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
+sInfoEmpty: "Pozycji 0 z 0 dostępnych",
+sInfoFiltered: "(filtrowanie spośród _MAX_ dostępnych pozycji)",
+sInfoPostFix: "",
+sLoadingRecords: "Wczytywanie...",
+sZeroRecords: "Nie znaleziono pasujących pozycji",
+sEmptyTable: "Brak danych",
+oPaginate: {
+sFirst: "Pierwsza",
+sPrevious: "Föregående",
+sNext: "Następna",
+sLast: "Ostatnia"
+},
+oAria: {
+sSortAscending: ": aktywuj, by posortować kolumnę rosnąco",
+sSortDescending: ": aktywuj, by posortować kolumnę malejąco"
+}
+}*@
+
 
 @*<script>
     (function andraknapp() {
