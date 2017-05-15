@@ -96,6 +96,12 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             return View(imodel);
         }
 
+        public PartialViewResult GetInmätningar(int custId)
+        {
+            
+            return null;
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

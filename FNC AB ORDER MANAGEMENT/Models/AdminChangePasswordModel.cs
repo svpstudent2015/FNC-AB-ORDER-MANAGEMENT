@@ -5,6 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
+
 namespace FNC_AB_ORDER_MANAGEMENT.Models
 {
     public class AdminChangePasswordModel
