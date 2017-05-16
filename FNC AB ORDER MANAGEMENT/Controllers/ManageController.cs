@@ -311,23 +311,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         }
 
 
-        [System.Web.Mvc.HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> changePassword2(AdminChangePasswordModel usermodel)
-        {
-            ApplicationUser user = await UserManager.FindByIdAsync(usermodel.Id);
-            if (user == null)
-            {
-                return View();
-            }
-            user.PasswordHash = UserManager.PasswordHasher.HashPassword(usermodel.NewPassword);
-            var result = await UserManager.UpdateAsync(user);
-            if (!result.Succeeded)
-            {
-                //throw exception......
-            }
-            return RedirectToAction("RedigeraAnvandare/"+usermodel.Id, "HanteraKonton");
-        }
+       
         //
         // GET: /Manage/LinkLoginCallback
         public async Task<ActionResult> LinkLoginCallback()

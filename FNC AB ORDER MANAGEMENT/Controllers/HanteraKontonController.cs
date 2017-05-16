@@ -18,11 +18,52 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 
 
+
+
 namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 {
     [System.Web.Mvc.Authorize(Roles = "Admin")]
     public class HanteraKontonController : Controller
     {
+        private ApplicationUserManager _userManager;
+        private ApplicationSignInManager _signInManager;
+
+
+        public HanteraKontonController()
+        {
+            
+        }
+        public HanteraKontonController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            _userManager = userManager;
+            SignInManager = signInManager;
+        }
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+
         public ActionResult HanteraKonton()
         {
             return View();
@@ -126,8 +167,31 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             //I recommend using "" quotes for a partial view
             return PartialView("changePassword2",acpm);
         }
-        
 
+        [System.Web.Mvc.HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> changePassword2(AdminChangePasswordModel usermodel)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                
+                return PartialView("changePassword2", usermodel);
+            }
+
+            ApplicationUser user = await UserManager.FindByIdAsync(usermodel.Id);
+            if (user == null)
+            {
+                return View();
+            }
+            user.PasswordHash = UserManager.PasswordHasher.HashPassword(usermodel.NewPassword);
+            var result = await UserManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                //throw exception......
+            }
+            return RedirectToAction("RedigeraAnvandare/" + usermodel.Id, "HanteraKonton");
+        }
         //ApplicationDbContext context = new ApplicationDbContext();
 
         //       internal void AddUserToRole(string userName, string roleName)
