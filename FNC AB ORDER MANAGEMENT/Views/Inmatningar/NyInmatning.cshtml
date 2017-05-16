@@ -98,24 +98,21 @@
                     <div class="col-md-10">
                         <select id="styckPrisLista" data-placeholder="Välj styckpris" class="chzn-select" style="width: 350px;" tabindex="2">
 
-
-
                             @foreach (var item in Model.styckPrislista)
                             {
 
-                                string katt;
-                                katt = item;
-                                bool katt2 = false;
+                                string bool1;
+                                bool1 = item;
+                                bool bool2 = false;
 
-                                if (katt.Equals("Ja"))
+                                if (bool1.Equals("Ja"))
                                 {
-                                    katt2 = true;
+                                    bool2 = true;
                                 }
 
 
 
-                                <option value="@katt2.ToString()"> @item</option>
-                            }
+                                <option value="@bool2.ToString()"> @item</option>
                             }
                         </select>
                     </div>
@@ -147,12 +144,39 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Fakturerad, htmlAttributes: new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
+            @{
+                if (Model != null)
+                {
+
+                    <div class="col-md-10">
+                        <select id="fakturalista" data-placeholder="Välj en kund..." class="chzn-select" style="width: 350px;" tabindex="2">
+                            @foreach (var item in Model.fakturaLista)
+                            {
+
+                                string bool1;
+                                bool1 = item;
+                                bool bool2 = false;
+
+                                if (bool1.Equals("Ja"))
+                                {
+                                    bool2 = true;
+                                }
+
+
+
+                                <option value="@bool2.ToString()"> @item</option>
+                            }
+                        </select>
+                    </div>
+
+                }
+            }
+            @*<div class="col-md-10">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.Fakturerad)
                     @Html.ValidationMessageFor(model => model.Fakturerad, "", new {@class = "text-danger"})
                 </div>
-            </div>
+            </div>*@
         </div>
 
         <div class="form-group">
@@ -250,10 +274,27 @@
             .attr('name', "StyckPris")
             .attr('value', spl)
             .appendTo('form');
+        
+        // FakturaLista
+        var f = document.getElementById("fakturalista");
+        var f2 = f.options[f.selectedIndex].value;
+        console.log(f2);
+
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "Fakturerad")
+            .attr('value', f2)
+            .appendTo('form');
 
     });
 
     $(document).ready(function(){
-        $("select").chosen({allow_single_deselect:true});
+        $("#selectlista").chosen({
+            allow_single_deselect:true,
+            disable_search:false
+        });
+        $("select").chosen({
+            allow_single_deselect:true,
+            disable_search:true
+        });
     });   
 </script>
