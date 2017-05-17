@@ -15,10 +15,10 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         //Andropas med önskad satus på utsättningar.
         //Retunerar vyn utsattning tillsammans med en modellen innehållandes
         //en lista av utsattningar
-        public ActionResult Utsattningar(string status)
+        public ActionResult Utsattningar(string sta)
         {
             UtsattningarModel uModel = new UtsattningarModel();
-            uModel.Status = status;
+            uModel.Status = sta;
             var dbUtsattningar = new UtsattningarRepository();
             var dbKund = new KundRepository();
             var utsattningsLista = dbUtsattningar.ShowAll();
@@ -27,7 +27,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             var nyUtsattningsLista = from u in utsattningsLista
                 join k in kundLista
                 on u.KundID equals k.ID
-                where u.Status == status
+                where u.Status == sta
                 select new UtsattningarModel()
                 {
                     KundNamn = k.Namn,
@@ -180,15 +180,18 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
             dbUtsattningar.SparaRedigeraUtsattningar(i);
 
-            return RedirectToAction("Utsattningar", "Utsattningar");
+            return RedirectToAction("Utsattningar", new { sta = i.Status });
         }
 
         public ActionResult TaBortUtsattning(int id)
         {
+
             UtsattningarRepository dbUtsattningar = new UtsattningarRepository();
+            DAL.Utsattningar uts = dbUtsattningar.HamtaEnUsattning(id);
             dbUtsattningar.TaBortEnUtsattning(id);
 
-            return RedirectToAction("Utsattningar", "Utsattningar");
+           
+            return RedirectToAction("Utsattningar", new { sta = uts.Status });
 
         }
     }

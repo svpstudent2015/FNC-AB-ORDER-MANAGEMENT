@@ -33,16 +33,39 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
 
         public List<String> statuslista;
 
+        public List<String> styckPrislista;
+
+        public List<String> fakturaLista;
+
+        public List<String> gpsLista;
+
         public UtsattningarModel()
         {
             UtsattningsLista = new List<UtsattningarModel>();
             KundLista = new List<KundModel>();
+
+            // StyckprisLista
+            styckPrislista = new List<string>();
+            styckPrislista.Add("Ja");
+            styckPrislista.Add("Nej");         
+
+            // Statuslista
             statuslista = new List<string>();
             statuslista.Add("Pågående");
             statuslista.Add("Ej genomförbar");
             statuslista.Add("Slutförd");
             statuslista.Add("Ej slutförd");
-              
+
+            // FakturaLista
+            fakturaLista = new List<string>();
+            fakturaLista.Add("Ja");
+            fakturaLista.Add("Nej");
+
+            // GPSLista
+            gpsLista = new List<string>();
+            gpsLista.Add("Ja");
+            gpsLista.Add("Nej");
+
         }
 
     }

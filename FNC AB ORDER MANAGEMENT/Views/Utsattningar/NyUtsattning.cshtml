@@ -95,10 +95,35 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.StyckPris, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @{
+                if (Model != null)
+                {
+
+                    <div class="col-md-10">
+                        <select id="styckPrisLista" data-placeholder="Välj styckpris" class="chzn-select" style="width: 350px;" tabindex="2">
+
+                            @foreach (var item in Model.styckPrislista)
+                            {
+
+                                string bool1;
+                                bool1 = item;
+                                bool bool2 = false;
+
+                                if (bool1.Equals("Ja"))
+                                {
+                                    bool2 = true;
+                                }
+
+                                <option value="@bool2.ToString()"> @item</option>
+                            }
+                        </select>
+                    </div>
+                }
+            }
+            @*<div class="col-md-10">
                 @Html.EditorFor(model => model.StyckPris, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.StyckPris, "", new { @class = "text-danger" })
-            </div>
+            </div>*@
         </div>
 
         <div class="form-group">
@@ -119,10 +144,37 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Fakturerad, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @{
+                if (Model != null)
+                {
+
+                    <div class="col-md-10">
+                        <select id="fakturalista" data-placeholder="Välj en kund..." class="chzn-select" style="width: 350px;" tabindex="2">
+                            @foreach (var item in Model.fakturaLista)
+                            {
+
+                                string bool1;
+                                bool1 = item;
+                                bool bool2 = false;
+
+                                if (bool1.Equals("Ja"))
+                                {
+                                    bool2 = true;
+                                }
+
+
+
+                                <option value="@bool2.ToString()"> @item</option>
+                            }
+                        </select>
+                    </div>
+
+                }
+            }
+            @*<div class="col-md-10">
                 @Html.EditorFor(model => model.Fakturerad, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Fakturerad, "", new { @class = "text-danger" })
-            </div>
+            </div>*@
         </div>
 
         <div class="form-group">
@@ -169,10 +221,35 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.GPS, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @{
+                if (Model != null)
+                {
+
+                    <div class="col-md-10">
+                        <select id="gpslista" data-placeholder="Välj en kund..." class="chzn-select" style="width: 350px;" tabindex="2">
+                            @foreach (var item in Model.gpsLista)
+                            {
+
+                                string bool1;
+                                bool1 = item;
+                                bool bool2 = false;
+
+                                if (bool1.Equals("Ja"))
+                                {
+                                    bool2 = true;
+                                }
+
+                                <option value="@bool2.ToString()"> @item</option>
+                            }
+                        </select>
+                    </div>
+
+                }
+            }
+            @*<div class="col-md-10">
                 @Html.EditorFor(model => model.GPS, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.GPS, "", new { @class = "text-danger" })
-            </div>
+            </div>*@
         </div>
 
         <div class="form-group">
@@ -199,29 +276,70 @@
 <script type="text/javascript">
     
     $("form").submit(function (eventObj) {
-     
-                var e = document.getElementById("selectlista");
-                var strUser = e.options[e.selectedIndex].value;
-                console.log(strUser);
+                
+          //KundLista
+         var e = document.getElementById("selectlista");
+         var strUser = e.options[e.selectedIndex].value;
+         console.log(strUser);
 
-                    $('<input />').attr('type', 'hidden')
-                    .attr('name', "KundID")
-                    .attr('value', strUser)
-                    .appendTo('form');
+              $('<input />').attr('type', 'hidden')
+             .attr('name', "KundID")
+             .attr('value', strUser)
+             .appendTo('form');
 
+        // Statuslista
         var s = document.getElementById("statuslista");
         var st = s.options[s.selectedIndex].value;
-        console.log(strUser);
+        
 
         $('<input />').attr('type', 'hidden')
             .attr('name', "Status")
             .attr('value', st)
             .appendTo('form');
 
+        //StyckprisLista
+        var sp = document.getElementById("styckPrisLista");
+        var spl = sp.options[sp.selectedIndex].value;
+        console.log(spl);
+
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "StyckPris")
+            .attr('value', spl)
+            .appendTo('form');
+
+        // FakturaLista
+        var f = document.getElementById("fakturalista");
+        var f2 = f.options[f.selectedIndex].value;
+        console.log(f2);
+
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "Fakturerad")
+            .attr('value', f2)
+            .appendTo('form');
+       
+        // GPSLista
+        var g = document.getElementById("gpslista");
+        var g2 = g.options[g.selectedIndex].value;
+        console.log(g2);
+
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "GPS")
+            .attr('value', g2)
+            .appendTo('form');
+
+
     });
 
-    $(document).ready(function(){
-        $("select").chosen({allow_single_deselect:true});
+    $(document).ready(function () {
+
+        $("#selectlista").chosen({
+            allow_single_deselect: true,
+            disable_search: false
+        });
+        $("select").chosen({
+            allow_single_deselect: true,
+            disable_search: true
+        });
     });   
 </script>
 

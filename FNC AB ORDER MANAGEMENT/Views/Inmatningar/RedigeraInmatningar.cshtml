@@ -106,15 +106,6 @@
 
                             @foreach (var item in Model.styckPrislista)
                             {
-                                if (item.Equals(Model.StyckPris))
-                                {
-
-                                    <option selected="selected" value="@item"> @item</option>
-                                }
-                                else
-                                {
-  
-                                
                                 string bool1;
                                 bool1 = item;
                                 bool bool2 = false;
@@ -124,7 +115,13 @@
                                     bool2 = true;
                                 }
 
+                                if (Model.StyckPris==bool2)
+                                {
 
+                                    <option selected="selected" value="@bool2.ToString()"> @item</option>
+                                }
+                                else
+                                {
 
                                     <option value="@bool2.ToString()"> @item</option>
                                 }
@@ -165,7 +162,6 @@
                         <select id="fakturalista" data-placeholder="Välj en kund..." class="chzn-select" style="width: 350px;" tabindex="2" disabled="disabled">
                             @foreach (var item in Model.fakturaLista)
                             {
-
                                 string bool1;
                                 bool1 = item;
                                 bool bool2 = false;
@@ -175,9 +171,16 @@
                                     bool2 = true;
                                 }
 
+                                if (Model.Fakturerad==bool2)
+                                {
 
+                                    <option selected="selected" value="@bool2.ToString()"> @item</option>
+                                }
+                                else
+                                {
 
-                                <option value="@bool2.ToString()"> @item</option>
+                                    <option value="@bool2.ToString()"> @item</option>
+                                }
                             }
                         </select>
                     </div>
@@ -258,7 +261,7 @@
 }
 
 <div>
-    @Html.ActionLink("Tillbaka", "Inmatningar", new { st = "Pågående" }, null)
+    @Html.ActionLink("Tillbaka", "Inmatningar", new { st = Model.Status }, null)
 </div>
 <script type="text/javascript">
 

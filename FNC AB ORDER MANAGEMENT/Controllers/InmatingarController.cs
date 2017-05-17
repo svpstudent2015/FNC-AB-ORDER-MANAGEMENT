@@ -153,7 +153,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             model.ID = e.ID;
 
             return View(model);
-        //    return RedirectToAction("RedigeraInmatningar", "Inmatningar", model);
+      
         }
 
         // Metod för att ändra och spara inmätningar
@@ -183,15 +183,16 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
              db.SparaRedigeraInmatningar(i);
 
-            return RedirectToAction("Inmatningar", "Inmatningar");
+            return RedirectToAction("Inmatningar", new { st = i.Status });
         }
 
         public ActionResult TaBortInmatning(int id)
         {
-            InmatningarRepository rep = new InmatningarRepository();
-            rep.TaBortEnInmatning(id);
+            InmatningarRepository dbInmatningar = new InmatningarRepository();
+            DAL.Inmatningar inm = dbInmatningar.ShowRowByID(id);
+            dbInmatningar.TaBortEnInmatning(id);
 
-            return RedirectToAction("Inmatningar", "Inmatningar");
+            return RedirectToAction("Inmatningar", new { st = inm.Status });
 
         }
 

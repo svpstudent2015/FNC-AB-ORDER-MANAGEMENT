@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="036cd569da5748fa9919a7c8f8891ee4" Name="Diagram1" ZoomLevel="93">
+      <Diagram DiagramId="036cd569da5748fa9919a7c8f8891ee4" Name="Diagram1" ZoomLevel="98">
         <EntityTypeShape EntityType="FNCOrderHanteringModel.C__MigrationHistory" Width="1.5" PointX="1.25" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="FNCOrderHanteringModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="FNCOrderHanteringModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
@@ -14,13 +14,13 @@
         <AssociationConnector Association="FNCOrderHanteringModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="FNCOrderHanteringModel.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="FNCOrderHanteringModel.Kund" Width="1.5" PointX="7.25" PointY="5.25" />
-        <EntityTypeShape EntityType="FNCOrderHanteringModel.Inmatningar" Width="1.5" PointX="10.25" PointY="0.625" />
+        <EntityTypeShape EntityType="FNCOrderHanteringModel.Inmatningar" Width="1.5" PointX="12.5" PointY="2.25" />
+        <EntityTypeShape EntityType="FNCOrderHanteringModel.Utsattningar" Width="1.5" PointX="9.5" PointY="2.125" />
         <AssociationConnector Association="FNCOrderHanteringModel.FK__Inmatningar__AID__05D8E0BE" />
-        <AssociationConnector Association="FNCOrderHanteringModel.FK__Inmatning__KundI__03F0984C" />
-        <EntityTypeShape EntityType="FNCOrderHanteringModel.Utsattningar" Width="1.5" PointX="12.25" PointY="0.625" />
         <AssociationConnector Association="FNCOrderHanteringModel.FK_Utsattningar_Id" />
+        <AssociationConnector Association="FNCOrderHanteringModel.FK__Inmatning__KundI__03F0984C" />
         <AssociationConnector Association="FNCOrderHanteringModel.FK__Utsattnin__KundI__04E4BC85" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
