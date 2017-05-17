@@ -12,69 +12,50 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
     public class UtsattningarController : Controller
     {
         // GET: Utsattningar
-        public ActionResult Utsattningar(string sta)
+        //Andropas med önskad satus på utsättningar.
+        //Retunerar vyn utsattning tillsammans med en modellen innehållandes
+        //en lista av utsattningar
+        public ActionResult Utsattningar(string status)
         {
-            UtsattningarModel i2 = new UtsattningarModel();
-            i2.Status = sta;
+            UtsattningarModel uModel = new UtsattningarModel();
+            uModel.Status = status;
             var dbUtsattningar = new UtsattningarRepository();
             var dbKund = new KundRepository();
-            var UtsattningsLista = dbUtsattningar.ShowAll();
-            var KundLista = dbKund.ShowAll();
+            var utsattningsLista = dbUtsattningar.ShowAll();
+            var kundLista = dbKund.ShowAll();
 
-            var lista = from k in UtsattningsLista
-                join i in KundLista
-                on k.KundID equals i.ID
-                where k.Status == sta
+            var nyUtsattningsLista = from u in utsattningsLista
+                join k in kundLista
+                on u.KundID equals k.ID
+                where u.Status == status
                 select new UtsattningarModel()
                 {
-                    KundNamn = i.Namn,
-                    Status = k.Status,
-                    Adress = k.Adress,
-                    Ordernr = k.Ordernr,
-                    InDatum = k.InDatum,
-                    ID = k.ID,
-                    Ovrigt = k.Ovrigt
+                    KundNamn = k.Namn,
+                    Status = u.Status,
+                    Adress = u.Adress,
+                    Ordernr = u.Ordernr,
+                    InDatum = u.InDatum,
+                    ID = u.ID,
+                    Ovrigt = u.Ovrigt
 
         };
 
-            foreach (UtsattningarModel e in lista)
+            foreach (UtsattningarModel uM in nyUtsattningsLista)
             {
-                //UtsattningarModel i = new UtsattningarModel();
-
-                //if (e.InDatum != null)
-                //{
-                //    i.InDatum = (DateTime)e.InDatum;
-
-                //}
-                //if (e.UtDatum != null)
-                //{
-                //    i.UtDatum = (DateTime)e.UtDatum;
-                //}
-
-           //     i.ID = e.ID;
-           //     i.AID = e.AID;
-
-           //     i.Ordernr = e.Ordernr;
-           ////     i.Kund = e.Kund;
-           //     i.Telefonnr = e.Telefonnr;
-           //     i.Ort = e.Ort;
-           //     i.Adress = e.Adress;
-           //     //i.Fakturerad = (bool)e.Fakturerad;
-           //     i.Ovrigt = e.Ovrigt;
-           //     i.Status = e.Status;
-
-                i2.UtsattningsLista.Add(e);
-
+               
+                uModel.UtsattningsLista.Add(uM);
 
             }
 
 
-            return View(i2);
+            return View(uModel);
         }
+        //Retunerar vyn NyUtsattning med en modell inhållandes en
+        //lista av Kunder
         public ActionResult NyUtsattning()
         {
-            KundRepository k = new KundRepository();
-            List<Kund>klista = k.ShowAll();
+            KundRepository dbKund = new KundRepository();
+            List<Kund>klista = dbKund.ShowAll();
             UtsattningarModel umodel = new UtsattningarModel();
 
 
@@ -120,10 +101,9 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 i.Status = model.Status; 
                 i.GPS = model.GPS;
 
-                var db = new UtsattningarRepository();
-                db.Add(i);
+                var dbUtsattningar = new UtsattningarRepository();
+                dbUtsattningar.Add(i);
                 return RedirectToAction("Utsattningar", new { sta = i.Status });
-
 
             }
 
@@ -133,11 +113,11 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         public ActionResult RedigerUtsattningar(int id)
         {
 
-            var db = new UtsattningarRepository();
-            Utsattningar e = db.ShowRowByID(id);
-            UtsattningarModel model = new UtsattningarModel();
-            KundRepository k = new KundRepository();
-            List<Kund> klista = k.ShowAll();
+            var dbUtsattningar = new UtsattningarRepository();
+            Utsattningar e = dbUtsattningar.HamtaEnUsattning(id);
+            UtsattningarModel uModel = new UtsattningarModel();
+            KundRepository dbKund = new KundRepository();
+            List<Kund> klista = dbKund.ShowAll();
             
 
 
@@ -149,39 +129,38 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 km.Email = kund.Email;
                 km.ID = kund.ID;
 
-                model.KundLista.Add(km);
+                uModel.KundLista.Add(km);
             }
 
-            model.Ordernr = e.Ordernr;
-            model.KundID = e.KundID;
-            model.Telefonnr = e.Telefonnr;
-            model.Ort = e.Ort;
-            model.Adress = e.Adress;
-            model.InDatum = e.InDatum;
-            model.UtDatum = e.UtDatum;
-            model.StyckPris = e.StyckPris;
-            model.Langd = e.Langd;
-            model.Timmar = e.Timmar;
-            model.Fakturerad = e.Fakturerad;
-            model.Ovrigt = e.Ovrigt;
-            model.Status = e.Status;
-            model.ID = e.ID;
-            model.GPS = e.GPS;
+            uModel.Ordernr = e.Ordernr;
+            uModel.KundID = e.KundID;
+            uModel.Telefonnr = e.Telefonnr;
+            uModel.Ort = e.Ort;
+            uModel.Adress = e.Adress;
+            uModel.InDatum = e.InDatum;
+            uModel.UtDatum = e.UtDatum;
+            uModel.StyckPris = e.StyckPris;
+            uModel.Langd = e.Langd;
+            uModel.Timmar = e.Timmar;
+            uModel.Fakturerad = e.Fakturerad;
+            uModel.Ovrigt = e.Ovrigt;
+            uModel.Status = e.Status;
+            uModel.ID = e.ID;
+            uModel.GPS = e.GPS;
            
 
-            return View(model);
-            //    return RedirectToAction("RedigeraInmatningar", "Inmatningar", model);
+            return View(uModel);
+            
         }
 
         // Metod för att ändra och spara inmätningar
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult RedigerUtsattningar(UtsattningarModel model)
         {
             Utsattningar i = new Utsattningar();
-            var db = new UtsattningarRepository();
+            var dbUtsattningar = new UtsattningarRepository();
 
             i.Ordernr = model.Ordernr;
             i.KundID = model.KundID;
@@ -199,15 +178,15 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             i.ID = model.ID; 
             i.GPS = model.GPS;
 
-            db.SparaRedigeraUtsattningar(i);
+            dbUtsattningar.SparaRedigeraUtsattningar(i);
 
             return RedirectToAction("Utsattningar", "Utsattningar");
         }
 
         public ActionResult TaBortUtsattning(int id)
         {
-            UtsattningarRepository rep = new UtsattningarRepository();
-            rep.TaBortEnUtsattning(id);
+            UtsattningarRepository dbUtsattningar = new UtsattningarRepository();
+            dbUtsattningar.TaBortEnUtsattning(id);
 
             return RedirectToAction("Utsattningar", "Utsattningar");
 

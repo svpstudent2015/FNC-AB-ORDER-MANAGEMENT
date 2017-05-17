@@ -13,7 +13,7 @@ namespace DAL.RepositoryFolder
 {
     public class UtsattningarRepository : Repository<Utsattningar>
     {
-        public Utsattningar ShowRowByID(int id)
+        public Utsattningar HamtaEnUsattning(int id)
         {
             try
             {
@@ -31,29 +31,29 @@ namespace DAL.RepositoryFolder
             }
         }
 
-        public void SparaRedigeraUtsattningar(Utsattningar e)
+        public void SparaRedigeraUtsattningar(Utsattningar nyUts)
         {
             try
             {
                 using (var db = new FNCOrderHanteringEntitiesConnections())
                 {
 
-                    Utsattningar i = db.Utsattningar.FirstOrDefault(x => x.ID == e.ID);
+                    Utsattningar gammalUts = db.Utsattningar.FirstOrDefault(x => x.ID == nyUts.ID);
 
-                    i.Ordernr = e.Ordernr;
-                    i.KundID = e.KundID;
-                    i.Telefonnr = e.Telefonnr;
-                    i.Ort = e.Ort;
-                    i.Adress = e.Adress;
-                    i.InDatum = e.InDatum;
-                    i.UtDatum = e.UtDatum;
-                    i.StyckPris = e.StyckPris;
-                    i.Langd = e.Langd;
-                    i.Timmar = e.Timmar;
-                    i.Fakturerad = e.Fakturerad;
-                    i.Ovrigt = e.Ovrigt;
-                    i.Status = e.Status;
-                    i.ID = e.ID;
+                    gammalUts.Ordernr = nyUts.Ordernr;
+                    gammalUts.KundID = nyUts.KundID;
+                    gammalUts.Telefonnr = nyUts.Telefonnr;
+                    gammalUts.Ort = nyUts.Ort;
+                    gammalUts.Adress = nyUts.Adress;
+                    gammalUts.InDatum = nyUts.InDatum;
+                    gammalUts.UtDatum = nyUts.UtDatum;
+                    gammalUts.StyckPris = nyUts.StyckPris;
+                    gammalUts.Langd = nyUts.Langd;
+                    gammalUts.Timmar = nyUts.Timmar;
+                    gammalUts.Fakturerad = nyUts.Fakturerad;
+                    gammalUts.Ovrigt = nyUts.Ovrigt;
+                    gammalUts.Status = nyUts.Status;
+                    gammalUts.ID = nyUts.ID;
 
                     db.SaveChanges();
                 }
