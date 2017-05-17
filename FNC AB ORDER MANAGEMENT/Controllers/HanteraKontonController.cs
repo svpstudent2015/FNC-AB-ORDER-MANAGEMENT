@@ -28,7 +28,6 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         private ApplicationUserManager _userManager;
         private ApplicationSignInManager _signInManager;
 
-
         public HanteraKontonController()
         {
             
@@ -63,13 +62,14 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             }
         }
 
-
+        // Get Hantera Konton
         public ActionResult HanteraKonton()
         {
             return View();
         
         }
-
+        
+        // Get användare
         public ActionResult VisaAnvandare()
         {
 
@@ -81,9 +81,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             foreach (AspNetUsers e in listAll)
             {
                 AnvandareModel i = new AnvandareModel();
-
              
-
                 i.UserName = e.UserName;
                 i.PasswordHash = e.PasswordHash;
 
@@ -91,14 +89,11 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 i.Id = e.Id;
 
                 i2.AnvandareLista.Add(i);
-
-
             }
-
-
             return View(i2);
         }
 
+        // Get redigera användare
         public ActionResult RedigeraAnvandare(String id)
         {
 
@@ -107,9 +102,6 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
             AnvandareModel model = new AnvandareModel();
 
-            //var roll = e.AspNetRoles.ToList();
-            //var admin=roll[0];
-
             bool admin=db.ShowUserRoll(e);
 
             if (admin==true)
@@ -117,17 +109,15 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 model.Roll = true;
             }
 
-
             model.Email = e.Email;
             model.UserName = e.UserName;
             model.Id = e.Id;
-
 
             return View(model);
             //    return RedirectToAction("RedigeraInmatningar", "Inmatningar", model);
         }
 
-
+        // Spara redigerad användare
         [System.Web.Mvc.HttpPost]
         [System.Web.Mvc.AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -140,9 +130,6 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             i.Email = model.Email;
             admin = model.Roll;
             
-           // i.Telefonnr = model.Telefonnr;
-           
-
             db.SparaRedigeraAnvandare(i,admin);
 
             return RedirectToAction("VisaAnvandare", "HanteraKonton");
@@ -168,6 +155,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             return PartialView("changePassword2",acpm);
         }
 
+        // Metod för att byta en annan användares lösenord
         [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> changePassword2(AdminChangePasswordModel usermodel)
