@@ -578,6 +578,10 @@ ol ol {
 .list-unstyled {
   padding-left: 0;
   list-style: none;
+    list-style-type: "string";
+    color: #000000;
+    font-size: medium;
+    text-decoration: none;
 }
 
 .list-inline {

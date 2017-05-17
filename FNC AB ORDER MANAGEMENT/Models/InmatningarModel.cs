@@ -28,19 +28,29 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
         public List<KundModel> KundLista;
         public List<String> statuslista;
         public List<String> styckPrislista;
+        public List<String> fakturaLista;
 
         public InmatningarModel()
         {
-            styckPrislista = new List<string>();
-            styckPrislista.Add("Ja");
-            styckPrislista.Add("Nej");
             InmatningsLista = new List<InmatningarModel>();
             KundLista = new List<KundModel>();
+
+            // StyckprisLista
+            styckPrislista = new List<string>();
+            styckPrislista.Add("Ja");
+            styckPrislista.Add("Nej");          
+
+            // StatusLista
             statuslista = new List<string>();
             statuslista.Add("Pågående");
             statuslista.Add("Ej genomförbar");
             statuslista.Add("Slutförd");
             statuslista.Add("Ej slutförd");
+
+            // FakturaLista
+            fakturaLista = new List<string>();
+            fakturaLista.Add("Ja");
+            fakturaLista.Add("Nej");
         }
  
     

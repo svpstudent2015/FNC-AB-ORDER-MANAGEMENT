@@ -43,30 +43,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                     };
 
                 foreach (InmatningarModel e in lista)
-                {
-                    //  InmatningarModel i = new InmatningarModel();
-
-                    //  if (e.InDatum != null)
-                    //  {
-                    //      i.InDatum = (DateTime)e.InDatum;
-
-                    //  }
-                    //  if(e.UtDatum != null)
-                    //  {
-                    //      i.UtDatum = (DateTime)e.UtDatum;
-                    //  }
-
-                    //  i.ID = e.ID;
-                    //  i.AID = e.AID;
-
-                    //  i.Ordernr = e.Ordernr;
-                    ////  i.Kund = e.Kund;
-                    //  i.Telefonnr = e.Telefonnr;
-                    //  i.Ort = e.Ort;
-                    //  i.Adress = e.Adress;                           
-                    //  //i.Fakturerad = (bool)e.Fakturerad;
-                    //  i.Ovrigt = e.Ovrigt;
-                    //  i.Status = e.Status;
+                {                   
 
                     i2.InmatningsLista.Add(e);
 
@@ -76,6 +53,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
             return View(i2);
         }
+        // Get Ny Inmätning
         public ActionResult NyInmatning()
         {
             KundRepository k = new KundRepository();
@@ -102,6 +80,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             return null;
         }
 
+        // Spara en ny inmätning
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -137,7 +116,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
         }
       
-        // Metod för att visa en inmätning med hjälp av ID
+        //Get redigera inmätningar
         public ActionResult RedigeraInmatningar(int id)
         {
 

@@ -13,7 +13,7 @@
     
     <div class="form-horizontal" >
         <hr />
-        <button id="edit" type="button">Redigera</button>
+        <button id="edit" type="button" class="btn btn-default">Redigera</button>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Ordernr, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -25,7 +25,6 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.KundNamn, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
                 @{
                     if (Model != null)
                     {
@@ -53,8 +52,7 @@
                     }
                 }
                 @*@Html.EditorFor(model => model.Kund, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Kund, "", new { @class = "text-danger" })*@
-            </div>
+                @Html.ValidationMessageFor(model => model.Kund, "", new { @class = "text-danger" })*@            
         </div>
 
         <div class="form-group">
@@ -99,10 +97,46 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.StyckPris, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @{
+                if (Model != null)
+                {
+
+                    <div class="col-md-10">
+                        <select id="styckPrisLista" data-placeholder="Välj styckpris" class="chzn-select" style="width: 350px;" tabindex="2" disabled="disabled">
+
+                            @foreach (var item in Model.styckPrislista)
+                            {
+                                if (item.Equals(Model.StyckPris))
+                                {
+
+                                    <option selected="selected" value="@item"> @item</option>
+                                }
+                                else
+                                {
+  
+                                
+                                string bool1;
+                                bool1 = item;
+                                bool bool2 = false;
+
+                                if (bool1.Equals("Ja"))
+                                {
+                                    bool2 = true;
+                                }
+
+
+
+                                    <option value="@bool2.ToString()"> @item</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                }
+            }
+            @*<div class="col-md-10">
                 @Html.EditorFor(model => model.StyckPris, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
                 @Html.ValidationMessageFor(model => model.StyckPris, "", new { @class = "text-danger" })
-            </div>
+            </div>*@
         </div>
 
         <div class="form-group">
@@ -123,16 +157,43 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Fakturerad, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @{
+                if (Model != null)
+                {
+
+                    <div class="col-md-10">
+                        <select id="fakturalista" data-placeholder="Välj en kund..." class="chzn-select" style="width: 350px;" tabindex="2" disabled="disabled">
+                            @foreach (var item in Model.fakturaLista)
+                            {
+
+                                string bool1;
+                                bool1 = item;
+                                bool bool2 = false;
+
+                                if (bool1.Equals("Ja"))
+                                {
+                                    bool2 = true;
+                                }
+
+
+
+                                <option value="@bool2.ToString()"> @item</option>
+                            }
+                        </select>
+                    </div>
+
+                }
+            }
+            @*<div class="col-md-10">
                 @Html.EditorFor(model => model.Fakturerad, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
                 @Html.ValidationMessageFor(model => model.Fakturerad, "", new { @class = "text-danger" })
-            </div>
+            </div>*@
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Ovrigt, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Ovrigt, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.TextAreaFor(model => model.Ovrigt, 5, 50, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.Ovrigt, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -185,7 +246,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default"   />
+                <input type="submit" value="Spara" class="btn btn-default"   />
             </div>
         </div>
         <div class="form-group">
@@ -203,6 +264,7 @@
 
     $("form").submit(function (eventObj) {
 
+        // Kundlista
         var e = document.getElementById("selectlista");
         var strUser = e.options[e.selectedIndex].value;
         console.log(strUser);
@@ -212,6 +274,7 @@
             .attr('value', strUser)
             .appendTo('form');
 
+        // Statuslista
         var s = document.getElementById("statuslista");
         var st = s.options[s.selectedIndex].value;
         console.log(strUser);
@@ -221,13 +284,40 @@
             .attr('value', st)
             .appendTo('form');
 
+        // FakturaLista
+        var f = document.getElementById("fakturalista");
+        var f2 = f.options[f.selectedIndex].value;
+        console.log(f2);
+
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "Fakturerad")
+            .attr('value', f2)
+            .appendTo('form');
+
+        //StyckprisLista
+        var sp = document.getElementById("styckPrisLista");
+        var spl = sp.options[sp.selectedIndex].value;
+        console.log(spl);
+
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "StyckPris")
+            .attr('value', spl)
+            .appendTo('form');
+
     });
 
     $(document).ready(function(){
-        $("select").chosen({allow_single_deselect:true});
+        $("#selectlista").chosen({
+            allow_single_deselect:true,
+            disable_search:false
+        });
+        $("select").chosen({
+            allow_single_deselect:true,
+            disable_search:true
+        });
     });
 
-   
+   // Funktion för att aktivera redigering av fälten
     $('#edit').click(function() {
         $('#Ordernr').prop('readOnly', false);
         $('#selectlista').prop('disabled', false).trigger("chosen:updated");
@@ -236,12 +326,11 @@
         $('#Adress').prop('readOnly', false);
         $('#InDatum').prop('readOnly', false);
         $('#UtDatum').prop('readOnly', false);
-        $('#StyckPris').prop('disabled', false).trigger("chosen:updated");
+        $('#styckPrisLista').prop('disabled', false).trigger("chosen:updated");
         $('#Langd').prop('readOnly', false);
         $('#Timmar').prop('readOnly', false);
-        $('#Fakturerad').prop('disabled', false).trigger("chosen:updated");
+        $('#fakturalista').prop('disabled', false).trigger("chosen:updated");
         $('#Ovrigt').prop('readOnly', false);
-       // $('#Status').prop('readOnly', false);
         $('#statuslista').prop('disabled', false).trigger("chosen:updated");
        
     });

@@ -6,11 +6,18 @@
 
 <h2>Hantera Konton</h2>
 
-<li>@Html.ActionLink("Registrera", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-<li>@Html.ActionLink("Visa Användare", "VisaAnvandare", "HanteraKonton")</li>
+<p >@Html.ActionLink("Registrera ny användare", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</p>
+<p >@Html.ActionLink("Visa alla Användare", "VisaAnvandare", "HanteraKonton")</p>
 @if (TempData["Success"] != null)
 {
     <div class="green">
         <p style="color:greenyellow"><strong>Success:</strong> @TempData["Success"].ToString()</p>
     </div>
 }
+
+<script>
+    $(document).ready(function() {
+        $("p").toggleClass("list-unstyled");
+    })
+</script>
+
