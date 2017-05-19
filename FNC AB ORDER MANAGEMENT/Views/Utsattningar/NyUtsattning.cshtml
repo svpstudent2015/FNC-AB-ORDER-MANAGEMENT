@@ -46,10 +46,7 @@
             @*<div class="col-md-10" style="visibility:">
                 
                 @Html.EditorFor(model => model.KundID, new {htmlAttributes = new {@class = "chzn-select"}})
-                @Html.ValidationMessageFor(model => model.KundID, "", new {@class = "text-danger"})
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="button" value="Lägg till ny kund" class="btn btn-default" onclick="location.href = '@Url.Action("NyKund", "Kund")'"/>
-                </div>
+                @Html.ValidationMessageFor(model => model.KundID, "", new {@class = "text-danger"})                
             </div>*@          
         </div>
 

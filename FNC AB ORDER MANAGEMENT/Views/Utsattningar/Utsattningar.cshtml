@@ -38,7 +38,7 @@
                     <th>Status</th>
                     <th>Adress</th>
                     <th>Ordernr</th>
-                    <th>Start datum</th>
+                    <th>Start Datum</th>
                     <th>Övrigt</th>
                 </tr>
             </thead>
@@ -48,7 +48,7 @@
                     <th>Status</th>
                     <th>Adress</th>
                     <th>Ordernr</th>
-                    <th>Start datum</th>
+                    <th>Start Datum</th>
                     <th>Övrigt</th>
                 </tr>
             </tfoot>
@@ -63,7 +63,12 @@
                                 <td>@item.Status</td>
                                 <td>@item.Adress</td>
                                 <td>@item.Ordernr</td>
-                                <td>@item.InDatum</td>
+                                <td>
+                                    @if (item.InDatum != null)
+                                    {
+                                        @item.InDatum.Value.ToShortDateString()
+                                    }
+                                </td>
                                 <td>@item.Ovrigt</td>
                             </tr>
                         }
