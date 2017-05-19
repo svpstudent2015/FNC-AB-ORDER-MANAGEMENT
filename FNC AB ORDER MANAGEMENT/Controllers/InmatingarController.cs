@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using FNC_AB_ORDER_MANAGEMENT.Models;
 using DAL.RepositoryFolder;
 using DAL;
+using Microsoft.AspNet.Identity;
 
 namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 {
@@ -91,6 +92,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
             else
             {
+                String anvandarId = User.Identity.GetUserId();
                 Inmatningar i = new Inmatningar();
 
                 i.Ordernr = model.Ordernr;
@@ -106,7 +108,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 i.Fakturerad = model.Fakturerad;
                 i.Ovrigt = model.Ovrigt;
                 i.Status = model.Status;
-
+                i.AID = anvandarId;
                 var db = new InmatningarRepository();
                 db.Add(i);
                 return RedirectToAction("Inmatningar", new {st = i.Status});
@@ -124,6 +126,11 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             Inmatningar e = db.ShowRowByID(id);
             InmatningarModel model = new InmatningarModel();
             KundRepository k = new KundRepository();
+            AnvandareRepository dbAnvandare = new AnvandareRepository();
+
+            
+
+            AspNetUsers anvandare = dbAnvandare.HamtaEnAnvandareMedId(e.AID);
             List<Kund> klista = k.ShowAll();
 
             foreach (var kund in klista)
@@ -151,6 +158,11 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             model.Ovrigt = e.Ovrigt;
             model.Status = e.Status;
             model.ID = e.ID;
+            if (anvandare != null)
+            {
+                model.Anvandrare = anvandare.Email;
+            }
+
 
             return View(model);
       

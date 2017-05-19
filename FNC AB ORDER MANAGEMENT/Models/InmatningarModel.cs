@@ -51,8 +51,11 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
 
         public string Status { get; set; }
 
-        [DisplayName("Användare")]
+        
         public string AID { get; set; }
+
+        [DisplayName("Användare")]
+        public string Anvandrare { get; set; }
 
         public int ID { get; set; }
 
