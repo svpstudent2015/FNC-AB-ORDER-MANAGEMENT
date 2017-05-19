@@ -25,10 +25,12 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
         [StringLength(50, ErrorMessage = "{0} kan inte var längre än 50 tecken")]
         public string Adress { get; set; }
 
-        [DisplayName("Indatum")]
+        [DisplayName("Start Datum")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> InDatum { get; set; }
 
-        [DisplayName("Utdatum")]
+        [DisplayName("Slut Datum")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> UtDatum { get; set; }
 
         [DisplayName("Fastpris")]
