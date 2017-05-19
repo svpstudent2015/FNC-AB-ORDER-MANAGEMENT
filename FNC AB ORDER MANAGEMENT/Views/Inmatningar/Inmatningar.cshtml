@@ -63,7 +63,12 @@
                         <td>@item.Status</td>
                         <td>@item.Adress</td>
                         <td>@item.Ordernr</td>
-                        <td>@item.InDatum</td>
+                        <td>
+                            @if (item.InDatum != null)
+                            {
+                                @item.InDatum.Value.ToShortDateString()
+                            }
+                        </td>
                         <td>@item.Ovrigt</td>
                     </tr>
                 }
@@ -76,80 +81,10 @@
         <input type="button" value="Ny Inmätning" class="btn btn-default" onclick="location.href='@Url.Action("NyInmatning", "Inmatningar")'" />  
 </div>
 <script>
-
-
-    //var chosen = new $.fn.dataTable.Editor({
-    //     ajax: "../php/todo.php",
-    //     table: "#example",
-    //     fields: [{
-    //         label: "Description:",
-    //         name: "description",
-    //         type: "chosen"
-    //     }]
-    // });
-
-
     $(document).ready(function () {
         $('#example').DataTable();
-
     });
-
 </script>
-
-@*jQuery.extend(true,chosen, {
-    "chosen": {
-    sProcessing: "Przetwarzanie...",
-    sSearch: "Szukaj:",
-    sLengthMenu: "Pokaż _MENU_ pozycji",
-    sInfo: "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
-    sInfoEmpty: "Pozycji 0 z 0 dostępnych",
-    sInfoFiltered: "(filtrowanie spośród _MAX_ dostępnych pozycji)",
-    sInfoPostFix: "",
-    sLoadingRecords: "Wczytywanie...",
-    sZeroRecords: "Nie znaleziono pasujących pozycji",
-    sEmptyTable: "Brak danych",
-    oPaginate: {
-    sFirst: "Pierwsza",
-    sPrevious: "Föregående",
-    sNext: "Następna",
-    sLast: "Ostatnia"
-    },
-    oAria: {
-    sSortAscending: ": aktywuj, by posortować kolumnę rosnąco",
-    sSortDescending: ": aktywuj, by posortować kolumnę malejąco"
-    }
-    }*@
-
-
-@*<script>
-        (function andraknapp() {
-
-           $('#s').addClass('myActive');
-            var knapp = document.getElementById('s');
-            knapp.style('myActive');
-
-            $("#StatusSortering").text("Slutförd");
-            @Url.Action("Inmatningar",new {st="Slutförd"})
-            Console.log("klicklkopick");
-        });
-
-
-        $('#s').click(function (eventObj) {
-
-            document.getElementById("StatusSortering").innerHTML = "Slutförd";
-
-            window.location.href='@Url.Action("Inmatningar",new { st = "Slutförd" })' ;
-
-            $('#s').addClass('myActive');
-            $('#StatusSortering').text = "Slutförd";
-            document.getElementById("StatusSortering").innerHTML = "Slutförd";
-
-            var tee = document.getElementById('StatusSortering');
-            tee.text = "Slutförd";
-
-
-        });
-    </script>*@
 
 
 
