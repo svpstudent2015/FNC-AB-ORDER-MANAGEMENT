@@ -15,62 +15,71 @@
 <div class="container">
     <h2 style="vertical-align: middle; text-align: center; font-weight: bold">Utsättningar</h2>
     <hr />
+    <div class="form-group">
+        <div>
+            <hr />
+            <h3 style=" width:50%; text-align:center;" id="StatusSortering">   @Model.Status </h3>
+        </div>
+        <div class="col-md-offset-2 col-md-10">
 
-    <hr /><h2>Sortering :</h2><h3 id="StatusSortering">@Model.Status </h3>
-    <input id="p" type="button" Onclick="location.href='@Url.Action("Utsattningar",new {sta="Pågående"})'" value="Pågående" />
-    <input id="es" type="button" Onclick="location.href='@Url.Action("Utsattningar",new {sta="Ej slutförd"})'" value="Ej slutförd" />
-    <input id="eg" type="button" Onclick="location.href='@Url.Action("Utsattningar",new {sta="Ej genomförbar"})'" value="Ej genomförbar" />
-    <input id="s" type="button" Onclick="location.href='@Url.Action("Utsattningar",new {sta="Slutförd"})'" value="Slutförd" />
-    
+
+            <input id="p" type="button" Onclick="location.href='@Url.Action("Utsattningar",new {sta="Pågående"})'" value="Pågående" class="btn btn-default" />
+            <input id="es" type="button" Onclick="location.href='@Url.Action("Utsattningar",new {sta="Ej slutförd"})'" value="Ej slutförd" class="btn btn-default" />
+            <input id="eg" type="button" Onclick="location.href='@Url.Action("Utsattningar",new {sta="Ej genomförbar"})'" value="Ej genomförbar" class="btn btn-default" />
+            <input id="s" type="button" Onclick="location.href='@Url.Action("Utsattningar",new {sta="Slutförd"})'" value="Slutförd" class="btn btn-default" />
+        </div>
+    </div>
 </div>
 
-<table id="example" class="display" cellspacing="0" width="100%">
-    <thead>
-        <tr>
-            <th>Kund</th>
-            <th>Status</th>
-            <th>Adress</th>
-            <th>Ordernr</th>
-            <th>Start datum</th>
-            <th>Övrigt</th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-            <th>Kund</th>
-            <th>Status</th>
-            <th>Adress</th>
-            <th>Ordernr</th>
-            <th>Start datum</th>
-            <th>Övrigt</th>
-        </tr>
-    </tfoot>
-    <tbody>
-        @{
-            if (Model != null)
-            {
-                foreach (var item in Model.UtsattningsLista)
-                {
-                    <tr>
-                        <td Onclick="location.href='@Url.Action("RedigerUtsattningar/"+item.ID, "Utsattningar")'">@item.KundNamn</td>
-                        <td>@item.Status</td>
-                        <td>@item.Adress</td>
-                        <td>@item.Ordernr</td>
-                        <td>@item.InDatum</td>
-                        <td>@item.Ovrigt</td>
-                    </tr>
+        <table id="example" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Kund</th>
+                    <th>Status</th>
+                    <th>Adress</th>
+                    <th>Ordernr</th>
+                    <th>Start datum</th>
+                    <th>Övrigt</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Kund</th>
+                    <th>Status</th>
+                    <th>Adress</th>
+                    <th>Ordernr</th>
+                    <th>Start datum</th>
+                    <th>Övrigt</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @{
+                    if (Model != null)
+                    {
+                        foreach (var item in Model.UtsattningsLista)
+                        {
+                            <tr>
+                                <td Onclick="location.href='@Url.Action("RedigerUtsattningar/"+item.ID, "Utsattningar")'">@item.KundNamn</td>
+                                <td>@item.Status</td>
+                                <td>@item.Adress</td>
+                                <td>@item.Ordernr</td>
+                                <td>@item.InDatum</td>
+                                <td>@item.Ovrigt</td>
+                            </tr>
+                        }
+                    }
                 }
-            }
-        }
 
-    </tbody>
-</table>
-<input type="button" value="Ny Utsättning" onclick="location.href='@Url.Action("NyUtsattning", "Utsattningar")'" />
-<script>
-$(document).ready(function() {
-    $('#example').DataTable();
-} );
-</script>
+            </tbody>
+        </table>
+        <div class="form-group">
+            <input type="button" value="Ny Utsättning" class="btn btn-default" onclick="location.href='@Url.Action("NyUtsattning", "Utsattningar")'" />
+        </div>
+        <script>
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
 
 
 

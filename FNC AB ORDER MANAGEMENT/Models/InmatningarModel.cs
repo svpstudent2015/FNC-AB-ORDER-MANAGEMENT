@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,21 +9,51 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
 {
     public class InmatningarModel
     {
+        [Required]
+        [StringLength(50, ErrorMessage = "{0} måste vara minst {2} tecken långt .", MinimumLength = 1)]
         public string Ordernr { get; set; }
+
+        [DisplayName("Kund")]
         public string KundNamn { get; set; }
+
+        [StringLength(15, ErrorMessage = "{0} kan inte var längre än 15 tecken")]
         public string Telefonnr { get; set; }
+
+        [StringLength(50, ErrorMessage = "{0} kan inte var längre än 50 tecken")]
         public string Ort { get; set; }
+
+        [StringLength(50, ErrorMessage = "{0} kan inte var längre än 50 tecken")]
         public string Adress { get; set; }
+
+        [DisplayName("Indatum")]
         public Nullable<System.DateTime> InDatum { get; set; }
+
+        [DisplayName("Utdatum")]
         public Nullable<System.DateTime> UtDatum { get; set; }
+
+        [DisplayName("Fastpris")]
         public Nullable<bool> StyckPris { get; set; }
+
+        [DisplayName("Längd")]
+        [RegularExpression(@"^[1-9]\d*(\.\d+)?$", ErrorMessage = "Du måste använda siffror")]
         public Nullable<decimal> Langd { get; set; }
+
+        [RegularExpression(@"^[1-9]\d*(\.\d+)?$", ErrorMessage = "Du måste använda siffror")]
         public Nullable<decimal> Timmar { get; set; }
+
         public Nullable<bool> Fakturerad { get; set; }
+
+        [DisplayName("Övrigt")]
+        [StringLength(200, ErrorMessage = "{0} kan inte var längre än 200 tecken")]
         public string Ovrigt { get; set; }
+
         public string Status { get; set; }
+
+        [DisplayName("Användare")]
         public string AID { get; set; }
+
         public int ID { get; set; }
+
         public Nullable<int> KundID { get; set; }
 
         public List<InmatningarModel> InmatningsLista;

@@ -80,7 +80,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         public ActionResult NyUtsattning(UtsattningarModel model)
         {
             if (!ModelState.IsValid)
-                return View();
+                return View(model);
 
             else
             {
