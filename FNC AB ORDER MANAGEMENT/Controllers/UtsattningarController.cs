@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using FNC_AB_ORDER_MANAGEMENT.Models;
 using DAL.RepositoryFolder;
 using DAL;
+using Microsoft.AspNet.Identity;
 
 namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 {
@@ -57,6 +58,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             KundRepository dbKund = new KundRepository();
             List<Kund>klista = dbKund.ShowAll();
             UtsattningarModel umodel = new UtsattningarModel();
+           
 
 
             foreach (var kund in klista )
@@ -84,6 +86,9 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
             else
             {
+                String anvandarId = User.Identity.GetUserId();
+               
+                
                 Utsattningar i = new Utsattningar();
 
                 i.Ordernr = model.Ordernr;
@@ -100,6 +105,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 i.Ovrigt = model.Ovrigt;
                 i.Status = model.Status; 
                 i.GPS = model.GPS;
+                i.AID = anvandarId;
 
                 var dbUtsattningar = new UtsattningarRepository();
                 dbUtsattningar.Add(i);
@@ -117,8 +123,11 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             Utsattningar e = dbUtsattningar.HamtaEnUsattning(id);
             UtsattningarModel uModel = new UtsattningarModel();
             KundRepository dbKund = new KundRepository();
+            AnvandareRepository dbAnvandare = new AnvandareRepository();
+
             List<Kund> klista = dbKund.ShowAll();
-            
+
+            AspNetUsers anvandare = dbAnvandare.HamtaEnAnvandareMedId(e.AID);
 
 
             foreach (var kund in klista)
@@ -147,13 +156,19 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             uModel.Status = e.Status;
             uModel.ID = e.ID;
             uModel.GPS = e.GPS;
-           
+
+            if (anvandare !=null) {
+                uModel.Anvandrare = anvandare.Email;
+            }
+            
+
+
 
             return View(uModel);
             
         }
 
-        // Metod för att ändra och spara inmätningar
+        // Metod för att ändra och sparaa utsättningar
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

@@ -8,7 +8,7 @@ namespace DAL.RepositoryFolder
 {
     public class AnvandareRepository : Repository<AspNetUsers>
     {
-        public AspNetUsers ShowRowByID(string id)
+        public AspNetUsers HamtaEnAnvandareMedId(string id)
         {
             try
             {
@@ -23,6 +23,9 @@ namespace DAL.RepositoryFolder
                 return null;
             }
         }
+
+    
+
         public bool ShowUserRoll(AspNetUsers u)
         {
             try

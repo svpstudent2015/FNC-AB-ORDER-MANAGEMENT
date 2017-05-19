@@ -98,7 +98,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         {
 
             var db = new AnvandareRepository();
-            AspNetUsers e = db.ShowRowByID(id);
+            AspNetUsers e = db.HamtaEnAnvandareMedId(id);
 
             AnvandareModel model = new AnvandareModel();
 

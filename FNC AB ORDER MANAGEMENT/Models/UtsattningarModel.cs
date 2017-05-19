@@ -35,10 +35,10 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
         public Nullable<bool> StyckPris { get; set; }
 
         [DisplayName("Längd")]
-        [RegularExpression(@"^[1-9]\d*(\.\d+)?$", ErrorMessage = "Du måste använda siffror")]
+        [RegularExpression(@"^[0-9]\d*(\.\d+)?$", ErrorMessage = "Du måste använda siffror")]
         public Nullable<decimal> Langd { get; set; }
 
-        [RegularExpression(@"^[1-9]\d*(\.\d+)?$", ErrorMessage = "Du måste använda siffror")]
+        [RegularExpression(@"^[0-9]\d*(\.\d+)?$", ErrorMessage = "Du måste använda siffror")]
         public Nullable<decimal> Timmar { get; set; }
 
         public Nullable<bool> Fakturerad { get; set; }
@@ -51,8 +51,11 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
 
         public Nullable<bool> GPS { get; set; }
 
-        [DisplayName("Användare")]
+        
         public string AID { get; set; }
+
+        [DisplayName("Användare")]
+        public string Anvandrare { get; set; }
 
         public int ID { get; set; }
 
