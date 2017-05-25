@@ -110,7 +110,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 i.Status = model.Status;
                 i.AID = anvandarId;
                 var db = new InmatningarRepository();
-                db.Add(i);
+                db.LaggTill(i);
                 return RedirectToAction("Inmatningar", new {st = i.Status});
 
 

@@ -14,8 +14,8 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
     {
         // GET: Utsattningar
         //Andropas med önskad satus på utsättningar.
-        //Retunerar vyn utsattning tillsammans med en modellen innehållandes
-        //en lista av utsattningar
+        //Retunerar vyn utsattning tillsammans med en modell innehållandes
+        //en lista av utsattningar 
         public ActionResult Utsattningar(string sta)
         {
             UtsattningarModel uModel = new UtsattningarModel();
@@ -88,28 +88,27 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             {
                 String anvandarId = User.Identity.GetUserId();
                
-                
-                Utsattningar i = new Utsattningar();
+                Utsattningar u = new Utsattningar();
 
-                i.Ordernr = model.Ordernr;
-                i.KundID = model.KundID;
-                i.Telefonnr = model.Telefonnr;
-                i.Ort = model.Ort;
-                i.Adress = model.Adress;
-                i.InDatum = model.InDatum;
-                i.UtDatum = model.UtDatum;
-                i.StyckPris = model.StyckPris;
-                i.Langd = model.Langd;
-                i.Timmar = model.Timmar;
-                i.Fakturerad = model.Fakturerad;
-                i.Ovrigt = model.Ovrigt;
-                i.Status = model.Status; 
-                i.GPS = model.GPS;
-                i.AID = anvandarId;
+                u.Ordernr = model.Ordernr;
+                u.KundID = model.KundID;
+                u.Telefonnr = model.Telefonnr;
+                u.Ort = model.Ort;
+                u.Adress = model.Adress;
+                u.InDatum = model.InDatum;
+                u.UtDatum = model.UtDatum;
+                u.StyckPris = model.StyckPris;
+                u.Langd = model.Langd;
+                u.Timmar = model.Timmar;
+                u.Fakturerad = model.Fakturerad;
+                u.Ovrigt = model.Ovrigt;
+                u.Status = model.Status; 
+                u.GPS = model.GPS;
+                u.AID = anvandarId;
 
                 var dbUtsattningar = new UtsattningarRepository();
-                dbUtsattningar.Add(i);
-                return RedirectToAction("Utsattningar", new { sta = i.Status });
+                dbUtsattningar.LaggTill(u);
+                return RedirectToAction("Utsattningar", new { sta = u.Status });
 
             }
 

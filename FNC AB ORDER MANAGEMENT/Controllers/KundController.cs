@@ -54,7 +54,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             k.Email = model.Email;
             k.Telefonnr = model.Telefonnr;
             
-            db.Add(k);
+            db.LaggTill(k);
 
             return RedirectToAction("NyUtsattning", "Utsattningar");
             

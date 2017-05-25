@@ -8,7 +8,7 @@ namespace DAL.RepositoryFolder
 {
     public class Repository<T> where T : class 
     {
-        public void Add(T item)
+        public void LaggTill(T item)
         {
             try
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
@@ -19,6 +20,8 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
         public string UserName { get; set; }
+
+        [DisplayName("Admin")]
         public bool Roll { get; set; }
 
         public List<AnvandareModel> AnvandareLista;
