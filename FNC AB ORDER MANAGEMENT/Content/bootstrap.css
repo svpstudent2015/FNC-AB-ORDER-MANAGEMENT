@@ -582,6 +582,14 @@ ol ol {
     color: #000000;
     font-size: medium;
     text-decoration: none;
+    text-decoration-style: none;
+        
+}
+
+.list-unstyled:hover {
+    color: #00000000;
+    text-decoration: none;
+    list-style: none;
 }
 
 .list-inline {

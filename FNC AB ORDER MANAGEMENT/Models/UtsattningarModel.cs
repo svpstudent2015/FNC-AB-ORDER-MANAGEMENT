@@ -61,6 +61,8 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
 
         public int ID { get; set; }
 
+        public Nullable<bool> Exporterad { get; set; }
+
         public Nullable<int> KundID { get; set; }
 
         public List<UtsattningarModel> UtsattningsLista;

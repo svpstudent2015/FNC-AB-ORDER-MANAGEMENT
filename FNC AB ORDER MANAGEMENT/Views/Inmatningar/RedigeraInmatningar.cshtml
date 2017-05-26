@@ -237,15 +237,52 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Anvandrare, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Anvandrare, new { htmlAttributes = new { @class = "form-control" , @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.Anvandrare, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Anvandrare, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Anvandrare, new { htmlAttributes = new { @class = "form-control" , @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.Anvandrare, "", new { @class = "text-danger" })
         </div>
+    </div>
+        
+    <div class="form-group">
+        @Html.LabelFor(model => model.Exporterad, htmlAttributes: new { @class = "control-label col-md-2" })
+        @{
+            if (Model != null)
+            {
 
-        @Html.HiddenFor(model => model.ID)
+                <div class="col-md-10">
+                    <select id="exporteradLista" data-placeholder="Välj en kund..." class="chzn-select" style="width: 350px;" tabindex="2" disabled="disabled">
+                        @foreach (var item in Model.ExporteradLista)
+                        {
+                            string bool1;
+                            bool1 = item;
+                            bool bool2 = false;
+
+                            if (bool1.Equals("Ja"))
+                            {
+                                bool2 = true;
+                            }
+
+                            if (Model.Exporterad==bool2)
+                            {
+
+                                <option selected="selected" value="@bool2.ToString()"> @item</option>
+                            }
+                            else
+                            {
+
+                                <option value="@bool2.ToString()"> @item</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+            }
+        }
+    </div>
+
+    @Html.HiddenFor(model => model.ID)
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -305,6 +342,16 @@
         $('<input />').attr('type', 'hidden')
             .attr('name', "StyckPris")
             .attr('value', spl)
+            .appendTo('form');
+
+        //ExporteradLista
+        var ex = document.getElementById("exporteradLista");
+        var exp = ex.options[ex.selectedIndex].value;
+        console.log(exp);
+
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "Exporterad")
+            .attr('value', exp)
             .appendTo('form');
 
     });

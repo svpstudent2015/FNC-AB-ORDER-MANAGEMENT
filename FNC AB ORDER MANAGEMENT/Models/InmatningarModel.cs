@@ -59,6 +59,8 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
 
         public int ID { get; set; }
 
+        public Nullable<bool> Exporterad { get; set; }
+
         public Nullable<int> KundID { get; set; }
 
         public List<InmatningarModel> InmatningsLista;
@@ -66,11 +68,13 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
         public List<String> statuslista;
         public List<String> styckPrislista;
         public List<String> fakturaLista;
+        public List<String> ExporteradLista;
 
         public InmatningarModel()
         {
             InmatningsLista = new List<InmatningarModel>();
             KundLista = new List<KundModel>();
+
 
             // StyckprisLista
             styckPrislista = new List<string>();
@@ -88,6 +92,11 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
             fakturaLista = new List<string>();
             fakturaLista.Add("Ja");
             fakturaLista.Add("Nej");
+
+            // ExporteradLista
+            ExporteradLista = new List<string>();
+            ExporteradLista.Add("Ja");
+            ExporteradLista.Add("Nej");
         }
  
     

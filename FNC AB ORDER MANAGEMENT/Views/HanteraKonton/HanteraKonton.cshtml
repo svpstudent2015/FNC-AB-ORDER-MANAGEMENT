@@ -6,7 +6,7 @@
 
 <h2>Hantera Konton</h2>
 
-<p >@Html.ActionLink("Registrera ny användare", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</p>
+@Html.ActionLink("Registrera ny användare", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
 <p >@Html.ActionLink("Visa alla Användare", "VisaAnvandare", "HanteraKonton")</p>
 @if (TempData["Success"] != null)
 {
@@ -16,8 +16,9 @@
 }
 
 <script>
-    $(document).ready(function() {
-        $("p").toggleClass("list-unstyled");
+    $(document).ready(function () {
+        $("#registerLink").removeClass();
+        $("#registerLink").toggleClass("list-unstyled");
     })
 </script>
 

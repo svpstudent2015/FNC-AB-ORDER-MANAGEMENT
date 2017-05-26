@@ -30,6 +30,7 @@ namespace DAL
         public int ID { get; set; }
         public Nullable<int> KundID { get; set; }
         public string Ovrigt { get; set; }
+        public Nullable<bool> Exporterad { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual Kund Kund { get; set; }

@@ -13,7 +13,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
     public class InmatningarController : Controller
     {
         // GET: Inmatningar
-        public ActionResult Inmatningar(string st)
+        public ActionResult Inmatningar(string st, string kNamn, bool? exp, DateTime? inDat, DateTime? utDat)
         {
             InmatningarModel i2 = new InmatningarModel();
             i2.Status = st;
@@ -23,6 +23,8 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             var InmatningsListan = dbInmatningar.ShowAll();
             var KundListan = dbKund.ShowAll();
 
+            
+
             if (InmatningsListan != null)
             {
 
@@ -30,18 +32,58 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 var lista = from k in InmatningsListan
                     join i in KundListan
                     on k.KundID equals i.ID
-                    where k.Status == st
+                    
                     select new InmatningarModel()
                     {
                         KundNamn = i.Namn,
+                        
                         Status = k.Status,
                         Adress = k.Adress,
                         Ordernr = k.Ordernr,
                         InDatum = k.InDatum,
+                        UtDatum = k.UtDatum,
                         ID = k.ID,
-                        Ovrigt = k.Ovrigt
+                        Ovrigt = k.Ovrigt,
+                        Exporterad = k.Exporterad
 
                     };
+                if (st != null)
+                {
+                    lista = lista.Where(x => x.Status == st);
+                }
+                if (kNamn != null)
+                {
+                    lista = lista.Where(x => x.KundNamn == kNamn);
+                }
+
+              //  lista = lista.Where(x => x.Exporterad == exp);
+                bool? test = exp;
+
+                if (test == true)
+                {
+                    lista = lista.Where(x => x.Exporterad == exp);
+                }
+
+                else if(test == false)
+                {
+                    lista = lista.Where(x => x.Exporterad == exp);
+                }
+                else 
+                {
+                    
+                }
+                DateTime? test2 = inDat;
+                if (test2 !=null)
+                {
+                    lista = lista.Where(x => x.InDatum >= inDat);
+                }
+
+                DateTime? test3 = utDat;
+                if (test3 != null)
+                {
+                    lista = lista.Where(x => x.UtDatum <= utDat);
+                }
+
 
                 foreach (InmatningarModel e in lista)
                 {                   
@@ -50,9 +92,27 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
 
                 }
+
+                foreach (var kund in KundListan)
+                {
+                    KundModel km = new KundModel();
+                    km.Namn = kund.Namn;
+                    km.Telefonnr = kund.Telefonnr;
+                    km.Email = kund.Email;
+                    km.ID = kund.ID;
+
+                    i2.KundLista.Add(km);
+                }
             }
 
             return View(i2);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Inmatningar(InmatningarModel model)
+        {
+            return RedirectToAction("Inmatningar", new { st = model.Status , kNamn=model.KundNamn, exp=model.Exporterad, inDat=model.InDatum, utDat=model.UtDatum });
         }
         // Get Ny Inmätning
         public ActionResult NyInmatning()
@@ -109,6 +169,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 i.Ovrigt = model.Ovrigt;
                 i.Status = model.Status;
                 i.AID = anvandarId;
+                i.Exporterad = false;
                 var db = new InmatningarRepository();
                 db.LaggTill(i);
                 return RedirectToAction("Inmatningar", new {st = i.Status});
@@ -158,6 +219,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             model.Ovrigt = e.Ovrigt;
             model.Status = e.Status;
             model.ID = e.ID;
+            model.Exporterad = e.Exporterad;
             if (anvandare != null)
             {
                 model.Anvandrare = anvandare.Email;

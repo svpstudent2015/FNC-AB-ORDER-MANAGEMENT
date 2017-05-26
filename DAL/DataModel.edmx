@@ -85,6 +85,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="KundID" Type="int" />
           <Property Name="Ovrigt" Type="nvarchar" MaxLength="200" />
+          <Property Name="Exporterad" Type="bit" />
         </EntityType>
         <EntityType Name="Kund">
           <Key>
@@ -115,6 +116,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="KundID" Type="int" />
           <Property Name="Ovrigt" Type="nvarchar" MaxLength="200" />
+          <Property Name="Exporterad" Type="bit" />
         </EntityType>
         <Association Name="FK__Inmatning__KundI__03F0984C">
           <End Role="Kund" Type="Self.Kund" Multiplicity="0..1" />
@@ -430,6 +432,7 @@
           <Property Name="Ovrigt" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUsers" Relationship="FNCOrderHanteringModel.FK__Inmatningar__AID__05D8E0BE" FromRole="Inmatningar" ToRole="AspNetUsers" />
           <NavigationProperty Name="Kund" Relationship="FNCOrderHanteringModel.FK__Inmatning__KundI__03F0984C" FromRole="Inmatningar" ToRole="Kund" />
+          <Property Name="Exporterad" Type="Boolean" />
         </EntityType>
         <EntityType Name="Utsattningar">
           <Key>
@@ -453,6 +456,7 @@
           <Property Name="Ovrigt" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUsers" Relationship="FNCOrderHanteringModel.FK_Utsattningar_Id" FromRole="Utsattningar" ToRole="AspNetUsers" />
           <NavigationProperty Name="Kund" Relationship="FNCOrderHanteringModel.FK__Utsattnin__KundI__04E4BC85" FromRole="Utsattningar" ToRole="Kund" />
+          <Property Name="Exporterad" Type="Boolean" />
         </EntityType>
         <Association Name="FK__Inmatningar__AID__05D8E0BE">
           <End Type="FNCOrderHanteringModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
@@ -584,6 +588,7 @@
           <EntitySetMapping Name="Inmatningar">
             <EntityTypeMapping TypeName="FNCOrderHanteringModel.Inmatningar">
               <MappingFragment StoreEntitySet="Inmatningar">
+                <ScalarProperty Name="Exporterad" ColumnName="Exporterad" />
                 <ScalarProperty Name="Ovrigt" ColumnName="Ovrigt" />
                 <ScalarProperty Name="KundID" ColumnName="KundID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -605,6 +610,7 @@
           <EntitySetMapping Name="Utsattningar">
             <EntityTypeMapping TypeName="FNCOrderHanteringModel.Utsattningar">
               <MappingFragment StoreEntitySet="Utsattningar">
+                <ScalarProperty Name="Exporterad" ColumnName="Exporterad" />
                 <ScalarProperty Name="Ovrigt" ColumnName="Ovrigt" />
                 <ScalarProperty Name="KundID" ColumnName="KundID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />

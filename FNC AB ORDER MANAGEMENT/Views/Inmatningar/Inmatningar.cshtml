@@ -39,6 +39,7 @@
             <th>Adress</th>
             <th>Ordernr</th>
             <th>Start datum</th>
+            <th>Slut datum</th>
             <th>Övrigt</th>
         </tr>
     </thead>
@@ -49,6 +50,7 @@
             <th>Adress</th>
             <th>Ordernr</th>
             <th>Start datum</th>
+            <th>Slut datum</th>
             <th>Övrigt</th>
         </tr>
     </tfoot>
@@ -69,6 +71,12 @@
                                 @item.InDatum.Value.ToShortDateString()
                             }
                         </td>
+                        <td>
+                            @if (item.UtDatum != null)
+                            {
+                                @item.UtDatum.Value.ToShortDateString()
+                            }
+                        </td>
                         <td>@item.Ovrigt</td>
                     </tr>
                 }
@@ -78,11 +86,180 @@
     </tbody>
 </table>
 <div class="form-group">   
-        <input type="button" value="Ny Inmätning" class="btn btn-default" onclick="location.href='@Url.Action("NyInmatning", "Inmatningar")'" />  
+    <input type="button" value="Ny Inmätning" class="btn btn-default" onclick="location.href='@Url.Action("NyInmatning", "Inmatningar")'" />  
 </div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+
+        <div class="col-md-offset-2 col-md-10">
+            
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.Status, htmlAttributes: new {@class = "control-label col-md-2"})
+                @{
+                    if (Model != null)
+                    {
+
+                        <div class="col-md-10">
+                            <select id="statuslista" data-placeholder="Välj en kund..." class="chzn-select" style="width: 350px;" tabindex="2">
+                                @foreach (var item in Model.statuslista)
+                                {
+                                    if (item == Model.Status)
+                                    {
+
+                                        <option selected="selected" value="@item"> @item</option>
+                                    }
+                                    else
+                                    {
+                                        <option id="@item" value="@item"> @item</option>
+                                    }
+
+
+
+                                }
+                            </select>
+                        </div>
+
+                    }
+                }
+              
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.KundNamn, htmlAttributes: new {@class = "control-label col-md-2"})
+                @{
+                    if (Model != null)
+                    {
+
+                        <div class="col-md-10">
+                            <select id="kundlistan" data-placeholder="Välj en kund..." class="chzn-select" style="width: 350px;" tabindex="2">
+                                @foreach (var item in Model.KundLista)
+                                {
+                                    <option id="@item.ID" value="@item.Namn"> @item.Namn</option>
+                                }
+                            </select>
+
+                        </div>
+
+                    }
+                }
+
+
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Exporterad, htmlAttributes: new {@class = "control-label col-md-2"})
+                @{
+                    if (Model != null)
+                    {
+
+                        <div class="col-md-10">
+                            <select id="exporteradLista" data-placeholder="Välj styckpris" class="chzn-select" style="width: 350px;" tabindex="2">
+
+                                @foreach (var item in Model.ExporteradLista)
+                                {
+
+                                    string bool1;
+                                    bool1 = item;
+                                    bool bool2 = false;
+
+                                    if (bool1.Equals("Ja"))
+                                    {
+                                        bool2 = true;
+                                    }
+
+
+
+                                    <option value="@bool2.ToString()"> @item</option>
+                                }
+                            </select>
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.InDatum, htmlAttributes: new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.InDatum, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.InDatum, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UtDatum, htmlAttributes: new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UtDatum, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.UtDatum, "", new {@class = "text-danger"})
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Sök" class="btn btn-default"/>
+                </div>
+            </div>
+
+        </div>
+        </div>
+
+        }
 <script>
+    $("form").submit(function (eventObj) {
+
+        // Kundlista
+        var e = document.getElementById("kundlistan");
+        var strUser = e.options[e.selectedIndex].value;
+        console.log(strUser);
+
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "KundNamn")
+            .attr('value', strUser)
+            .appendTo('form');
+
+        // Statuslista
+        var s = document.getElementById("statuslista");
+        var st = s.options[s.selectedIndex].value;
+        console.log(strUser);
+
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "Status")
+            .attr('value', st)
+            .appendTo('form');
+
+        //ExporteradLista
+        var ex = document.getElementById("exporteradLista");
+        var exp = ex.options[ex.selectedIndex].value;
+        console.log(exp);
+
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "Exporterad")
+            .attr('value', exp)
+            .appendTo('form');
+
+    });
     $(document).ready(function () {
         $('#example').DataTable();
+                
+
+        $("#exporteradLista").chosen({
+            allow_single_deselect: true,
+            disable_search: true
+               
+                
+
+        });
+        $("#kundlistan").chosen({
+            allow_single_deselect: true,
+            disable_search: true
+        });
+               
+        $("#statuslista").chosen({
+            allow_single_deselect: true,
+            disable_search: true
+        });
+
     });
 </script>
 
