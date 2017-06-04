@@ -77,6 +77,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
 
         public List<String> gpsLista;
 
+        public List<String> ExporteradLista;
         public UtsattningarModel()
         {
             UtsattningsLista = new List<UtsattningarModel>();
@@ -104,6 +105,9 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
             gpsLista.Add("Ja");
             gpsLista.Add("Nej");
 
+            ExporteradLista = new List<string>();
+            ExporteradLista.Add("Ja");
+            ExporteradLista.Add("Nej");
         }
 
     }

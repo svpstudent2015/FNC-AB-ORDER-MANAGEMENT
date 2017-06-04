@@ -27,7 +27,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             var InmatningsListan = dbInmatningar.ShowAll();
             var KundListan = dbKund.ShowAll();
 
-            
+
 
             if (InmatningsListan != null)
             {
@@ -36,11 +36,11 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 var lista = from k in InmatningsListan
                     join i in KundListan
                     on k.KundID equals i.ID
-                    
+
                     select new InmatningarModel()
                     {
                         KundNamn = i.Namn,
-                        
+
                         Status = k.Status,
                         Adress = k.Adress,
                         Ordernr = k.Ordernr,
@@ -55,21 +55,20 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 {
 
                 }
-               else if (st != null)
+                else if (st != null)
                 {
                     lista = lista.Where(x => x.Status == st);
                 }
 
-                if (kNamn=="Alla")
+                if (kNamn == "Alla")
                 {
 
                 }
-               else if (kNamn != null )
+                else if (kNamn != null)
                 {
                     lista = lista.Where(x => x.KundNamn == kNamn);
                 }
 
-              //  lista = lista.Where(x => x.Exporterad == exp);
                 bool? test = exp;
 
                 if (test == true)
@@ -77,16 +76,16 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                     lista = lista.Where(x => x.Exporterad == exp);
                 }
 
-                else if(test == false)
+                else if (test == false)
                 {
                     lista = lista.Where(x => x.Exporterad == exp);
                 }
-                else 
+                else
                 {
-                    
+
                 }
                 DateTime? test2 = inDat;
-                if (test2 !=null)
+                if (test2 != null)
                 {
                     lista = lista.Where(x => x.InDatum >= inDat);
                 }
@@ -99,14 +98,15 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
 
                 foreach (InmatningarModel e in lista)
-                {                   
+                {
 
                     i2.InmatningsLista.Add(e);
 
 
                 }
+            }
 
-                foreach (var kund in KundListan)
+            foreach (var kund in KundListan)
                 {
                     KundModel km = new KundModel();
                     km.Namn = kund.Namn;
@@ -115,7 +115,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                     km.ID = kund.ID;
 
                     i2.KundLista.Add(km);
-                }
+                
             }
 
             return View(i2);

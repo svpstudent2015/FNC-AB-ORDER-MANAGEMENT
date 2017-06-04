@@ -16,41 +16,117 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         //Andropas med önskad satus på utsättningar.
         //Retunerar vyn utsattning tillsammans med en modell innehållandes
         //en lista av utsattningar 
-        public ActionResult Utsattningar(string sta)
+        public ActionResult Utsattningar(string sta, string kNamn, bool? exp, DateTime? inDat, DateTime? utDat)
         {
-            UtsattningarModel uModel = new UtsattningarModel();
-            uModel.Status = sta;
+            UtsattningarModel i2 = new UtsattningarModel();
+            i2.Status = sta;
+            i2.KundNamn = kNamn;
+            i2.Exporterad = exp;
+            i2.InDatum = inDat;
+            i2.UtDatum = utDat;
+
             var dbUtsattningar = new UtsattningarRepository();
             var dbKund = new KundRepository();
             var utsattningsLista = dbUtsattningar.ShowAll();
             var kundLista = dbKund.ShowAll();
 
-            var nyUtsattningsLista = from u in utsattningsLista
-                join k in kundLista
-                on u.KundID equals k.ID
-                where u.Status == sta
-                select new UtsattningarModel()
-                {
-                    KundNamn = k.Namn,
-                    Status = u.Status,
-                    Adress = u.Adress,
-                    Ordernr = u.Ordernr,
-                    InDatum = u.InDatum,
-                    ID = u.ID,
-                    Ovrigt = u.Ovrigt
-
-        };
-
-            foreach (UtsattningarModel uM in nyUtsattningsLista)
+            if (utsattningsLista != null)
             {
-               
-                uModel.UtsattningsLista.Add(uM);
 
+                var lista = from u in utsattningsLista
+                    join k in kundLista
+                    on u.KundID equals k.ID
+
+                    select new UtsattningarModel()
+                    {
+                        KundNamn = k.Namn,
+                        Status = u.Status,
+                        Adress = u.Adress,
+                        Ordernr = u.Ordernr,
+                        InDatum = u.InDatum,
+                        ID = u.ID,
+                        Ovrigt = u.Ovrigt,
+                        Exporterad = u.Exporterad
+
+                    };
+
+                if (sta == "Alla")
+                {
+
+                }
+                else if (sta != null)
+                {
+                    lista = lista.Where(x => x.Status == sta);
+                }
+
+                if (kNamn == "Alla")
+                {
+
+                }
+                else if (kNamn != null)
+                {
+                    lista = lista.Where(x => x.KundNamn == kNamn);
+                }
+
+                bool? test = exp;
+
+                if (test == true)
+                {
+                    lista = lista.Where(x => x.Exporterad == exp);
+                }
+
+                else if (test == false)
+                {
+                    lista = lista.Where(x => x.Exporterad == exp);
+                }
+                else
+                {
+
+                }
+                DateTime? test2 = inDat;
+                if (test2 != null)
+                {
+                    lista = lista.Where(x => x.InDatum >= inDat);
+                }
+
+                DateTime? test3 = utDat;
+                if (test3 != null)
+                {
+                    lista = lista.Where(x => x.UtDatum <= utDat);
+                }
+
+                foreach (UtsattningarModel uM in lista)
+                {
+
+                    i2.UtsattningsLista.Add(uM);
+
+                }
             }
 
+            foreach (var kund in kundLista)
+                {
+                    KundModel km = new KundModel();
+                    km.Namn = kund.Namn;
+                    km.Telefonnr = kund.Telefonnr;
+                    km.Email = kund.Email;
+                    km.ID = kund.ID;
 
-            return View(uModel);
+                    i2.KundLista.Add(km);
+                }
+
+            
+
+            return View(i2);
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Utsattningar(UtsattningarModel model)
+        {
+            return RedirectToAction("Utsattningar", new { sta = model.Status, kNamn = model.KundNamn, exp = model.Exporterad, inDat = model.InDatum, utDat = model.UtDatum });
+        }
+
         //Retunerar vyn NyUtsattning med en modell inhållandes en
         //lista av Kunder
         public ActionResult NyUtsattning()
