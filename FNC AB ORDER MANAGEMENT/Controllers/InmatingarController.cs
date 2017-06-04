@@ -17,7 +17,11 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         {
             InmatningarModel i2 = new InmatningarModel();
             i2.Status = st;
-            
+            i2.KundNamn = kNamn;
+            i2.Exporterad = exp;
+            i2.InDatum = inDat;
+            i2.UtDatum = utDat;
+
             var dbInmatningar = new InmatningarRepository();            
             var dbKund = new KundRepository();
             var InmatningsListan = dbInmatningar.ShowAll();
@@ -47,11 +51,20 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                         Exporterad = k.Exporterad
 
                     };
-                if (st != null)
+                if (st == "Alla")
+                {
+
+                }
+               else if (st != null)
                 {
                     lista = lista.Where(x => x.Status == st);
                 }
-                if (kNamn != null)
+
+                if (kNamn=="Alla")
+                {
+
+                }
+               else if (kNamn != null )
                 {
                     lista = lista.Where(x => x.KundNamn == kNamn);
                 }
