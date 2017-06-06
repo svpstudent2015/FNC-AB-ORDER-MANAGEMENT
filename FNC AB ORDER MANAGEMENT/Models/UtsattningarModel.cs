@@ -33,10 +33,10 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> UtDatum { get; set; }
 
-        [DisplayName("Fastpris")]
+        [DisplayName("Etablerad Kostnad")]
         public Nullable<bool> StyckPris { get; set; }
 
-        [DisplayName("Längd")]
+        [DisplayName("Längd > 500M")]
         [RegularExpression(@"^[0-9]\d*(\.\d+)?$", ErrorMessage = "Du måste använda siffror")]
         public Nullable<decimal> Langd { get; set; }
 
