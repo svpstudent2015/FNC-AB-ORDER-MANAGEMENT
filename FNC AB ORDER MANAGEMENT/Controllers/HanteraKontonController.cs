@@ -144,6 +144,13 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
         }
 
+        public ActionResult ChangePw(string id)
+        {
+            AdminChangePasswordModel acpm = new AdminChangePasswordModel();
+            acpm.Id = id;
+            return View(acpm);
+
+        }
 
         //[ChildActionOnly]
         public ActionResult PartialPasswordChange(string id)
@@ -158,13 +165,13 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         // Metod för att byta en annan användares lösenord
         [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> changePassword2(AdminChangePasswordModel usermodel)
+        public async Task<ActionResult> ChangePw(AdminChangePasswordModel usermodel)
         {
 
             if (!ModelState.IsValid)
             {
                 
-                return PartialView("changePassword2", usermodel);
+                return View(usermodel);
             }
 
             ApplicationUser user = await UserManager.FindByIdAsync(usermodel.Id);
