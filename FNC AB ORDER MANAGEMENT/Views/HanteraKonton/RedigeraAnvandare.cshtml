@@ -43,35 +43,44 @@
                     <input type="button" value="Radera Användare" class="btn btn-default" onclick="location.href='@Url.Action("TaBortAnvandare/"+Model.Id , "HanteraKonton")'" />
                 </div>
             </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Byt Lösenord" class="btn btn-default" onclick="location.href='@Url.Action("ChangePw/"+Model.Id , "HanteraKonton")'" />
+            </div>
+        </div>
+
     </div>
 }
-<div id="part" @*style="display: none"*@>
-    @*@{Html.RenderAction("PartialPasswordChange"); }*@
-    <input type="button" @*onclick="@{Html.Partial("changePassword");}"*@id="partialbtn"/>
-    @*@Html.Partial("_LoginPartial")*@
-</div>
+@*<div id="part" style="display: none">
+    @{Html.RenderAction("PartialPasswordChange"); }
+    <input type="button" onclick="@{Html.Partial("changePassword");}"id="partialbtn"/>
+    @Html.Partial("_LoginPartial")
+</div>*@
 
 <div>
     @Html.ActionLink("Tillbaka", "VisaAnvandare")
 </div>
 
 <script>
-    var url = '@Url.Action("PartialPasswordChange/"+Model.Id,"HanteraKonton")';
+    @*var url = '@Url.Action("PartialPasswordChange/"+Model.Id,"HanteraKonton")';
     $('#partialbtn').click(function () {
 
 
-        @*var url = '@Url.Action("PartialPasswordChange","HanteraKonton")';*@
+        var url = '@Url.Action("PartialPasswordChange","HanteraKonton")';
         $('#part').load(url);
-        //$.ajax({
-        //    url: '/HanteraKonton/changePassword',
-        //    success: function (result) {
-        //        $('#part').html(result);
-        //    }
-        //});
+        $.ajax({
+            url: '/HanteraKonton/changePassword',
+            success: function (result) {
+                $('#part').html(result);
+            }
+        });
 
 
-        //$('#part').RenderAction("returnPartialPasswordChange");
-    });
+        $('#part').RenderAction("returnPartialPasswordChange");
+    });*@
     
     
 </script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

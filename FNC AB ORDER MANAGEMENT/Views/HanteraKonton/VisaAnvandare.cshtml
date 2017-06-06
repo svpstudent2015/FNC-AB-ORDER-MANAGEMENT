@@ -9,16 +9,18 @@
 <table id="example" class="display" cellspacing="0" width="100%">
     <thead>
     <tr>
-        <th>Username</th>
+        
         <th>Email</th>
+        
         
       
     </tr>
     </thead>
     <tfoot>
     <tr>
-        <th>Username</th>
+        
         <th>Email</th>
+        
        
      
     </tr>
@@ -31,10 +33,11 @@
             {
                     
               
+
                 <tr>
-                    <td Onclick="location.href='@Url.Action("RedigeraAnvandare/"+item.Id, "HanteraKonton")'">@item.UserName</td>
+                    <td Onclick="location.href='@Url.Action("RedigeraAnvandare/"+item.Id, "HanteraKonton")'">@item.Email</td>
                   
-                    <td>@item.Email</td>
+                    
                     
                  
                 </tr>

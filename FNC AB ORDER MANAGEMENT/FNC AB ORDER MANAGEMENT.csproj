@@ -317,6 +317,7 @@
     <Content Include="Views\Kund\Kund.cshtml" />
     <Content Include="Views\Kund\RedigeraKund.cshtml" />
     <Content Include="Views\HanteraKonton\changePassword2.cshtml" />
+    <Content Include="Views\HanteraKonton\ChangePw.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

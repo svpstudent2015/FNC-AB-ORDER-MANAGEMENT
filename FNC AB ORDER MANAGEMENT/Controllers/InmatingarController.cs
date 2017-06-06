@@ -34,23 +34,23 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
 
                 var lista = from k in InmatningsListan
-                    join i in KundListan
-                    on k.KundID equals i.ID
+                            join i in KundListan
+                            on k.KundID equals i.ID
 
-                    select new InmatningarModel()
-                    {
-                        KundNamn = i.Namn,
+                            select new InmatningarModel()
+                            {
+                                KundNamn = i.Namn,
 
-                        Status = k.Status,
-                        Adress = k.Adress,
-                        Ordernr = k.Ordernr,
-                        InDatum = k.InDatum,
-                        UtDatum = k.UtDatum,
-                        ID = k.ID,
-                        Ovrigt = k.Ovrigt,
-                        Exporterad = k.Exporterad
+                                Status = k.Status,
+                                Adress = k.Adress,
+                                Ordernr = k.Ordernr,
+                                InDatum = k.InDatum,
+                                UtDatum = k.UtDatum,
+                                ID = k.ID,
+                                Ovrigt = k.Ovrigt,
+                                Exporterad = k.Exporterad
 
-                    };
+                            };
                 if (st == "Alla")
                 {
 
@@ -69,6 +69,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                     lista = lista.Where(x => x.KundNamn == kNamn);
                 }
 
+                //  lista = lista.Where(x => x.Exporterad == exp);
                 bool? test = exp;
 
                 if (test == true)
@@ -106,7 +107,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 }
             }
 
-            foreach (var kund in KundListan)
+                foreach (var kund in KundListan)
                 {
                     KundModel km = new KundModel();
                     km.Namn = kund.Namn;
@@ -115,8 +116,8 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                     km.ID = kund.ID;
 
                     i2.KundLista.Add(km);
-                
-            }
+                }
+            
 
             return View(i2);
         }
