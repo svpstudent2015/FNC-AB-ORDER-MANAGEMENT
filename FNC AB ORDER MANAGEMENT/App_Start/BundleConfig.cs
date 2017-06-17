@@ -10,10 +10,13 @@ namespace FNC_AB_ORDER_MANAGEMENT
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery.dataTables.min.js",
+                        "~/Scripts/jquery.dataTables.min.1.10.15.js",
                         "~/Scripts/chosen.jquery.js",
                         "~/Scripts/jquery-1.12.4.min.js",
+                        "~/Scripts/jquery.dataTables.select.min.js",
                         "~/Scripts/jquery-ui-1.12.1.min.js"));
+            
+
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -31,8 +34,10 @@ namespace FNC_AB_ORDER_MANAGEMENT
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/jquery.dataTables.min.css",
+                      "~/Content/select.dataTables.min.1.2.2.css",
                       "~/Content/chosen.css",
                       "~/Content/themes/base/minified/jquery-ui.min.css"));
+            
         }
     }
 }

@@ -132,12 +132,12 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         public ActionResult NyUtsattning()
         {
             KundRepository dbKund = new KundRepository();
-            List<Kund>klista = dbKund.ShowAll();
-            UtsattningarModel umodel = new UtsattningarModel();
+            List<Kund>kLista = dbKund.ShowAll();
+            UtsattningarModel uModel = new UtsattningarModel();
            
 
 
-            foreach (var kund in klista )
+            foreach (var kund in kLista )
             {
                 KundModel km= new KundModel();
                 km.Namn = kund.Namn;
@@ -145,11 +145,11 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 km.Email = kund.Email;
                 km.ID = kund.ID;
 
-                umodel.KundLista.Add(km);
+                uModel.KundLista.Add(km);
             }
             
 
-            return View(umodel);
+            return View(uModel);
         }
 
         [HttpPost]

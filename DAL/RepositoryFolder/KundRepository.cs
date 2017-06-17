@@ -8,7 +8,7 @@ namespace DAL.RepositoryFolder
 {
     public class KundRepository : Repository<Kund>
     {
-        public Kund getKund(int id)
+        public Kund getKund(int? id)
         {
             try
             {
