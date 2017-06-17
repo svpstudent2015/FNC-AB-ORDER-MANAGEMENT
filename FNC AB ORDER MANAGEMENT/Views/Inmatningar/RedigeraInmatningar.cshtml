@@ -289,6 +289,19 @@
                 <input type="submit" value="Spara" class="btn btn-default"   />
             </div>
         </div>
+        @*(string bestNr,string kund, string ort, string adress, DateTime inDat, DateTime utDat, bool etab, decimal m )  (string bestNr,string kund, string ort, string adress, DateTime inDat, DateTime utDat, bool etab, decimal m )  (string bestNr,string kund, string ort, string adress, DateTime inDat, DateTime utDat, bool etab, decimal m )
+        "Products", "Jquery", new { categoryid = 1, Productid = 2}
+        "pdf/"+Model.Ordernr , "Inmatningar"*@
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Exportera till pdf" class="btn btn-default" onclick="location.href='@Url.Action("pdf", "Inmatningar", new { @bestNr = Model.Ordernr, @kund = Model.KundNamn, @ort = Model.Ort, @adress = Model.Adress, @inDat = Model.InDatum, @utDat = Model.UtDatum, @etab = Model.StyckPris, @m = Model.Langd })'" />
+            </div>
+        </div>
+        @*<div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Exportera till pdf" class="btn btn-default" onclick="location.href='@Url.Action("pdf/"+Model, "Inmatningar")'" />
+            </div>
+        </div>*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="button" value="Radera Inmätning" class="btn btn-default" onclick="location.href='@Url.Action("TaBortInmatning/"+Model.ID , "Inmatningar")'" />
