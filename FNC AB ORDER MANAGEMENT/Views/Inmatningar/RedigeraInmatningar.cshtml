@@ -294,7 +294,7 @@
         "pdf/"+Model.Ordernr , "Inmatningar"*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Exportera till pdf" class="btn btn-default" onclick="location.href='@Url.Action("pdf", "Inmatningar", new { @bestNr = Model.Ordernr, @kund = Model.KundNamn, @ort = Model.Ort, @adress = Model.Adress, @inDat = Model.InDatum, @utDat = Model.UtDatum, @etab = Model.StyckPris, @m = Model.Langd })'" />
+                <input type="button" value="Exportera till pdf" class="btn btn-default" id="pdfexpo" onclick="location.href='@Url.Action("pdf", "Inmatningar", new { @bestNr = Model.Ordernr, @kund = Model.KundNamn, @ort = Model.Ort, @adress = Model.Adress, @inDat = Model.InDatum, @utDat = Model.UtDatum, @etab = Model.StyckPris, @m = Model.Langd, @inmId =Model.ID })'" />
             </div>
         </div>
         @*<div class="form-group">
@@ -304,10 +304,16 @@
         </div>*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Radera Inmätning" class="btn btn-default" onclick="location.href='@Url.Action("TaBortInmatning/"+Model.ID , "Inmatningar")'" />
+                <input type="button" value="Radera Inmätning"  class="btn btn-default" onclick="location.href='@Url.Action("TaBortInmatning/"+Model.ID , "Inmatningar")'" />
             </div>
         </div>
+        @*<div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Radera " id="teeest" class="btn btn-default"  />
+            </div>
+        </div>*@
     </div>
+
 }
 
 <div>
@@ -369,7 +375,8 @@
 
     });
 
-    $(document).ready(function(){
+    $(document).ready(function () {
+        document.getElementById("pdfexpo").addEventListener("click", myFunction);
         $("#selectlista").chosen({
             allow_single_deselect:true,
             disable_search:false
@@ -396,6 +403,22 @@
         $('#Ovrigt').prop('readOnly', false);
         $('#statuslista').prop('disabled', false).trigger("chosen:updated");       
     });
+
+    function myFunction() {
+       
+        //document.getElementById("exporteradLista").removeAttribute("disabled");
+        //document.getElementById("exporteradLista").value = "true";
+        //document.getElementById("exporteradLista").setAttribute("disabled", "disabled");
+        //$("#exporteradLista").find('option:selected').removeAttr("selected");
+        //$('#exporteradLista option[value=true]').attr('selected', 'selected');
+
+        //alert("heeeejs!");
+        $("#exporteradLista").val("True");
+        $('#exporteradLista').trigger('chosen:updated');
+    }
+    
+    
+
 </script>
 
 @section Scripts {

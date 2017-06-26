@@ -289,9 +289,11 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             return RedirectToAction("Inmatningar", new { st = inm.Status });
 
         }
-        public ActionResult pdf(string bestNr,string kund, string ort, string adress, DateTime? inDat, DateTime? utDat, bool? etab, decimal? m )
+      
+        public ActionResult pdf(string bestNr,string kund, string ort, string adress, DateTime? inDat, DateTime? utDat, bool? etab, decimal? m , int? inmId)
         {
             Document document = new Document();
+            InmatningarRepository dbInmatningar = new InmatningarRepository();
 
             MemoryStream stream = new MemoryStream();
 
@@ -352,12 +354,24 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 table.AddCell(new PdfPCell(new Phrase(adress, arial)));
 
                 //table.AddCell(inDat.Value.ToShortDateString());
-
-                table.AddCell(new PdfPCell(new Phrase(inDat.Value.ToShortDateString(), arial)));
+                if (inDat != null)
+                {
+                    table.AddCell(new PdfPCell(new Phrase(inDat.Value.ToShortDateString(), arial)));
+                }
+                else
+                {
+                    table.AddCell("");
+                }
 
                 //table.AddCell(utDat.Value.ToShortDateString());
-
-                table.AddCell(new PdfPCell(new Phrase(utDat.Value.ToShortDateString(), arial)));
+                if (utDat != null)
+                {
+                    table.AddCell(new PdfPCell(new Phrase(utDat.Value.ToShortDateString(), arial)));
+                }
+                else
+                {
+                    table.AddCell("");
+                }
 
                 //table.AddCell(etab.ToString());
 
@@ -386,7 +400,11 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             stream.Flush(); //Always catches me out
             stream.Position = 0; //Not sure if this is required
 
+            dbInmatningar.AndraEnInmatningTillExp(inmId);
+            
             return File(stream, "application/pdf", "DownloadName.pdf");
+            
+            
         }
 
     }

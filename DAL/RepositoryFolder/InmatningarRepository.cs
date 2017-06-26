@@ -80,6 +80,27 @@ namespace DAL.RepositoryFolder
 
             }
         }
+        public void AndraEnInmatningTillExp(int? InmatningsId)
+        {
+            try
+            {
+                using (var db = new FNCOrderHanteringEntitiesConnections())
+                {
+
+                    Inmatningar i = db.Inmatningar.FirstOrDefault(x => x.ID == InmatningsId);
+
+                    i.Exporterad = true;
+                  
+
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+
+            }
+        }
 
     }
 }
