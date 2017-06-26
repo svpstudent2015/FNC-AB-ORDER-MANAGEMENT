@@ -54,6 +54,7 @@ namespace DAL.RepositoryFolder
                     gammalUts.Ovrigt = nyUts.Ovrigt;
                     gammalUts.Status = nyUts.Status;
                     gammalUts.ID = nyUts.ID;
+                    gammalUts.GPS = nyUts.GPS;
 
                     db.SaveChanges();
                 }

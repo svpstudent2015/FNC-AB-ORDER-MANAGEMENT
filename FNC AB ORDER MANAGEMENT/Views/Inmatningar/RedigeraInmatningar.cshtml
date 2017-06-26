@@ -51,8 +51,7 @@
 
                     }
                 }
-                @*@Html.EditorFor(model => model.Kund, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Kund, "", new { @class = "text-danger" })*@            
+                        
         </div>
 
         <div class="form-group">
@@ -97,45 +96,26 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.StyckPris, htmlAttributes: new { @class = "control-label col-md-2" })
-            @{
-                if (Model != null)
+            
+            <div class="col-md-10">
+                @if (Model != null)
                 {
-
-                    <div class="col-md-10">
-                        <select id="styckPrisLista" data-placeholder="Välj styckpris" class="chzn-select" style="width: 350px;" tabindex="2" disabled="disabled">
-
-                            @foreach (var item in Model.styckPrislista)
+                    @Html.DropDownListFor(model => model.StyckPris, new SelectList(
+                            new[]
                             {
-                                string bool1;
-                                bool1 = item;
-                                bool bool2 = false;
-
-                                if (bool1.Equals("Ja"))
-                                {
-                                    bool2 = true;
-                                }
-
-                                if (Model.StyckPris==bool2)
-                                {
-
-                                    <option selected="selected" value="@bool2.ToString()"> @item</option>
-                                }
-                                else
-                                {
-
-                                    <option value="@bool2.ToString()"> @item</option>
-                                }
-                            }
-                        </select>
-                    </div>
+                                new { Value = "true", Text = "Ja" },
+                                new { Value = "false", Text = "Nej" },
+                            },
+                            "Value",
+                            "Text",
+                            Model
+                            ), new { @class = "form-control", style = "width: 350px;", disabled = "disabled" }
+                            )
                 }
-            }
-            @*<div class="col-md-10">
-                @Html.EditorFor(model => model.StyckPris, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-                @Html.ValidationMessageFor(model => model.StyckPris, "", new { @class = "text-danger" })
-            </div>*@
-        </div>
+            </div>
 
+        </div>
+       
         <div class="form-group">
             @Html.LabelFor(model => model.Langd, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -152,46 +132,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Fakturerad, htmlAttributes: new { @class = "control-label col-md-2" })
-            @{
-                if (Model != null)
-                {
-
-                    <div class="col-md-10">
-                        <select id="fakturalista" data-placeholder="Välj en kund..." class="chzn-select" style="width: 350px;" tabindex="2" disabled="disabled">
-                            @foreach (var item in Model.fakturaLista)
-                            {
-                                string bool1;
-                                bool1 = item;
-                                bool bool2 = false;
-
-                                if (bool1.Equals("Ja"))
-                                {
-                                    bool2 = true;
-                                }
-
-                                if (Model.Fakturerad==bool2)
-                                {
-
-                                    <option selected="selected" value="@bool2.ToString()"> @item</option>
-                                }
-                                else
-                                {
-
-                                    <option value="@bool2.ToString()"> @item</option>
-                                }
-                            }
-                        </select>
-                    </div>
-
-                }
-            }*@
-            @*<div class="col-md-10">
-                @Html.EditorFor(model => model.Fakturerad, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-                @Html.ValidationMessageFor(model => model.Fakturerad, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+        *@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Ovrigt, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -232,8 +173,6 @@
             }
 
             <div class="col-md-10">
-                @*@Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })*@
             </div>
         </div>
 
@@ -281,6 +220,7 @@
             }
         }
     </div>
+    	
 
     @Html.HiddenFor(model => model.ID)
 
@@ -297,22 +237,14 @@
                 <input type="button" value="Exportera till pdf" class="btn btn-default" id="pdfexpo" onclick="location.href='@Url.Action("pdf", "Inmatningar", new { @bestNr = Model.Ordernr, @kund = Model.KundNamn, @ort = Model.Ort, @adress = Model.Adress, @inDat = Model.InDatum, @utDat = Model.UtDatum, @etab = Model.StyckPris, @m = Model.Langd, @inmId =Model.ID })'" />
             </div>
         </div>
-        @*<div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Exportera till pdf" class="btn btn-default" onclick="location.href='@Url.Action("pdf/"+Model, "Inmatningar")'" />
-            </div>
-        </div>*@
+       
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="button" value="Radera Inmätning"  class="btn btn-default" onclick="location.href='@Url.Action("TaBortInmatning/"+Model.ID , "Inmatningar")'" />
             </div>
         </div>
-        @*<div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Radera " id="teeest" class="btn btn-default"  />
-            </div>
-        </div>*@
-    </div>
+       
+  </div>
 
 }
 
@@ -341,26 +273,6 @@
         $('<input />').attr('type', 'hidden')
             .attr('name', "Status")
             .attr('value', st)
-            .appendTo('form');
-
-        // FakturaLista
-        var f = document.getElementById("fakturalista");
-        var f2 = f.options[f.selectedIndex].value;
-        console.log(f2);
-
-        $('<input />').attr('type', 'hidden')
-            .attr('name', "Fakturerad")
-            .attr('value', f2)
-            .appendTo('form');
-
-        //StyckprisLista
-        var sp = document.getElementById("styckPrisLista");
-        var spl = sp.options[sp.selectedIndex].value;
-        console.log(spl);
-
-        $('<input />').attr('type', 'hidden')
-            .attr('name', "StyckPris")
-            .attr('value', spl)
             .appendTo('form');
 
         //ExporteradLista
@@ -396,10 +308,9 @@
         $('#Adress').prop('readOnly', false);
         $('#InDatum').prop('readOnly', false);
         $('#UtDatum').prop('readOnly', false);
-        $('#styckPrisLista').prop('disabled', false).trigger("chosen:updated");
+        $('#StyckPris').prop('disabled', false).trigger("chosen:updated");
         $('#Langd').prop('readOnly', false);
         $('#Timmar').prop('readOnly', false);
-        $('#fakturalista').prop('disabled', false).trigger("chosen:updated");
         $('#Ovrigt').prop('readOnly', false);
         $('#statuslista').prop('disabled', false).trigger("chosen:updated");       
     });
@@ -424,4 +335,6 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+
 

@@ -374,9 +374,14 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 }
 
                 //table.AddCell(etab.ToString());
-
-                table.AddCell(new PdfPCell(new Phrase(etab.ToString(), arial)));
-
+                if (etab == true)
+                {
+                    table.AddCell(new PdfPCell(new Phrase("Ja", arial)));
+                }
+                else
+                {
+                    table.AddCell(new PdfPCell(new Phrase("Nej", arial)));
+                }
                 //table.AddCell(m.ToString());
 
                 table.AddCell(new PdfPCell(new Phrase(m.ToString(), arial)));

@@ -86,7 +86,15 @@
                             }
                         </td>
                         <td>@item.Ovrigt</td>
-                        <td>@item.Exporterad</td>
+                        @if (item.Exporterad == true)
+                        {
+
+                            <td>Ja</td>
+                        }
+                        else
+                        {
+                            <td>Nej</td>
+                        }
                     </tr>
                 }
             }
