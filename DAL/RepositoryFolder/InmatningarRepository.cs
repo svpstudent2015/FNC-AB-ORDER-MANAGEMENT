@@ -102,5 +102,39 @@ namespace DAL.RepositoryFolder
             }
         }
 
+        public List<Inmatningar> SattInmatningTillExpOchHamtaLista(List<int> ids)
+        {
+            try
+            {
+                using (var db = new FNCOrderHanteringEntitiesConnections())
+                {
+
+                    //Inmatningar i = db.Inmatningar.FirstOrDefault(x => x.ID == InmatningsId);
+
+                    var inmat = db.Inmatningar.Where(t => ids.Contains(t.ID)).ToList();
+                    foreach(var e in inmat)
+                    {
+                        e.Exporterad = true;
+                    }
+
+                    //var userProfiles = _dataContext.UserProfile
+                    //           .Where(t => idList.Contains(t.Id));
+
+                    
+
+
+                    db.SaveChanges();
+                    return inmat;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return null;
+
+            }
+        }
+
     }
 }

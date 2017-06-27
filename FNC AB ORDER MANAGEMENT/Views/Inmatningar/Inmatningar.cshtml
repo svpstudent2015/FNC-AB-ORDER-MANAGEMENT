@@ -265,59 +265,63 @@
                 </div>
             </div>
 
+
         </div>
         </div>
        
 
                     }
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="button" value="Exportera till pdf test" class="btn btn-default" id="pdfexpo" onclick="location.href='@Url.Action("FleraPdfer", "Inmatningar")'" />
+    </div>
+</div>
 <script>
     $("#skickaPdf").click(function () {
-        //var oTable = $('#example').dataTable();
-        ////var rowcollection = oTable.$(":checked", { "page": "all" });
-        //$("input:checked", oTable.attr("id")).each(function () {
-        //    console.log($(this).val());
-        //});
-        //var selectedIds = [];
-        //rowcollection.each(function(index,elem){
-            //var checkbox_value = $(elem).val();
-            //var checkbox_value = $(elem).attr('id');
-        //selectedIds.push($(elem).val());
+
 
         var table = $('#example').DataTable();
 
         var test = table.rows({ selected: true }).data();
-        
-        console.log(test[0].DT_RowId);
-        //console.log(test[0][1]);
-        //$('#example tbody').on('click', 'tr', function () {
-        //    console.log(table.row(this).data());
+
+
+
+
+        //console.log(test[0].DT_RowId);
+
+        var roleList = new Array();
+        var usrId = "testuser";
+
+
+        /* one  way of adding items to array */
+        //test.forEach(function(element) {
+        //    console.log(element.DT_RowId);
         //});
+        for (i = 0; i < test.length; i++) {
+            console.log(test[i].DT_RowId);
+            roleList.push(test[i].DT_RowId);
 
-            
-            //Do something with 'checkbox_value'
-        //var selectedIds = [];
+        };
 
-        //$(":checked").each(function () {
-        //    selectedIds.push($(this).val());
-        //});
+        $.ajax({
+            type: "POST",
+            traditional: true, /* I M P O R T A N T */
+            url: '@Url.Action("FleraPdfer", "Inmatningar")',
+            data: { userId: roleList},
+            success: function (returndata) {
+                var blob = new Blob([returndata]);
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = "Dossier_" + new Date() + ".pdf";
+                link.click();
+                alert(returndata);
+            },
+            error: function(returndata) {
+                alert("Error:\n" + returndata.responseText);
+            }
+        });
 
-        //var selectedIds = [];
-        //var table = $('#example').DataTable();
 
-
-        //table.rows().every(function () {
-        //    //var d = this.data();
-        //    selectedIds.push($(this).val());
-
-             
-        //});
-           
-
-         
-        //});
-        //console.log(rowcollection[0]);
-        
-        
     });
 
     $("form").submit(function (eventObj) {
@@ -363,7 +367,7 @@
                  columnDefs: [ {
                      orderable: false,
                      className: 'select-checkbox',
-                    
+
                      targets:   0
                  } ],
                  select: {
@@ -372,20 +376,20 @@
                  },
                  order: [[ 1, 'asc' ]]
              });
-                
+
 
         $("#exporteradLista").chosen({
             allow_single_deselect: true,
             disable_search: true
-               
-                
+
+
 
         });
         $("#kundlistan").chosen({
             allow_single_deselect: true,
             disable_search: false
         });
-               
+
         $("#statuslista").chosen({
             allow_single_deselect: true,
             disable_search: true
