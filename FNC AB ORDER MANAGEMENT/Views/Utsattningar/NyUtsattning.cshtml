@@ -132,38 +132,6 @@
             </div>
         </div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.Fakturerad, htmlAttributes: new { @class = "control-label col-md-2" })
-            @{
-                if (Model != null)
-                {
-
-                    <div class="col-md-10">
-                        <select id="fakturalista" data-placeholder="Välj en kund..." class="chzn-select" style="width: 350px;" tabindex="2">
-                            @foreach (var item in Model.fakturaLista)
-                            {
-
-                                string bool1;
-                                bool1 = item;
-                                bool bool2 = false;
-
-                                if (bool1.Equals("Ja"))
-                                {
-                                    bool2 = true;
-                                }
-
-
-
-                                <option value="@bool2.ToString()"> @item</option>
-                            }
-                        </select>
-                    </div>
-
-                }
-            }
-           
-        </div>*@
-
         <div class="form-group">
             @Html.LabelFor(model => model.Ovrigt, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -205,35 +173,25 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.GPS, htmlAttributes: new { @class = "control-label col-md-2" })
-            @{
-                if (Model != null)
+            
+            <div class="col-md-10">
+                @if (Model != null)
                 {
-
-                    <div class="col-md-10">
-                        <select id="gpslista" data-placeholder="Välj en kund..." class="chzn-select" style="width: 350px;" tabindex="2">
-                            @foreach (var item in Model.gpsLista)
-                            {
-
-                                string bool1;
-                                bool1 = item;
-                                bool bool2 = false;
-
-                                if (bool1.Equals("Ja"))
-                                {
-                                    bool2 = true;
-                                }
-
-                                <option value="@bool2.ToString()"> @item</option>
-                            }
-                        </select>
-                    </div>
-
+                    @Html.DropDownListFor(model => model.GPS, new SelectList(
+                        new[]
+                        {
+                            new { Value = "true", Text = "Ja" },
+                            new { Value = "false", Text = "Nej" },
+                        },
+                        "Value",
+                        "Text",
+                        Model
+                        ), new { @class = "form-control", style = "width: 350px;"}
+                        )
                 }
-            }
-     
-        </div>
+            </div>
 
-       
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -281,27 +239,6 @@
             .attr('name', "StyckPris")
             .attr('value', spl)
             .appendTo('form');
-
-        // FakturaLista
-        var f = document.getElementById("fakturalista");
-        var f2 = f.options[f.selectedIndex].value;
-        console.log(f2);
-
-        $('<input />').attr('type', 'hidden')
-            .attr('name', "Fakturerad")
-            .attr('value', f2)
-            .appendTo('form');
-       
-        // GPSLista
-        var g = document.getElementById("gpslista");
-        var g2 = g.options[g.selectedIndex].value;
-        console.log(g2);
-
-        $('<input />').attr('type', 'hidden')
-            .attr('name', "GPS")
-            .attr('value', g2)
-            .appendTo('form');
-
 
     });
 
