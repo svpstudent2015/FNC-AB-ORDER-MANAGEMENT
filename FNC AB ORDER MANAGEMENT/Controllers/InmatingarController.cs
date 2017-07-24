@@ -294,7 +294,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         {
             Document document = new Document();
             InmatningarRepository dbInmatningar = new InmatningarRepository();
-
+            
             MemoryStream stream = new MemoryStream();
 
             try
@@ -409,6 +409,182 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             
             return File(stream, "application/pdf", "DownloadName.pdf");
             
+            
+        }
+
+        public ActionResult tempPDF(List<int> userId)
+        {
+
+            var hej = "hej";
+
+                //var list = Session[userId] new List<int>();
+                //list.Add(userId);
+                Session[hej] = userId;
+
+            return Json(new { success = true, hej }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult FleraPdfer()
+        {
+            var list = Session["hej"] as List<int>;
+
+            //List<int> userId = new List<int>();
+            //userId.Add(10);
+            //userId.Add(11);
+            //userId.Add(12);
+
+
+            InmatningarRepository dbInmatningar = new InmatningarRepository();
+            KundRepository dbKund = new KundRepository();
+            List<Kund> KundListan = dbKund.ShowAll();
+            List<Inmatningar> InmatningsListan = dbInmatningar.SattInmatningTillExpOchHamtaLista(list);
+
+            var lista = from k in InmatningsListan
+                        join i in KundListan
+                        on k.KundID equals i.ID
+
+                        select new InmatningarModel()
+                        {
+                            KundNamn = i.Namn,
+
+                           
+                            Adress = k.Adress,
+                            Ordernr = k.Ordernr,
+                            InDatum = k.InDatum,
+                            UtDatum = k.UtDatum,
+                            Ort = k.Ort,
+                            StyckPris = k.StyckPris,
+                            Langd =k.Langd
+                            
+                           
+                        
+
+                        };
+
+            Document document = new Document();
+           
+
+            MemoryStream stream = new MemoryStream();
+
+            try
+            {
+                PdfWriter pdfWriter = PdfWriter.GetInstance(document, stream);
+                pdfWriter.CloseStream = false;
+
+                document.Open();
+                document.Add(new Paragraph("Hello World"));
+                document.Add(new Paragraph(DateTime.Now.ToShortDateString()));
+                document.Add(new Chunk("\n"));
+                PdfPTable table = new PdfPTable(8);
+                table.WidthPercentage = 100;
+                Font arial = FontFactory.GetFont("Arial", 11);
+                //Font fontH1 = new Font(Helvetica, 16, Font.NORMAL);
+
+                PdfPCell cell = new PdfPCell(new Phrase("Inmätning"));
+
+                cell.Colspan = 8;
+
+                cell.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+
+                table.AddCell(cell);
+
+                table.AddCell("Best Nr");
+
+                table.AddCell("Kund");
+
+                table.AddCell("Ort");
+
+                table.AddCell("Adress");
+
+                table.AddCell("In");
+
+                table.AddCell("Ut");
+
+                table.AddCell("Etab");
+
+                table.AddCell("Meter");
+
+                //table.AddCell("Fakturerad");
+
+                //table.AddCell(bestNr);
+
+                foreach (var inmatning in lista)
+                {
+
+                    table.AddCell(new PdfPCell(new Phrase(inmatning.Ordernr, arial)));
+
+                    //table.AddCell(kund);
+
+                    table.AddCell(new PdfPCell(new Phrase(inmatning.KundNamn, arial)));
+
+                    //table.AddCell(ort);
+
+                    table.AddCell(new PdfPCell(new Phrase(inmatning.Ort, arial)));
+
+                    //table.AddCell(adress);
+
+                    table.AddCell(new PdfPCell(new Phrase(inmatning.Adress, arial)));
+
+                    //table.AddCell(inDat.Value.ToShortDateString());
+                    if (inmatning.InDatum != null)
+                    {
+                        table.AddCell(new PdfPCell(new Phrase(inmatning.InDatum.Value.ToShortDateString(), arial)));
+                    }
+                    else
+                    {
+                        table.AddCell("");
+                    }
+
+                    //table.AddCell(utDat.Value.ToShortDateString());
+                    if (inmatning.UtDatum != null)
+                    {
+                        table.AddCell(new PdfPCell(new Phrase(inmatning.UtDatum.Value.ToShortDateString(), arial)));
+                    }
+                    else
+                    {
+                        table.AddCell("");
+                    }
+
+                    //table.AddCell(etab.ToString());
+                    if (inmatning.StyckPris == true)
+                    {
+                        table.AddCell(new PdfPCell(new Phrase("Ja", arial)));
+                    }
+                    else
+                    {
+                        table.AddCell(new PdfPCell(new Phrase("Nej", arial)));
+                    }
+                    //table.AddCell(m.ToString());
+
+                    table.AddCell(new PdfPCell(new Phrase(inmatning.Langd.ToString(), arial)));
+
+                    //table.AddCell(DateTime.Now.ToString("MMMM", CultureInfo.InvariantCulture));
+
+                }
+
+                document.Add(table);
+
+            }
+            catch (DocumentException de)
+            {
+                Console.Error.WriteLine(de.Message);
+            }
+            catch (IOException ioe)
+            {
+                Console.Error.WriteLine(ioe.Message);
+            }
+
+            document.Close();
+
+            stream.Flush(); //Always catches me out
+            stream.Position = 0; //Not sure if this is required
+
+           
+
+            return File(stream, "application/pdf", "DownloadName.pdf");
+
+
+
             
         }
 
