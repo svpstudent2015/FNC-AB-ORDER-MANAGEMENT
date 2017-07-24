@@ -1,4 +1,6 @@
-﻿@model FNC_AB_ORDER_MANAGEMENT.Models.InmatningarModel
+﻿@using System.Net.Mime
+@using FNC_AB_ORDER_MANAGEMENT.Models
+@model FNC_AB_ORDER_MANAGEMENT.Models.InmatningarModel
 
 @{
     ViewBag.Title = "Ny Inmätning";
@@ -86,47 +88,34 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.StyckPris, htmlAttributes: new {@class = "control-label col-md-2"})
-            @{
-                if (Model != null)
+            @Html.LabelFor(model => model.StyckPris, htmlAttributes: new { @class = "control-label col-md-2" })
+            
+            <div class="col-md-10">
+                @if (Model != null)
                 {
-
-                    <div class="col-md-10">
-                        <select id="styckPrisLista" data-placeholder="Välj styckpris" class="chzn-select" style="width: 350px;" tabindex="2">
-
-                            @foreach (var item in Model.styckPrislista)
-                            {
-
-                                string bool1;
-                                bool1 = item;
-                                bool bool2 = false;
-
-                                if (bool1.Equals("Ja"))
-                                {
-                                    bool2 = true;
-                                }
-
-
-
-                                <option value="@bool2.ToString()"> @item</option>
-                            }
-                        </select>
-                    </div>
+                    @Html.DropDownListFor(model => model.StyckPris, new SelectList(
+                        new[]
+                        {
+                            new { Value = "true", Text = "Ja" },
+                            new { Value = "false", Text = "Nej" },
+                        },
+                        "Value",
+                        "Text",
+                        Model
+                        ), new { @class = "form-control", style = "width: 350px;"} 
+                        )
                 }
-            }
-            @*<div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.StyckPris)
-                    @Html.ValidationMessageFor(model => model.StyckPris, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
+            </div>
+
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Langd, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Langd, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.Langd, "", new {@class = "text-danger"})
+               
+                    @Html.EditorFor(model => model.Langd, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.Langd, "", new {@class = "text-danger"})              
+               
             </div>
         </div>
 
@@ -187,9 +176,19 @@
 </div>
 
 <script type="text/javascript">
+    var L = $("Langd");
+    
+    function disableLength() {
+        var SP = $("StyckPris");
+        
+        if (SP = true) {
+            L.prop('readOnly', true);
+        }
+    }
     
     $("form").submit(function (eventObj) {
-
+        
+       
         // KundLista
         var e = document.getElementById("selectlista");
         var strUser = e.options[e.selectedIndex].value;
@@ -231,7 +230,7 @@
             allow_single_deselect:true,
             disable_search:true
         });
-    });   
+    });
 </script>
 
 @section Scripts {

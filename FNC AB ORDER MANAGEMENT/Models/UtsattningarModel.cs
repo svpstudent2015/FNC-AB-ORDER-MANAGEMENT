@@ -10,6 +10,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
     public class UtsattningarModel
     {
         [DisplayName("Kund")]
+        [Required]
         public string KundNamn { get; set; }
 
         [Required]
@@ -27,6 +28,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
 
         [DisplayName("Start Datum")]
         [DataType(DataType.Date)]
+        [Required]
         public Nullable<System.DateTime> InDatum { get; set; }
 
         [DisplayName("Slut Datum")]
