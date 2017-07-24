@@ -14,6 +14,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
         public string Ordernr { get; set; }
 
         [DisplayName("Kund")]
+        
         public string KundNamn { get; set; }
 
         [StringLength(15, ErrorMessage = "{0} kan inte var längre än 15 tecken")]
@@ -27,6 +28,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
 
         [DisplayName("Start Datum")]
         [DataType(DataType.Date)]
+        [Required]
         public Nullable<System.DateTime> InDatum { get; set; }
 
         [DisplayName("Slut Datum")]
@@ -37,7 +39,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
         public Nullable<bool> StyckPris { get; set; }
 
         [DisplayName("Längd (m)")]
-        [RegularExpression(@"^[0-9]\d*(\.\d+)?$", ErrorMessage = "Du måste använda siffror")]
+        [RegularExpression(@"^[0-9]\d*(\,\d+)?$", ErrorMessage = "Du måste använda siffror")]
         public Nullable<decimal> Langd { get; set; }
 
         [RegularExpression(@"^[0-9]\d*(\.\d+)?$", ErrorMessage = "Du måste använda siffror")]
