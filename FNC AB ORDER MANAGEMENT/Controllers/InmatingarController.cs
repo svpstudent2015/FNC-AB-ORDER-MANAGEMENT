@@ -412,19 +412,32 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             
         }
 
-        public ActionResult FleraPdfer(/*List<int> userId*/)
+        public ActionResult tempPDF(List<int> userId)
         {
 
-            List<int> userId = new List<int>();
-            userId.Add(10);
-            userId.Add(11);
-            userId.Add(12);
+            var hej = "hej";
+
+                //var list = Session[userId] new List<int>();
+                //list.Add(userId);
+                Session[hej] = userId;
+
+            return Json(new { success = true, hej }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult FleraPdfer()
+        {
+            var list = Session["hej"] as List<int>;
+
+            //List<int> userId = new List<int>();
+            //userId.Add(10);
+            //userId.Add(11);
+            //userId.Add(12);
 
 
             InmatningarRepository dbInmatningar = new InmatningarRepository();
             KundRepository dbKund = new KundRepository();
             List<Kund> KundListan = dbKund.ShowAll();
-            List<Inmatningar> InmatningsListan = dbInmatningar.SattInmatningTillExpOchHamtaLista(userId);
+            List<Inmatningar> InmatningsListan = dbInmatningar.SattInmatningTillExpOchHamtaLista(list);
 
             var lista = from k in InmatningsListan
                         join i in KundListan

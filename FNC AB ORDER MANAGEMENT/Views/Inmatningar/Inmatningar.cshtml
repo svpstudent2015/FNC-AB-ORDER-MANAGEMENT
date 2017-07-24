@@ -306,15 +306,20 @@
         $.ajax({
             type: "POST",
             traditional: true, /* I M P O R T A N T */
-            url: '@Url.Action("FleraPdfer", "Inmatningar")',
+            url: '@Url.Action("tempPDF", "Inmatningar")',
             data: { userId: roleList},
             success: function (returndata) {
-                var blob = new Blob([returndata]);
-                var link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                link.download = "Dossier_" + new Date() + ".pdf";
-                link.click();
-                alert(returndata);
+                if (returndata.success) {
+                    window.location = "/Inmatningar/FleraPdfer";
+                    
+                }
+
+                //var blob = new Blob([returndata]);
+                //var link = document.createElement('a');
+                //link.href = window.URL.createObjectURL(blob);
+                //link.download = "Dossier_" + new Date() + ".pdf";
+                //link.click();
+                //alert(returndata);
             },
             error: function(returndata) {
                 alert("Error:\n" + returndata.responseText);
