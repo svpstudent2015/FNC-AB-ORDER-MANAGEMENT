@@ -29,7 +29,7 @@
             </button>
                 
         </div>
-        <div class="navbar-collapse collapse">
+        <div class="navbar-collapse collapse" id="main-navbar">
             <ul class="nav navbar-nav">
                 <li>                   
                     <a href='@Url.Action("Index", "Home")'>
@@ -74,3 +74,12 @@
         padding-top: 5px;
     }    
 </style>
+<script>
+    $(window).resize(function () {
+        $('body').css('padding-top', parseInt($('#main-navbar').css("height")) + 10);
+    });
+
+    $(window).load(function () {
+        $('body').css('padding-top', parseInt($('#main-navbar').css("height")) + 10);
+    });
+</script>

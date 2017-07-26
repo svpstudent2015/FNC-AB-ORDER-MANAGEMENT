@@ -11,11 +11,7 @@
     <script type="text/javascript" src="~/scripts/jquery.dataTables.min.js"></script>
 </header>
 
-<div class="container">
-    
-    <input type="button" value="Lägg till ny kund" class="btn btn-default" onclick="location.href = '@Url.Action("NyKund", "Kund")'" />
 
-</div>
 
 <table id="example" class="display" cellspacing="0" width="100%">
     <thead>
@@ -55,6 +51,11 @@
 
     </tbody>
 </table>
+<div class="container">
+
+    <input type="button" value="Lägg till ny kund" class="btn btn-default" onclick="location.href = '@Url.Action("NyKund", "Kund")'" />
+
+</div>
 
 <script>
     $(document).ready(function() {
