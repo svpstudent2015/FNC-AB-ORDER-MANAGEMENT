@@ -10,7 +10,9 @@
 <header>
     <style type="text/css" src="content/jquery.dataTables.min.css"></style>
     <script type="text/javascript" src="~/scripts/jquery-1.12.4.js"></script>
-    <script type="text/javascript" src="~/scripts/jquery.dataTables.min.js"></script>
+    @*<script type="text/javascript" src="~/scripts/jquery.dataTables.min.js"></script>*@
+    <script type="text/javascript" src="~/scripts/jquery.dataTables.min.1.10.15.js"></script>
+    <script type="text/javascript" src="~/scripts/jquery.dataTables.select.min.js"></script>
 </header>
 
 <div class="container">
@@ -35,6 +37,7 @@
         <table id="example" class="display" cellspacing="0" width="100%">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Kund</th>
                     <th>Status</th>
                     <th>Adress</th>
@@ -47,6 +50,7 @@
             </thead>
             <tfoot>
                 <tr>
+                    <th></th>
                     <th>Kund</th>
                     <th>Status</th>
                     <th>Adress</th>
@@ -63,7 +67,8 @@
                     {
                         foreach (var item in Model.UtsattningsLista)
                         {
-                            <tr>
+                            <tr id="@item.ID">
+                                <td name="@item.ID"></td>
                                 <td Onclick="location.href='@Url.Action("RedigerUtsattningar/"+item.ID, "Utsattningar")'">@item.KundNamn</td>
                                 <td>@item.Status</td>
                                 <td>@item.Adress</td>
@@ -100,7 +105,11 @@
 <div class="form-group">
     <input type="button" value="Ny Utsättning" class="btn btn-default" onclick="location.href='@Url.Action("NyUtsattning", "Utsattningar")'" />
 </div>
-
+<div class="form-group">
+    <div>
+        <input type="button" value="Exportera till pdf" id="skickaPdf" class="btn btn-default" />
+    </div>
+</div>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -264,6 +273,53 @@
 
 <script>
     
+    $("#skickaPdf").click(function () {
+
+
+        var table = $('#example').DataTable();
+
+        var test = table.rows({ selected: true }).data();
+
+
+
+
+        //console.log(test[0].DT_RowId);
+
+        var roleList = new Array();
+        var usrId = "testuser";
+
+
+        /* one  way of adding items to array */
+        //test.forEach(function(element) {
+        //    console.log(element.DT_RowId);
+        //});
+        for (i = 0; i < test.length; i++) {
+            console.log(test[i].DT_RowId);
+            roleList.push(test[i].DT_RowId);
+
+        };
+
+        $.ajax({
+            type: "POST",
+            traditional: true, /* I M P O R T A N T */
+            url: '@Url.Action("tempPDF", "Utsattningar")',
+            data: { userId: roleList },
+            success: function (returndata) {
+                if (returndata.success) {
+                    window.location = "/Utsattningar/FleraPdfer";
+
+                }
+
+
+            },
+            error: function (returndata) {
+                alert("Error:\n" + returndata.responseText);
+            }
+        });
+
+
+    });
+
     $("form").submit(function (eventObj) {
 
         // Kundlista
@@ -302,7 +358,20 @@
         }
     });
     $(document).ready(function () {
-        $('#example').DataTable();
+        $('#example').DataTable(
+            {
+                columnDefs: [{
+                    orderable: false,
+                    className: 'select-checkbox',
+
+                    targets: 0
+                }],
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child'
+                },
+                order: [[1, 'asc']]
+            });
                 
 
         $("#exporteradLista").chosen({
