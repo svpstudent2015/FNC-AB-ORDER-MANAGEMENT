@@ -11,14 +11,7 @@
 @if (TempData["Success"] != null)
 {
     <div class="green">
-        <p style="color:greenyellow"><strong>Success:</strong> @TempData["Success"].ToString()</p>
+        <p><strong>Success:</strong> @TempData["Success"].ToString()</p>
     </div>
 }
-
-<script>
-    $(document).ready(function () {
-        $("#registerLink").removeClass();
-        $("#registerLink").toggleClass("list-unstyled");
-    })
-</script>
 
