@@ -9,6 +9,8 @@ using FNC_AB_ORDER_MANAGEMENT.Models;
 
 namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 {
+
+    [System.Web.Mvc.Authorize]
     public class KundController : Controller
     {
         // GET: Kund

@@ -241,7 +241,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Exportera till pdf" class="btn btn-default" id="pdfexpo" onclick="location.href='@Url.Action("pdf", "Utsattningar", new { @bestNr = Model.Ordernr, @kund = Model.KundNamn, @ort = Model.Ort, @adress = Model.Adress, @inDat = Model.InDatum, @utDat = Model.UtDatum, @etab = Model.StyckPris, @m = Model.Langd, @inmId =Model.ID })'" />
+                <input type="button" value="Exportera till pdf" class="btn btn-default" id="pdfexpo" onclick="location.href='@Url.Action("pdf", "Utsattningar", new { @bestNr = Model.Ordernr, @kund = Model.KundNamn, @ort = Model.Ort, @adress = Model.Adress, @inDat = Model.InDatum, @utDat = Model.UtDatum, @etab = Model.StyckPris, @m = Model.Langd, @inmId =Model.ID, @gps = Model.GPS, @timmar = Model.Timmar })'" />
             </div>
         </div>
 

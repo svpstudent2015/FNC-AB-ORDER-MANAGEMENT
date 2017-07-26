@@ -13,6 +13,7 @@ using System.IO;
 
 namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 {
+    [System.Web.Mvc.Authorize]
     public class UtsattningarController : Controller
     {
         // GET: Utsattningar
@@ -203,6 +204,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             UtsattningarModel uModel = new UtsattningarModel();
             KundRepository dbKund = new KundRepository();
             AnvandareRepository dbAnvandare = new AnvandareRepository();
+            Kund tempKund = dbKund.getKund(e.KundID);
 
             List<Kund> klista = dbKund.ShowAll();
 
@@ -235,6 +237,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             uModel.Status = e.Status;
             uModel.ID = e.ID;
             uModel.GPS = e.GPS;
+            uModel.KundNamn = tempKund.Namn;
 
             if (anvandare !=null) {
                 uModel.Anvandrare = anvandare.Email;
@@ -289,7 +292,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
         }
 
-        public ActionResult pdf(string bestNr, string kund, string ort, string adress, DateTime? inDat, DateTime? utDat, bool? etab, decimal? m, int? inmId)
+        public ActionResult pdf(string bestNr, string kund, string ort, string adress, DateTime? inDat, DateTime? utDat, bool? etab, decimal? m, int? inmId, bool? gps, decimal? timmar)
         {
             Document document = new Document();
             UtsattningarRepository dbUtsattningar = new UtsattningarRepository();
@@ -302,17 +305,17 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 pdfWriter.CloseStream = false;
 
                 document.Open();
-                document.Add(new Paragraph("Hello World"));
+                document.Add(new Paragraph("Faktura-information, Utsättningar"));
                 document.Add(new Paragraph(DateTime.Now.ToShortDateString()));
                 document.Add(new Chunk("\n"));
-                PdfPTable table = new PdfPTable(8);
+                PdfPTable table = new PdfPTable(10);
                 table.WidthPercentage = 100;
                 Font arial = FontFactory.GetFont("Arial", 11);
                 //Font fontH1 = new Font(Helvetica, 16, Font.NORMAL);
 
                 PdfPCell cell = new PdfPCell(new Phrase("Utsättning"));
 
-                cell.Colspan = 8;
+                cell.Colspan = 10;
 
                 cell.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
 
@@ -330,9 +333,13 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
                 table.AddCell("Ut");
 
+                table.AddCell("Tim");
+
                 table.AddCell("Etab");
 
-                table.AddCell("Meter");
+                table.AddCell(">500m");
+
+                table.AddCell("GPS");
 
                 //table.AddCell("Fakturerad");
 
@@ -372,6 +379,8 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                     table.AddCell("");
                 }
 
+                table.AddCell(new PdfPCell(new Phrase(timmar.ToString(), arial)));
+
                 //table.AddCell(etab.ToString());
                 if (etab == true)
                 {
@@ -385,6 +394,15 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
                 table.AddCell(new PdfPCell(new Phrase(m.ToString(), arial)));
 
+                //table.AddCell(DateTime.Now.ToString("MMMM", CultureInfo.InvariantCulture));
+                if (gps == true)
+                {
+                    table.AddCell(new PdfPCell(new Phrase("Ja", arial)));
+                }
+                else
+                {
+                    table.AddCell(new PdfPCell(new Phrase("Nej", arial)));
+                }
                 //table.AddCell(DateTime.Now.ToString("MMMM", CultureInfo.InvariantCulture));
 
                 document.Add(table);
@@ -471,17 +489,17 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 pdfWriter.CloseStream = false;
 
                 document.Open();
-                document.Add(new Paragraph("Hello World"));
+                document.Add(new Paragraph("Faktura-information, Utsättningar"));
                 document.Add(new Paragraph(DateTime.Now.ToShortDateString()));
                 document.Add(new Chunk("\n"));
-                PdfPTable table = new PdfPTable(8);
+                PdfPTable table = new PdfPTable(10);
                 table.WidthPercentage = 100;
                 Font arial = FontFactory.GetFont("Arial", 11);
                 //Font fontH1 = new Font(Helvetica, 16, Font.NORMAL);
 
                 PdfPCell cell = new PdfPCell(new Phrase("Utsättningar"));
 
-                cell.Colspan = 8;
+                cell.Colspan = 10;
 
                 cell.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
 
@@ -499,9 +517,13 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
                 table.AddCell("Ut");
 
+                table.AddCell("Tim");
+
                 table.AddCell("Etab");
 
-                table.AddCell("Meter");
+                table.AddCell(">500m");
+
+                table.AddCell("GPS");
 
                 //table.AddCell("Fakturerad");
 
@@ -544,6 +566,8 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                         table.AddCell("");
                     }
 
+                    table.AddCell(new PdfPCell(new Phrase(utsatt.Timmar.ToString(), arial)));
+
                     //table.AddCell(etab.ToString());
                     if (utsatt.StyckPris == true)
                     {
@@ -558,6 +582,15 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                     table.AddCell(new PdfPCell(new Phrase(utsatt.Langd.ToString(), arial)));
 
                     //table.AddCell(DateTime.Now.ToString("MMMM", CultureInfo.InvariantCulture));
+                    if (utsatt.GPS == true)
+                    {
+                        table.AddCell(new PdfPCell(new Phrase("Ja", arial)));
+                    }
+                    else
+                    {
+                        table.AddCell(new PdfPCell(new Phrase("Nej", arial)));
+                    }
+
 
                 }
 
