@@ -68,7 +68,7 @@
                 foreach (var item in Model.InmatningsLista)
                 {
                     <tr id="@item.ID">
-                        <td name="@item.ID">@*<input type="checkbox" />*@</td>
+                        <td name="@item.ID"></td>
                         <td Onclick="location.href='@Url.Action("RedigeraInmatningar/"+item.ID, "Inmatningar")'">@item.KundNamn</td>
                         <td>@item.Status</td>
                         <td>@item.Adress</td>
@@ -314,12 +314,7 @@
                     
                 }
 
-                //var blob = new Blob([returndata]);
-                //var link = document.createElement('a');
-                //link.href = window.URL.createObjectURL(blob);
-                //link.download = "Dossier_" + new Date() + ".pdf";
-                //link.click();
-                //alert(returndata);
+              
             },
             error: function(returndata) {
                 alert("Error:\n" + returndata.responseText);

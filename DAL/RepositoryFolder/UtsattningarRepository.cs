@@ -85,5 +85,62 @@ namespace DAL.RepositoryFolder
             }
         }
 
+        public void AndraEnUtsattningTillExp(int? utsattningsId)
+        {
+            try
+            {
+                using (var db = new FNCOrderHanteringEntitiesConnections())
+                {
+
+                    Utsattningar u = db.Utsattningar.FirstOrDefault(x => x.ID == utsattningsId);
+
+                    u.Exporterad = true;
+
+
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+
+            }
+        }
+
+
+        public List<Utsattningar> SattUtsattningarTillExpOchHamtaLista(List<int> ids)
+        {
+            try
+            {
+                using (var db = new FNCOrderHanteringEntitiesConnections())
+                {
+
+                    //Inmatningar i = db.Inmatningar.FirstOrDefault(x => x.ID == InmatningsId);
+
+                    var usattning = db.Utsattningar.Where(t => ids.Contains(t.ID)).ToList();
+                    foreach (var e in usattning)
+                    {
+                        e.Exporterad = true;
+                    }
+
+                    //var userProfiles = _dataContext.UserProfile
+                    //           .Where(t => idList.Contains(t.Id));
+
+
+
+
+                    db.SaveChanges();
+                    return usattning;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return null;
+
+            }
+        }
+
     }
 }

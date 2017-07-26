@@ -186,15 +186,50 @@
             </div>
 
         </div>
-           
 
         <div class="form-group">
             @Html.LabelFor(model => model.Anvandrare, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Anvandrare, new { htmlAttributes = new { @class = "form-control" , @readonly = "readonly" } })
+                @Html.EditorFor(model => model.Anvandrare, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.Anvandrare, "", new { @class = "text-danger" })
             </div>
         </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Exporterad, htmlAttributes: new { @class = "control-label col-md-2" })
+            @{
+                if (Model != null)
+                {
+
+                    <div class="col-md-10">
+                        <select id="exporteradLista" data-placeholder="Välj en kund..." class="chzn-select" style="width: 350px;" tabindex="2" disabled="disabled">
+                            @if (Model.Exporterad == true)
+                            {
+
+                                <option selected="selected" value="@Model.Exporterad.ToString()"> Ja</option>
+                                <option value="false"> Nej</option>
+                            }
+                            else
+                            {
+                                <option selected="selected" value="@Model.Exporterad.ToString()"> Nej</option>
+                                <option value="true"> Ja</option>
+
+                            }
+                            
+                        </select>
+                    </div>
+
+                }
+            }
+        </div>
+
+
+       
+
+           
+
+      
 
         @Html.HiddenFor(model => model.ID)
 
@@ -203,6 +238,13 @@
                 <input type="submit" value="Spara" class="btn btn-default" />
             </div>
         </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Exportera till pdf" class="btn btn-default" id="pdfexpo" onclick="location.href='@Url.Action("pdf", "Utsattningar", new { @bestNr = Model.Ordernr, @kund = Model.KundNamn, @ort = Model.Ort, @adress = Model.Adress, @inDat = Model.InDatum, @utDat = Model.UtDatum, @etab = Model.StyckPris, @m = Model.Langd, @inmId =Model.ID })'" />
+            </div>
+        </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="button" value="Radera Utsättning" class="btn btn-default" onclick="location.href='@Url.Action("TaBortUtsattning/"+Model.ID , "Utsattningar")'" />
@@ -243,6 +285,7 @@
 
     $(document).ready(function(){
 
+        document.getElementById("pdfexpo").addEventListener("click", myFunction);
         $("#selectlista").chosen({
             allow_single_deselect: true,
             disable_search: false
@@ -269,4 +312,11 @@
         $('#GPS').prop('disabled', false).trigger("chosen:updated");
         $('#statuslista').prop('disabled', false).trigger("chosen:updated");
     });
+
+    function myFunction() {
+       
+        
+        $("#exporteradLista").val("true");
+        $('#exporteradLista').trigger('chosen:updated');
+    }
 </script>

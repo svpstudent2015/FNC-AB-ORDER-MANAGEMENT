@@ -7,6 +7,9 @@ using FNC_AB_ORDER_MANAGEMENT.Models;
 using DAL.RepositoryFolder;
 using DAL;
 using Microsoft.AspNet.Identity;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
 
 namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 {
@@ -181,6 +184,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 u.Status = model.Status; 
                 u.GPS = model.GPS;
                 u.AID = anvandarId;
+                u.Exporterad = false;
 
                 var dbUtsattningar = new UtsattningarRepository();
                 dbUtsattningar.LaggTill(u);
@@ -282,6 +286,304 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 
            
             return RedirectToAction("Utsattningar", new { sta = uts.Status });
+
+        }
+
+        public ActionResult pdf(string bestNr, string kund, string ort, string adress, DateTime? inDat, DateTime? utDat, bool? etab, decimal? m, int? inmId)
+        {
+            Document document = new Document();
+            UtsattningarRepository dbUtsattningar = new UtsattningarRepository();
+
+            MemoryStream stream = new MemoryStream();
+
+            try
+            {
+                PdfWriter pdfWriter = PdfWriter.GetInstance(document, stream);
+                pdfWriter.CloseStream = false;
+
+                document.Open();
+                document.Add(new Paragraph("Hello World"));
+                document.Add(new Paragraph(DateTime.Now.ToShortDateString()));
+                document.Add(new Chunk("\n"));
+                PdfPTable table = new PdfPTable(8);
+                table.WidthPercentage = 100;
+                Font arial = FontFactory.GetFont("Arial", 11);
+                //Font fontH1 = new Font(Helvetica, 16, Font.NORMAL);
+
+                PdfPCell cell = new PdfPCell(new Phrase("Utsättning"));
+
+                cell.Colspan = 8;
+
+                cell.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+
+                table.AddCell(cell);
+
+                table.AddCell("Best Nr");
+
+                table.AddCell("Kund");
+
+                table.AddCell("Ort");
+
+                table.AddCell("Adress");
+
+                table.AddCell("In");
+
+                table.AddCell("Ut");
+
+                table.AddCell("Etab");
+
+                table.AddCell("Meter");
+
+                //table.AddCell("Fakturerad");
+
+                //table.AddCell(bestNr);
+
+                table.AddCell(new PdfPCell(new Phrase(bestNr, arial)));
+
+                //table.AddCell(kund);
+
+                table.AddCell(new PdfPCell(new Phrase(kund, arial)));
+
+                //table.AddCell(ort);
+
+                table.AddCell(new PdfPCell(new Phrase(ort, arial)));
+
+                //table.AddCell(adress);
+
+                table.AddCell(new PdfPCell(new Phrase(adress, arial)));
+
+                //table.AddCell(inDat.Value.ToShortDateString());
+                if (inDat != null)
+                {
+                    table.AddCell(new PdfPCell(new Phrase(inDat.Value.ToShortDateString(), arial)));
+                }
+                else
+                {
+                    table.AddCell("");
+                }
+
+                //table.AddCell(utDat.Value.ToShortDateString());
+                if (utDat != null)
+                {
+                    table.AddCell(new PdfPCell(new Phrase(utDat.Value.ToShortDateString(), arial)));
+                }
+                else
+                {
+                    table.AddCell("");
+                }
+
+                //table.AddCell(etab.ToString());
+                if (etab == true)
+                {
+                    table.AddCell(new PdfPCell(new Phrase("Ja", arial)));
+                }
+                else
+                {
+                    table.AddCell(new PdfPCell(new Phrase("Nej", arial)));
+                }
+                //table.AddCell(m.ToString());
+
+                table.AddCell(new PdfPCell(new Phrase(m.ToString(), arial)));
+
+                //table.AddCell(DateTime.Now.ToString("MMMM", CultureInfo.InvariantCulture));
+
+                document.Add(table);
+
+            }
+            catch (DocumentException de)
+            {
+                Console.Error.WriteLine(de.Message);
+            }
+            catch (IOException ioe)
+            {
+                Console.Error.WriteLine(ioe.Message);
+            }
+
+            document.Close();
+
+            stream.Flush(); //Always catches me out
+            stream.Position = 0; //Not sure if this is required
+
+            dbUtsattningar.AndraEnUtsattningTillExp(inmId);
+
+            return File(stream, "application/pdf", "DownloadName.pdf");
+
+
+        }
+
+        public ActionResult tempPDF(List<int> userId)
+        {
+
+            var hej = "hej";
+
+            //var list = Session[userId] new List<int>();
+            //list.Add(userId);
+            Session[hej] = userId;
+
+            return Json(new { success = true, hej }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult FleraPdfer()
+        {
+            var list = Session["hej"] as List<int>;
+
+            //List<int> userId = new List<int>();
+            //userId.Add(10);
+            //userId.Add(11);
+            //userId.Add(12);
+
+
+            UtsattningarRepository dbUtsattningar = new UtsattningarRepository();
+            KundRepository dbKund = new KundRepository();
+            List<Kund> KundListan = dbKund.ShowAll();
+            List<Utsattningar>  UtsattningsListan = dbUtsattningar.SattUtsattningarTillExpOchHamtaLista(list);
+
+            var lista = from k in UtsattningsListan
+                        join i in KundListan
+                        on k.KundID equals i.ID
+
+                        select new UtsattningarModel()
+                        {
+                            KundNamn = i.Namn,
+
+
+                            Adress = k.Adress,
+                            Ordernr = k.Ordernr,
+                            InDatum = k.InDatum,
+                            UtDatum = k.UtDatum,
+                            Ort = k.Ort,
+                            StyckPris = k.StyckPris,
+                            Langd = k.Langd
+
+
+
+
+                        };
+
+            Document document = new Document();
+
+
+            MemoryStream stream = new MemoryStream();
+
+            try
+            {
+                PdfWriter pdfWriter = PdfWriter.GetInstance(document, stream);
+                pdfWriter.CloseStream = false;
+
+                document.Open();
+                document.Add(new Paragraph("Hello World"));
+                document.Add(new Paragraph(DateTime.Now.ToShortDateString()));
+                document.Add(new Chunk("\n"));
+                PdfPTable table = new PdfPTable(8);
+                table.WidthPercentage = 100;
+                Font arial = FontFactory.GetFont("Arial", 11);
+                //Font fontH1 = new Font(Helvetica, 16, Font.NORMAL);
+
+                PdfPCell cell = new PdfPCell(new Phrase("Utsättningar"));
+
+                cell.Colspan = 8;
+
+                cell.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+
+                table.AddCell(cell);
+
+                table.AddCell("Best Nr");
+
+                table.AddCell("Kund");
+
+                table.AddCell("Ort");
+
+                table.AddCell("Adress");
+
+                table.AddCell("In");
+
+                table.AddCell("Ut");
+
+                table.AddCell("Etab");
+
+                table.AddCell("Meter");
+
+                //table.AddCell("Fakturerad");
+
+                //table.AddCell(bestNr);
+
+                foreach (var utsatt in lista)
+                {
+
+                    table.AddCell(new PdfPCell(new Phrase(utsatt.Ordernr, arial)));
+
+                    //table.AddCell(kund);
+
+                    table.AddCell(new PdfPCell(new Phrase(utsatt.KundNamn, arial)));
+
+                    //table.AddCell(ort);
+
+                    table.AddCell(new PdfPCell(new Phrase(utsatt.Ort, arial)));
+
+                    //table.AddCell(adress);
+
+                    table.AddCell(new PdfPCell(new Phrase(utsatt.Adress, arial)));
+
+                    //table.AddCell(inDat.Value.ToShortDateString());
+                    if (utsatt.InDatum != null)
+                    {
+                        table.AddCell(new PdfPCell(new Phrase(utsatt.InDatum.Value.ToShortDateString(), arial)));
+                    }
+                    else
+                    {
+                        table.AddCell("");
+                    }
+
+                    //table.AddCell(utDat.Value.ToShortDateString());
+                    if (utsatt.UtDatum != null)
+                    {
+                        table.AddCell(new PdfPCell(new Phrase(utsatt.UtDatum.Value.ToShortDateString(), arial)));
+                    }
+                    else
+                    {
+                        table.AddCell("");
+                    }
+
+                    //table.AddCell(etab.ToString());
+                    if (utsatt.StyckPris == true)
+                    {
+                        table.AddCell(new PdfPCell(new Phrase("Ja", arial)));
+                    }
+                    else
+                    {
+                        table.AddCell(new PdfPCell(new Phrase("Nej", arial)));
+                    }
+                    //table.AddCell(m.ToString());
+
+                    table.AddCell(new PdfPCell(new Phrase(utsatt.Langd.ToString(), arial)));
+
+                    //table.AddCell(DateTime.Now.ToString("MMMM", CultureInfo.InvariantCulture));
+
+                }
+
+                document.Add(table);
+
+            }
+            catch (DocumentException de)
+            {
+                Console.Error.WriteLine(de.Message);
+            }
+            catch (IOException ioe)
+            {
+                Console.Error.WriteLine(ioe.Message);
+            }
+
+            document.Close();
+
+            stream.Flush(); //Always catches me out
+            stream.Position = 0; //Not sure if this is required
+
+
+
+            return File(stream, "application/pdf", "DownloadName.pdf");
+
+
+
 
         }
     }

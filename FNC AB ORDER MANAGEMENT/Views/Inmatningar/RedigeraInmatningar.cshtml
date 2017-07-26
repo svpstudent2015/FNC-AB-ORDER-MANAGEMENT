@@ -192,28 +192,23 @@
 
                 <div class="col-md-10">
                     <select id="exporteradLista" data-placeholder="Välj en kund..." class="chzn-select" style="width: 350px;" tabindex="2" disabled="disabled">
-                        @foreach (var item in Model.ExporteradLista)
-                        {
-                            string bool1;
-                            bool1 = item;
-                            bool bool2 = false;
+                     
+                      
 
-                            if (bool1.Equals("Ja"))
-                            {
-                                bool2 = true;
-                            }
-
-                            if (Model.Exporterad==bool2)
+                         
+                            @if (Model.Exporterad==true)
                             {
 
-                                <option selected="selected" value="@bool2.ToString()"> @item</option>
+                                <option selected="selected" value="@Model.Exporterad.ToString()"> Ja</option>
+                                <option value="false"> Nej</option>
                             }
                             else
                             {
+                                <option selected="selected" value="@Model.Exporterad.ToString()"> Nej</option>
+                                <option value="true"> Ja</option>
 
-                                <option value="@bool2.ToString()"> @item</option>
                             }
-                        }
+                        
                     </select>
                 </div>
 
@@ -324,7 +319,7 @@
         //$('#exporteradLista option[value=true]').attr('selected', 'selected');
 
         //alert("heeeejs!");
-        $("#exporteradLista").val("True");
+        $("#exporteradLista").val("true");
         $('#exporteradLista').trigger('chosen:updated');
     }
     
