@@ -106,11 +106,23 @@
     <input type="button" value="Ny Inmätning" class="btn btn-default" onclick="location.href='@Url.Action("NyInmatning", "Inmatningar")'" />  
 </div>
 
+
+
 <div class="form-group">
     <div>
         <input type="button" value="Exportera till pdf" id="skickaPdf" class="btn btn-default" />
     </div>
+
+    <div>
+        <input type="button" value="Markera Alla" id="markeraAlla" class="btn btn-default" />
+    </div>
+
+    <div>
+        <input type="button" value="Avmarkera Alla" id="avMarkeraAlla" class="btn btn-default" />
+    </div>
 </div>
+
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -271,12 +283,11 @@
        
 
                     }
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <input type="button" value="Exportera till pdf test" class="btn btn-default" id="pdfexpo" onclick="location.href='@Url.Action("FleraPdfer", "Inmatningar")'" />
-    </div>
-</div>
+
+
 <script>
+    
+  
     $("#skickaPdf").click(function () {
 
 
@@ -374,8 +385,11 @@
                      style: 'multi',
                      selector: 'td:first-child'
                  },
-                 order: [[ 1, 'asc' ]]
+                 order: [[5, 'desc']],
+
              });
+
+
 
 
         $("#exporteradLista").chosen({
@@ -394,6 +408,21 @@
             allow_single_deselect: true,
             disable_search: true
         });
+
+    });
+
+    $("#markeraAlla").click(function () {
+
+        var table = $('#example').DataTable();
+
+        table.rows().select();
+
+    });
+    $("#avMarkeraAlla").click(function () {
+
+        var table = $('#example').DataTable();
+
+        table.rows().deselect();
 
     });
 </script>

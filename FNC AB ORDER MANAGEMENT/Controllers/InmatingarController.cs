@@ -15,6 +15,7 @@ using System.Globalization;
 
 namespace FNC_AB_ORDER_MANAGEMENT.Controllers
 {
+    [System.Web.Mvc.Authorize]
     public class InmatningarController : Controller
     {
         // GET: Inmatningar
@@ -303,7 +304,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 pdfWriter.CloseStream = false;
 
                 document.Open();
-                document.Add(new Paragraph("Hello World"));
+                document.Add(new Paragraph("Faktura-information, Inmätningar"));
                 document.Add(new Paragraph(DateTime.Now.ToShortDateString()));
                 document.Add(new Chunk("\n"));
                 PdfPTable table = new PdfPTable(8);
@@ -472,7 +473,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 pdfWriter.CloseStream = false;
 
                 document.Open();
-                document.Add(new Paragraph("Hello World"));
+                document.Add(new Paragraph("Faktura-information, Inmätningar"));
                 document.Add(new Paragraph(DateTime.Now.ToShortDateString()));
                 document.Add(new Chunk("\n"));
                 PdfPTable table = new PdfPTable(8);
@@ -480,7 +481,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                 Font arial = FontFactory.GetFont("Arial", 11);
                 //Font fontH1 = new Font(Helvetica, 16, Font.NORMAL);
 
-                PdfPCell cell = new PdfPCell(new Phrase("Inmätning"));
+                PdfPCell cell = new PdfPCell(new Phrase("Inmätningar"));
 
                 cell.Colspan = 8;
 

@@ -7,6 +7,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <header>
     <style type="text/css" src="content/jquery.dataTables.min.css"></style>
     <script type="text/javascript" src="~/scripts/jquery-1.12.4.js"></script>
@@ -109,7 +110,18 @@
     <div>
         <input type="button" value="Exportera till pdf" id="skickaPdf" class="btn btn-default" />
     </div>
+
+    <div>
+        <input type="button" value="Markera Alla" id="markeraAlla" class="btn btn-default" />
+    </div>
+
+    <div>
+        <input type="button" value="Avmarkera Alla" id="avMarkeraAlla" class="btn btn-default" />
+    </div>
+
+
 </div>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -359,7 +371,7 @@
     });
     $(document).ready(function () {
         $('#example').DataTable(
-            {
+          {
                 columnDefs: [{
                     orderable: false,
                     className: 'select-checkbox',
@@ -370,8 +382,9 @@
                     style: 'multi',
                     selector: 'td:first-child'
                 },
-                order: [[1, 'asc']]
-            });
+                order: [[5, 'desc']]
+          });
+
                 
 
         $("#exporteradLista").chosen({
@@ -388,6 +401,22 @@
             allow_single_deselect: true,
             disable_search: true
         });
+
+    });
+
+    $("#markeraAlla").click(function () {
+
+        var table = $('#example').DataTable();
+
+        table.rows().select();
+
+    });
+
+    $("#avMarkeraAlla").click(function () {
+
+        var table = $('#example').DataTable();
+
+        table.rows().deselect();
 
     });
 </script>
