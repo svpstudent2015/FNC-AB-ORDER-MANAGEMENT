@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>KundModel</h4>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -38,15 +38,60 @@
                 @Html.ValidationMessageFor(model => model.Telefonnr, "", new { @class = "text-danger" })
             </div>
         </div>
+        @Html.HiddenFor(model => model.Status)
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Skapa" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+
+
+    @{
+
+        if (Model.Status == "Utsattning")
+        {
+           
+
+
+            @Html.ActionLink("Tillbaka", "NyUtsattning", "Utsattningar",null, null)
+
+
+
+        }
+
+        else if (Model.Status == "Inmatning")
+        {
+
+
+
+            @Html.ActionLink("Tillbaka", "NyInmatning", "Inmatningar",null, null)
+
+        }
+
+        else if (Model.Status == "hanterakund")
+        {
+
+
+  
+
+            @Html.ActionLink("Tillbaka", "Kund", "Kund", null)
+
+        }
+
+        else
+        {
+        
+
+            @Html.ActionLink("Tillbaka", "Kund", "Kund", null)
+
+        }
+
+    }
+
+    
 </div>

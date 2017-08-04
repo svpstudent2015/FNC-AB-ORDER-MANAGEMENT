@@ -39,9 +39,11 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
         }
         
         // Skapa en ny kund
-        public ActionResult NyKund()
+        public ActionResult NyKund(String stat)   
         {
-            return View();
+            KundModel kunden = new KundModel();
+            kunden.Status = stat;
+            return View(kunden);
         }
 
         [HttpPost]
@@ -58,8 +60,32 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
             
             db.LaggTill(k);
 
-            return RedirectToAction("NyUtsattning", "Utsattningar");
+            if (model.Status == "Utsattning")
+            {
+                return RedirectToAction("NyUtsattning", "Utsattningar");
+
+            }
+           
+            else if (model.Status == "Inmatning")
+            {
+
+                return RedirectToAction("NyInmatning", "Inmatningar");
+
+            }
+
+            else if (model.Status == "hanterakund")
+            {
+                return RedirectToAction("Kund", "Kund");
+
+            }
+
+            else
+            {
+                return RedirectToAction("Kund", "Kund");
+
+            }
             
+
         }
 
         // Get redigera kund

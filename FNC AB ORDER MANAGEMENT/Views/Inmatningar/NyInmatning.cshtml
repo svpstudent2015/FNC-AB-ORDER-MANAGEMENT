@@ -37,8 +37,10 @@
                                     <option id="@item.ID" value="@item.ID"> @item.Namn</option>
                                 }
                             </select>
-                            <input type="button" value="Lägg till ny kund" class="btn btn-default" onclick="location.href = '@Url.Action("NyKund", "Kund")'" />
+                            <input type="button" value="Lägg till ny kund" class="btn btn-default" onclick="location.href = '@Url.Action("NyKund", "Kund", new { stat = "Inmatning" }, null)'" />
                         </div>
+
+                       
 
                     }
                 }
