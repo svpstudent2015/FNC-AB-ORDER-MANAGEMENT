@@ -42,7 +42,7 @@
         </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="button" value="Radera Kund" class="btn btn-default" onclick="location.href='@Url.Action("TaBortKund/"+Model.ID , "Kund")'" />
+                    <input type="button" id="radera" value="Radera Kund" class="btn btn-default"/>
                 </div>
             </div>
         
@@ -58,3 +58,15 @@
 <div>
     @Html.ActionLink("Back to List", "Kund")
 </div>
+<script>
+
+    $('#radera').click(function () {
+        var ok = confirm('Är du säker på att du vill radera kunden?');
+        if(ok)
+            window.location = "/Kund/TaBortKund/" + @Model.ID;
+        else
+            return false;
+
+    });
+
+</script>

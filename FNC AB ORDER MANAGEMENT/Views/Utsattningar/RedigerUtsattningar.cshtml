@@ -247,7 +247,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Radera Utsättning" class="btn btn-default" onclick="location.href='@Url.Action("TaBortUtsattning/"+Model.ID , "Utsattningar")'" />
+                <input type="button" id="radera" value="Radera Utsättning" class="btn btn-default"/>
             </div>
         </div>
     </div>
@@ -257,23 +257,32 @@
     @Html.ActionLink("Tillbaka", "Utsattningar", new { st = Model.Status }, null)
 </div>
 <script type="text/javascript">
-    
+
+    $('#radera').click(function () {
+        var ok = confirm('Är du säker på att du vill radera utsättningen?');
+        if(ok)
+            window.location = "/Utsattningar/TaBortUtsattning/" + @Model.ID;
+        else
+            return false;
+
+    });
+
     $("form").submit(function (eventObj) {
-        
+
         var koll = document.getElementById("statuslista");
         var vardeKoll = koll.options[koll.selectedIndex].value;
 
-        
+
 
         if(vardeKoll == "Slutförd"){
 
 
-           
+
             var test= $('#UtDatum').val();
-            
-            
-           
-            
+
+
+
+
             if(test == ""){
 
                 alert("För att slutföra en order, vänligen fyll i slutdatum");
@@ -283,8 +292,8 @@
 
             }
 
-      
-          
+
+
 
         }
 
@@ -309,7 +318,7 @@
             .attr('name', "Status")
             .attr('value', st)
             .appendTo('form');
-       
+
 
     });
 
@@ -325,7 +334,7 @@
             disable_search: true
         });
 
-    });   
+    });
 
     $('#edit').click(function() {
         $('#Ordernr').prop('readOnly', false);
@@ -337,15 +346,15 @@
         $('#UtDatum').prop('readOnly', false);
         $('#StyckPris').prop('disabled', false).trigger("chosen:updated");
         $('#Langd').prop('readOnly', false);
-        $('#Timmar').prop('readOnly', false);     
+        $('#Timmar').prop('readOnly', false);
         $('#Ovrigt').prop('readOnly', false);
         $('#GPS').prop('disabled', false).trigger("chosen:updated");
         $('#statuslista').prop('disabled', false).trigger("chosen:updated");
     });
 
     function myFunction() {
-       
-        
+
+
         $("#exporteradLista").val("true");
         $('#exporteradLista').trigger('chosen:updated');
     }

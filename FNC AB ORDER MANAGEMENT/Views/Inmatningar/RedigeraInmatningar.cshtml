@@ -231,7 +231,7 @@
        
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" id ="radera" value="Radera Inmätning"  class="btn btn-default" onclick="location.href='@Url.Action("TaBortInmatning/"+Model.ID , "Inmatningar")'" />
+                <input type="button" id ="radera" value="Radera Inmätning"  class="btn btn-default"/>
             </div>
         </div>
        
@@ -244,34 +244,25 @@
 </div>
 <script type="text/javascript">
 
-    
-    function ConfirmDelete()
-    {        
-        var ok = confirm('Är du säker på att du vill radera inmätningen?');
-        if(ok)
-            return true;
-        else
-            return false;
-    }
 
     $("form").submit(function (eventObj) {
 
 
-        
+
         var koll = document.getElementById("statuslista");
         var vardeKoll = koll.options[koll.selectedIndex].value;
 
-        
+
 
         if(vardeKoll == "Slutförd"){
 
 
-           
+
             var test= $('#UtDatum').val();
-            
-            
-           
-            
+
+
+
+
             if(test == ""){
 
                 alert("För att slutföra en order, vänligen fyll i slutdatum");
@@ -281,8 +272,8 @@
 
             }
 
-      
-          
+
+
 
         }
 
@@ -319,7 +310,6 @@
     });
 
     $(document).ready(function () {
-        document.getElementById("radera").addEventListener("click", ConfirmDelete);
         document.getElementById("pdfexpo").addEventListener("click", myFunction);
         $("#selectlista").chosen({
             allow_single_deselect:true,
@@ -332,7 +322,12 @@
     });
 
     $('#radera').click(function () {
-       
+        var ok = confirm('Är du säker på att du vill radera inmätningen?');
+        if(ok)
+            window.location = "/Inmatningar/TaBortInmatning/" + @Model.ID;
+        else
+            return false;
+
     });
 
 
@@ -349,11 +344,11 @@
         $('#Langd').prop('readOnly', false);
         $('#Timmar').prop('readOnly', false);
         $('#Ovrigt').prop('readOnly', false);
-        $('#statuslista').prop('disabled', false).trigger("chosen:updated");       
+        $('#statuslista').prop('disabled', false).trigger("chosen:updated");
     });
 
     function myFunction() {
-       
+
         //document.getElementById("exporteradLista").removeAttribute("disabled");
         //document.getElementById("exporteradLista").value = "true";
         //document.getElementById("exporteradLista").setAttribute("disabled", "disabled");
