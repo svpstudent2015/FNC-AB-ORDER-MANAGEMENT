@@ -20,9 +20,11 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
         [StringLength(15, ErrorMessage = "{0} kan inte var längre än 15 tecken")]
         public string Telefonnr { get; set; }
 
+        [Required]
         [StringLength(50, ErrorMessage = "{0} kan inte var längre än 50 tecken")]
         public string Ort { get; set; }
 
+        [Required]
         [StringLength(50, ErrorMessage = "{0} kan inte var längre än 50 tecken")]
         public string Adress { get; set; }
 

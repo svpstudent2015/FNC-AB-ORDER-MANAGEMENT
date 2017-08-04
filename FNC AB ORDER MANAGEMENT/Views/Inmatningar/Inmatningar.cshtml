@@ -296,43 +296,62 @@
         var test = table.rows({ selected: true }).data();
 
 
+        if (test[0] == null) {
+
+            alert("Du måste välja någonting att exportera!");
+
+        }
 
 
-        //console.log(test[0].DT_RowId);
+        else {
+            //console.log(test[0].DT_RowId);
 
-        var roleList = new Array();
-        var usrId = "testuser";
+            var roleList = new Array();
+            var usrId = "testuser";
 
 
-        /* one  way of adding items to array */
-        //test.forEach(function(element) {
-        //    console.log(element.DT_RowId);
-        //});
-        for (i = 0; i < test.length; i++) {
-            console.log(test[i].DT_RowId);
-            roleList.push(test[i].DT_RowId);
+            /* one  way of adding items to array */
+            //test.forEach(function(element) {
+            //    console.log(element.DT_RowId);
+            //});
+            for (i = 0; i < test.length; i++) {
+                console.log(test[i].DT_RowId);
+                //console.log(test[i][8]);
 
-        };
+                roleList.push(test[i].DT_RowId);
+                //test[i][8].data('Ja').draw();
+                //table.cell(i, 8).data('Ja').draw();
 
-        $.ajax({
-            type: "POST",
-            traditional: true, /* I M P O R T A N T */
-            url: '@Url.Action("tempPDF", "Inmatningar")',
-            data: { userId: roleList},
-            success: function (returndata) {
-                if (returndata.success) {
-                    window.location = "/Inmatningar/FleraPdfer";
-                    
+            };
+
+            $.ajax({
+                type: "POST",
+                traditional: true, /* I M P O R T A N T */
+                url: '@Url.Action("tempPDF", "Inmatningar")',
+                data: { userId: roleList },
+                success: function (returndata) {
+                    if (returndata.success) {
+
+
+                        //table.cell(1, 1).data('Updated').draw();
+                        window.location = "/Inmatningar/FleraPdfer";
+                        //location.reload();
+                        //window.location.reload();
+
+
+
+
+                    }
+
+                    //window.location.reload();
+                },
+                error: function (returndata) {
+                    alert("Error:\n" + returndata.responseText);
                 }
-
-              
-            },
-            error: function(returndata) {
-                alert("Error:\n" + returndata.responseText);
-            }
-        });
+            });
 
 
+        }
     });
 
     $("form").submit(function (eventObj) {

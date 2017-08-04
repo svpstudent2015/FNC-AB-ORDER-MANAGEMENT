@@ -48,6 +48,7 @@ namespace FNC_AB_ORDER_MANAGEMENT.Controllers
                         Adress = u.Adress,
                         Ordernr = u.Ordernr,
                         InDatum = u.InDatum,
+                        UtDatum =u.UtDatum,
                         ID = u.ID,
                         Ovrigt = u.Ovrigt,
                         Exporterad = u.Exporterad

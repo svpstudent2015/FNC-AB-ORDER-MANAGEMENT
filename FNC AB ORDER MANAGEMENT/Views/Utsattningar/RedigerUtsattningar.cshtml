@@ -260,6 +260,36 @@
     
     $("form").submit(function (eventObj) {
         
+        var koll = document.getElementById("statuslista");
+        var vardeKoll = koll.options[koll.selectedIndex].value;
+
+        
+
+        if(vardeKoll == "Slutförd"){
+
+
+           
+            var test= $('#UtDatum').val();
+            
+            
+           
+            
+            if(test == ""){
+
+                alert("För att slutföra en order, vänligen fyll i slutdatum");
+
+
+                eventObj.preventDefault();
+
+            }
+
+      
+          
+
+        }
+
+
+
         //KundLista
         var e = document.getElementById("selectlista");
         var strUser = e.options[e.selectedIndex].value;
@@ -320,3 +350,7 @@
         $('#exporteradLista').trigger('chosen:updated');
     }
 </script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
