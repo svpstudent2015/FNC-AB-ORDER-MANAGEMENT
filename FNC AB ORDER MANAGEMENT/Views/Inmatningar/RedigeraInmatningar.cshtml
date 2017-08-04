@@ -231,7 +231,7 @@
        
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Radera Inmätning"  class="btn btn-default" onclick="location.href='@Url.Action("TaBortInmatning/"+Model.ID , "Inmatningar")'" />
+                <input type="button" id ="radera" value="Radera Inmätning"  class="btn btn-default" onclick="location.href='@Url.Action("TaBortInmatning/"+Model.ID , "Inmatningar")'" />
             </div>
         </div>
        
@@ -243,6 +243,16 @@
     @Html.ActionLink("Tillbaka", "Inmatningar", new { st = Model.Status }, null)
 </div>
 <script type="text/javascript">
+
+    
+    function ConfirmDelete()
+    {        
+        var ok = confirm('Är du säker på att du vill radera inmätningen?');
+        if(ok)
+            return true;
+        else
+            return false;
+    }
 
     $("form").submit(function (eventObj) {
 
@@ -279,6 +289,7 @@
     });
 
     $(document).ready(function () {
+        document.getElementById("radera").addEventListener("click", ConfirmDelete);
         document.getElementById("pdfexpo").addEventListener("click", myFunction);
         $("#selectlista").chosen({
             allow_single_deselect:true,
@@ -289,6 +300,11 @@
             disable_search:true
         });
     });
+
+    $('#radera').click(function () {
+       
+    });
+
 
     // Funktion för att aktivera redigering av fälten
     $('#edit').click(function() {
@@ -318,8 +334,7 @@
         $("#exporteradLista").val("true");
         $('#exporteradLista').trigger('chosen:updated');
     }
-    
-    
+
 
 </script>
 
