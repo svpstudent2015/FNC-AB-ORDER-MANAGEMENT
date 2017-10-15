@@ -26,10 +26,10 @@
         </div>
         <div class="col-md-offset-2 col-md-10">
 
-            <input id="p" type="button" Onclick="location.href = '@Url.Action("Inmatningar", new {st = "Pågående"})'" value="Pågående" class="btn btn-default" />
-            <input id="es" type="button" Onclick="location.href = '@Url.Action("Inmatningar", new {st = "Ej slutförd"})'" value="Ej slutförd" class="btn btn-default" />
-            <input id="eg" type="button" Onclick="location.href = '@Url.Action("Inmatningar", new {st = "Ej genomförbar"})'" value="Ej genomförbar" class="btn btn-default" />
-            <input id="s" type="button" Onclick="location.href = '@Url.Action("Inmatningar", new {st = "Slutförd"})'" value="Slutförd" class="btn btn-default" />
+            <input id="p" type="button" style="color: blue" Onclick="location.href = '@Url.Action("Inmatningar", new {st = "Pågående"})'"  value="Pågående" class="btn btn-default"/>
+            <input id="es" type="button" style="color: orange" Onclick="location.href = '@Url.Action("Inmatningar", new {st = "Ej slutförd"})'" value="Ej slutförd" class="btn btn-default" />
+            <input id="eg" type="button" style="color: red" Onclick="location.href = '@Url.Action("Inmatningar", new {st = "Ej genomförbar"})'" value="Ej genomförbar" class="btn btn-default" />
+            <input id="s" type="button" style="color: green" Onclick="location.href = '@Url.Action("Inmatningar", new {st = "Slutförd"})'" value="Slutförd" class="btn btn-default" />
 
         </div>
     </div>
@@ -70,30 +70,48 @@
                     <tr id="@item.ID">
                         <td name="@item.ID"></td>
                         <td Onclick="location.href='@Url.Action("RedigeraInmatningar/"+item.ID, "Inmatningar")'">@item.KundNamn</td>
-                        <td>@item.Status</td>
-                        <td>@item.Adress</td>
-                        <td>@item.Ordernr</td>
-                        <td>
+                        
+                        @if (item.Status == "Pågående")
+                        {
+                            item.Color = "blue";
+                        } 
+                        @if (item.Status == "Ej slutförd")
+                        {
+                            item.Color = "orange";
+                        } 
+                        @if (item.Status == "Ej genomförbar")
+                        {
+                            item.Color = "red";
+                        } 
+                        @if (item.Status == "Slutförd")
+                        {
+                            item.Color = "green";
+                        } 
+
+                        <td style="color: @item.Color" Onclick="location.href='@Url.Action("RedigeraInmatningar/"+item.ID, "Inmatningar")'">@item.Status</td>
+                        <td Onclick="location.href='@Url.Action("RedigeraInmatningar/"+item.ID, "Inmatningar")'">@item.Adress</td>
+                        <td Onclick="location.href='@Url.Action("RedigeraInmatningar/"+item.ID, "Inmatningar")'">@item.Ordernr</td>
+                        <td Onclick="location.href='@Url.Action("RedigeraInmatningar/"+item.ID, "Inmatningar")'">
                             @if (item.InDatum != null)
                             {
                                 @item.InDatum.Value.ToShortDateString()
                             }
                         </td>
-                        <td>
+                        <td Onclick="location.href='@Url.Action("RedigeraInmatningar/"+item.ID, "Inmatningar")'">
                             @if (item.UtDatum != null)
                             {
                                 @item.UtDatum.Value.ToShortDateString()
                             }
                         </td>
-                        <td>@item.Ovrigt</td>
+                        <td Onclick="location.href='@Url.Action("RedigeraInmatningar/"+item.ID, "Inmatningar")'">@item.Ovrigt</td>
                         @if (item.Exporterad == true)
                         {
 
-                            <td>Ja</td>
+                            <td Onclick="location.href='@Url.Action("RedigeraInmatningar/"+item.ID, "Inmatningar")'">Ja</td>
                         }
                         else
                         {
-                            <td>Nej</td>
+                            <td Onclick="location.href='@Url.Action("RedigeraInmatningar/"+item.ID, "Inmatningar")'">Nej</td>
                         }
                     </tr>
                 }
@@ -103,7 +121,7 @@
     </tbody>
 </table>
 <div class="form-group">   
-    <input type="button" value="Ny Inmätning" class="btn btn-default" onclick="location.href='@Url.Action("NyInmatning", "Inmatningar")'" />  
+    <input type="button" value="Ny Inmätning" style="border: 2px solid Blue" class="btn btn-default" onclick="location.href='@Url.Action("NyInmatning", "Inmatningar")'" />  
 </div>
 
 

@@ -55,8 +55,9 @@ namespace FNC_AB_ORDER_MANAGEMENT.Models
 
         public string Status { get; set; }
 
-        public Nullable<bool> GPS { get; set; }
+        public string Color { get; set; }
 
+        public Nullable<bool> GPS { get; set; }
         
         public string AID { get; set; }
 
